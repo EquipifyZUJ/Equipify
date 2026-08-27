@@ -172,7 +172,6 @@ var host = new HostBuilder()
             DbSeeder.SeedAsync(ctx).GetAwaiter().GetResult();
 
             var webApp = (IApplicationBuilder)app;
-            var endpoints = (IEndpointRouteBuilder)app;
 
             webApp.UseForwardedHeaders(new ForwardedHeadersOptions { ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto });
             webApp.UseMiddleware<ExceptionHandlingMiddleware>();
@@ -196,8 +195,11 @@ var host = new HostBuilder()
             webApp.UseAuthentication();
             webApp.UseAuthorization();
 
-            endpoints.MapGet("/", () => Results.Redirect("/swagger"));
-            endpoints.MapControllers();
+            webApp.UseEndpoints(e =>
+            {
+                e.MapGet("/", () => Results.Redirect("/swagger"));
+                e.MapControllers();
+            });
         });
     })
     .Build();
