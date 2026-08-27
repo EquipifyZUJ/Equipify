@@ -1,11 +1,4 @@
 services:
-  # ── PostgreSQL Database ──
-  - type: postgresql
-    name: equipify-db
-    databaseName: equipifydb
-    plan: free
-    diskSizeGB: 1
-
   # ── Backend API (.NET 8) ──
   - type: web
     name: equipify-api
@@ -15,9 +8,7 @@ services:
     healthCheckPath: /swagger/v1/swagger.json
     envVars:
       - key: DATABASE_URL
-        fromDatabase:
-          name: equipify-db
-          property: connectionString
+        value: "postgresql://equipify_db_user:4vHHlEmgvX0v7dqXKf5aisx441jnnQDT@dpg-da8a9i942hec73c9ts8g-a.virginia-postgres.render.com/equipify_db"
       - key: JWT_SECRET
         sync: false
         value: "equipify_production_jwt_secret_change_me_2024_abcdef"
