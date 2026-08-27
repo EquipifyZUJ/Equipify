@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <!-- Gives access to Microsoft.Extensions.* (DI, Configuration, Options, Logging)
+       at the shared-framework version, avoiding package version conflicts. -->
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Equipify.Data\Equipify.Data.csproj" />
+    <ProjectReference Include="..\Equipify.Domain\Equipify.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

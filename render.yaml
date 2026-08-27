@@ -1,0 +1,45 @@
+services:
+  # ── PostgreSQL Database ──
+  - type: postgresql
+    name: equipify-db
+    databaseName: equipifydb
+    plan: free
+    diskSizeGB: 1
+
+  # ── Backend API (.NET 8) ──
+  - type: web
+    name: equipify-api
+    runtime: docker
+    rootDir: backend
+    plan: free
+    healthCheckPath: /swagger/v1/swagger.json
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: equipify-db
+          property: connectionString
+      - key: JWT_SECRET
+        sync: false
+        value: "equipify_production_jwt_secret_change_me_2024_abcdef"
+      - key: JWT_ISSUER
+        value: "Equipify.Api"
+      - key: JWT_AUDIENCE
+        value: "Equipify.Client"
+      - key: ASPNETCORE_ENVIRONMENT
+        value: "Production"
+      - key: ASPNETCORE_URLS
+        value: "http://0.0.0.0:10000"
+      - key: PORT
+        value: "10000"
+
+  # ── Frontend (React + Nginx) ──
+  - type: web
+    name: equipify-frontend
+    runtime: docker
+    rootDir: frontend
+    plan: free
+    envVars:
+      - key: VITE_API_URL
+        value: "https://equipify-api.onrender.com/api"
+      - key: FRONTEND_URL
+        value: "https://equipify-frontend.onrender.com"

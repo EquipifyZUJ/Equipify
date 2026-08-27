@@ -1,0 +1,2913 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Equipify — Documentation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="page-wrapper">
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- ==================== SIDEBAR ==================== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo" id="sidebarLogo"><img src="img/project_logo.png" alt="E" style="width:100%;height:100%;object-fit:contain;border-radius:8px" onerror="this.parentElement.textContent='E'"></div>
+      <div class="sidebar-brand">
+        <h2>Equipify</h2>
+        <span>Project Documentation</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <ul><li><a href="#cover">Cover</a></li></ul>
+
+      <ul>
+        <li class="nav-group-label">Introduction</li>
+        <li><a href="#sec-overview"><span class="nav-num">01</span> Project Overview</a></li>
+        <li><a href="#sec-problem"><span class="nav-num">02</span> Problem Statement</a></li>
+        <li><a href="#sec-solution"><span class="nav-num">03</span> Proposed Solution</a></li>
+        <li><a href="#sec-objectives"><span class="nav-num">04</span> Objectives</a></li>
+        <li><a href="#sec-scope"><span class="nav-num">05</span> Scope</a></li>
+        <li><a href="#sec-users"><span class="nav-num">06</span> Target Users</a></li>
+      </ul>
+      <ul>
+        <li class="nav-group-label">Requirements</li>
+        <li><a href="#sec-func"><span class="nav-num">07</span> Functional Requirements</a></li>
+        <li><a href="#sec-nonfunc"><span class="nav-num">08</span> Non-Functional Requirements</a></li>
+        <li><a href="#sec-modules"><span class="nav-num">09</span> System Modules</a></li>
+      </ul>
+      <ul>
+        <li class="nav-group-label">Architecture</li>
+        <li><a href="#sec-arch"><span class="nav-num">10</span> System Architecture</a></li>
+        <li><a href="#sec-backend"><span class="nav-num">11</span> Backend Architecture</a></li>
+        <li><a href="#sec-react"><span class="nav-num">12</span> React Architecture</a></li>
+        <li><a href="#sec-flutter"><span class="nav-num">13</span> Flutter Architecture</a></li>
+        <li><a href="#sec-database"><span class="nav-num">14</span> Database Design</a></li>
+      </ul>
+      <ul>
+        <li class="nav-group-label">Diagrams</li>
+        <li><a href="#sec-er"><span class="nav-num">15</span> ER Diagram</a></li>
+        <li><a href="#sec-usecase"><span class="nav-num">16</span> Use Case Diagram</a></li>
+        <li><a href="#sec-class"><span class="nav-num">17</span> Class Diagram</a></li>
+        <li><a href="#sec-activity"><span class="nav-num">18</span> Activity Diagrams</a></li>
+        <li><a href="#sec-sequence"><span class="nav-num">19</span> Sequence Diagrams</a></li>
+        <li><a href="#sec-auth-flow"><span class="nav-num">20</span> Authentication Flow</a></li>
+        <li><a href="#sec-dfd"><span class="nav-num">21</span> Data Flow Diagrams</a></li>
+        <li><a href="#sec-component"><span class="nav-num">22</span> Component Diagram</a></li>
+        <li><a href="#sec-deploy-diag"><span class="nav-num">23</span> Deployment Diagram</a></li>
+      </ul>
+      <ul>
+        <li class="nav-group-label">API &amp; Security</li>
+        <li><a href="#sec-api-arch"><span class="nav-num">24</span> API Architecture</a></li>
+        <li><a href="#sec-api-endpoints"><span class="nav-num">25</span> API Endpoints</a></li>
+        <li><a href="#sec-security"><span class="nav-num">26</span> Security Architecture</a></li>
+        <li><a href="#sec-errors"><span class="nav-num">27</span> Error Handling</a></li>
+        <li><a href="#sec-validation"><span class="nav-num">28</span> Validation</a></li>
+      </ul>
+      <ul>
+        <li class="nav-group-label">Quality Attributes</li>
+        <li><a href="#sec-performance"><span class="nav-num">29</span> Performance</a></li>
+        <li><a href="#sec-scalability"><span class="nav-num">30</span> Scalability</a></li>
+        <li><a href="#sec-testing"><span class="nav-num">31</span> Testing</a></li>
+      </ul>
+      <ul>
+        <li class="nav-group-label">Deployment</li>
+        <li><a href="#sec-deploy"><span class="nav-num">32</span> Deployment</a></li>
+        <li><a href="#sec-future"><span class="nav-num">33</span> Future Improvements</a></li>
+        <li><a href="#sec-conclusion"><span class="nav-num">34</span> Conclusion</a></li>
+      </ul>
+      <ul>
+        <li class="nav-group-label">Appendices</li>
+        <li><a href="#sec-glossary"><span class="nav-num">A</span> Glossary</a></li>
+        <li><a href="#sec-abbrev"><span class="nav-num">B</span> Abbreviations</a></li>
+      </ul>
+    </nav>
+
+    <div class="sidebar-footer">
+      <img src="img/uni_logo.png" alt="University Logo" onerror="this.style.display='none'">
+    </div>
+  </aside>
+
+  <!-- ==================== MAIN CONTENT ==================== -->
+  <main class="main-content">
+    <header class="top-header">
+      <div class="header-left">
+        <button class="menu-toggle" id="menuToggle">&#9776;</button>
+        <div>
+          <h1>Equipify Documentation</h1>
+          <div class="header-breadcrumb">Graduation Project / <span id="currentSection">Cover</span></div>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="btn-download" id="pdfBtn" title="Download PDF">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span>PDF</span>
+        </button>
+        <button class="btn-icon" id="printBtn" title="Print">&#128424;</button>
+      </div>
+    </header>
+
+    <div class="content-area">
+
+      <!-- ===== COVER ===== -->
+      <div class="cover" id="cover">
+        <div class="cover-logos">
+          <img class="uni-logo" src="img/uni_logo.png" alt="Al-Zaytoonah University of Jordan" onerror="this.style.display='none'">
+          <div class="logo-divider"></div>
+          <img class="project-logo" src="img/project_logo.png" alt="Equipify" onerror="this.style.display='none'">
+        </div>
+
+        <div class="cover-title-block">
+          <div class="cover-label">Project Documentation</div>
+          <h1 class="cover-title">Equipify</h1>
+          <div class="cover-subtitle">Equipment Rental Marketplace Platform</div>
+        </div>
+
+        <div class="cover-meta-line"></div>
+
+        <div class="cover-meta">
+          <strong>Al-Zaytoonah University of Jordan</strong><br>
+          Department of Computer Science<br>
+          Academic Year: 2025 – 2026
+        </div>
+
+        <div class="cover-team-section">
+          <div class="cover-team-label">Project Team</div>
+
+          <div class="cover-supervisor">
+            <div class="role">Supervisor</div>
+            <div class="name">Dr. Wael Zyadat</div>
+          </div>
+
+          <div class="cover-leader">
+            <div class="role">Team Leader</div>
+            <div class="name">Mahmoud Mohammad</div>
+            <div class="id">202211206</div>
+          </div>
+
+          <div class="cover-members">
+            <div class="cover-member">
+              <div class="role">Team Member</div>
+              <div class="name">Mohammad Jaber</div>
+              <div class="id">202212437</div>
+            </div>
+            <div class="cover-member">
+              <div class="role">Team Member</div>
+              <div class="name">Khaled Asha</div>
+              <div class="id">202312446</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cover-footer">
+          <div class="cover-footer-line"></div>
+          <div class="cover-footer-text">Software Engineering Project Documentation</div>
+        </div>
+      </div>
+
+      <!-- ============================================================
+           SECTION 01 — PROJECT OVERVIEW
+           ============================================================ -->
+      <section class="doc-section" id="sec-overview">
+        <h2>01 — Project Overview</h2>
+        <p>Equipify is a multi-platform equipment rental marketplace that connects equipment owners with renters in a trust-verified environment. Inspired by the Airbnb model, the platform enables individuals and businesses to list, discover, and rent equipment across diverse categories — from electronics and vehicles to fitness machines and real estate.</p>
+        <p>The system operates across three client platforms: a React-based web application served on port 5173, a Flutter mobile application for Android and iOS, and a RESTful ASP.NET Core 8.0 Web API backend on port 5000. All platforms communicate via HTTP/REST using JSON as the data interchange format, with multipart form-data for file uploads.</p>
+
+        <h3>Platform Summary</h3>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-value">3</div>
+            <div class="stat-label">Client Platforms</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">48</div>
+            <div class="stat-label">API Endpoints</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">7</div>
+            <div class="stat-label">Database Tables</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">6</div>
+            <div class="stat-label">API Controllers</div>
+          </div>
+        </div>
+
+        <h3>Key Features</h3>
+        <ul>
+          <li><strong>Bilingual Support:</strong> Full Arabic (RTL) and English (LTR) interface across all platforms, with 214 translation keys on the web and 130+ on mobile.</li>
+          <li><strong>Phone-Based Authentication:</strong> Registration and login via phone number with OTP verification, JWT access tokens, and refresh token rotation.</li>
+          <li><strong>Interactive Maps:</strong> Leaflet-based map browsing on web, flutter_map on mobile, with geographic viewport filtering and click-to-place-pin for listing locations.</li>
+          <li><strong>Dynamic Pricing:</strong> Five rental units (hour, day, week, month, year) with corresponding cost fields and duration constraints.</li>
+          <li><strong>Admin Moderation:</strong> Listing approval workflow, user management, category management, and aggregate dashboard statistics.</li>
+          <li><strong>Rating System:</strong> 1–5 star ratings on completed rentals with owner average recalculation.</li>
+        </ul>
+      </section>
+
+      <!-- ============================================================
+           SECTION 02 — PROBLEM STATEMENT
+           ============================================================ -->
+      <section class="doc-section" id="sec-problem">
+        <h2>02 — Problem Statement</h2>
+        <p>The equipment rental market faces several persistent challenges that reduce efficiency and trust between parties:</p>
+        <ul>
+          <li><strong>Fragmented Discovery:</strong> Equipment owners and renters rely on word-of-mouth, social media groups, or scattered classified ads. There is no centralized, searchable platform that aggregates rental equipment by category, location, price, and availability.</li>
+          <li><strong>Trust Deficit:</strong> Without a verification mechanism, renters have no way to assess the reliability of an owner, and owners cannot verify the identity or intentions of renters. This leads to hesitation and failed transactions.</li>
+          <li><strong>Manual Scheduling Conflicts:</strong> Without an integrated booking system, overlapping rental requests are common, resulting in double-bookings and disputes.</li>
+          <li><strong>Lack of Transparency:</strong> Pricing, availability, and equipment condition are often unclear. Renters may encounter hidden fees or receive equipment that does not match the description.</li>
+          <li><strong>No Accountability:</strong> Without a rating or review system, there is no mechanism to reward reliable owners and renters or to flag problematic participants.</li>
+          <li><strong>Limited Language Support:</strong> Most existing platforms serve only English-speaking users, excluding Arabic-speaking populations who constitute a significant market segment.</li>
+        </ul>
+        <p>Equipify addresses these challenges through a purpose-built, bilingual marketplace with verified identities, integrated booking with OTP confirmation, transparent pricing, and a community-driven rating system.</p>
+      </section>
+
+      <!-- ============================================================
+           SECTION 03 — PROPOSED SOLUTION
+           ============================================================ -->
+      <section class="doc-section" id="sec-solution">
+        <h2>03 — Proposed Solution</h2>
+        <p>Equipify provides a comprehensive, multi-platform solution that addresses each identified problem through the following architectural and functional decisions:</p>
+
+        <h3>Centralized Marketplace</h3>
+        <p>A unified platform where equipment owners can create detailed listings with images, pricing, location coordinates, and availability windows. Renters can browse, search, filter, and discover equipment through both grid and map views.</p>
+
+        <h3>Verified Identity System</h3>
+        <p>All user interactions require phone-based registration with OTP verification. This ensures that every participant on the platform has a verified phone number, establishing a baseline of accountability and traceability.</p>
+
+        <h3>Integrated Booking Engine</h3>
+        <p>The rental request workflow enforces date/time selection, automatic cost calculation, overlap detection against existing bookings, and OTP-verified confirmation. This eliminates double-bookings and provides a clear audit trail.</p>
+
+        <h3>Admin Moderation Layer</h3>
+        <p>All new listings enter a <code>Pending</code> state and require admin approval before becoming visible in the marketplace. Admins can approve, deactivate, or delete listings, and can block or unblock users, ensuring content quality and platform integrity.</p>
+
+        <h3>Community Trust Mechanism</h3>
+        <p>After a completed rental, the renter can submit a 1–5 star rating. The system enforces one rating per rental request and recalculates the owner's average rating in real time, creating a transparent reputation system.</p>
+
+        <h3>Bilingual Architecture</h3>
+        <p>The entire user interface — including navigation, forms, error messages, and notifications — supports Arabic (default) and English with full RTL layout support. Categories include a <code>NameAr</code> field for bilingual display.</p>
+      </section>
+
+      <!-- ============================================================
+           SECTION 04 — OBJECTIVES
+           ============================================================ -->
+      <section class="doc-section" id="sec-objectives">
+        <h2>04 — Objectives</h2>
+        <p>The primary objectives of the Equipify project are:</p>
+        <ol>
+          <li><strong>Build a Cross-Platform Marketplace:</strong> Develop a web application (React + TypeScript), a mobile application (Flutter + Dart), and a backend API (ASP.NET Core 8.0) that function as a cohesive equipment rental ecosystem.</li>
+          <li><strong>Implement Secure Authentication:</strong> Provide phone-based registration with OTP verification, JWT access tokens with configurable expiry (60 minutes for users, 120 minutes for admins), and refresh token rotation with 7-day expiry.</li>
+          <li><strong>Enable Equipment Listing Management:</strong> Allow authenticated users to create, edit, activate/deactivate, and delete equipment listings with image upload (maximum 6 images, 5MB each), map-based location selection, and dynamic pricing based on five rental units.</li>
+          <li><strong>Provide Advanced Search and Discovery:</strong> Implement text-based search across title, description, location, and owner name; category and price filtering; rental unit and duration filtering; geographic viewport filtering via map bounds; and paginated results (maximum 50 per page).</li>
+          <li><strong>Enforce a Booking Workflow:</strong> Implement a rental request lifecycle with OTP verification, overlap detection, owner accept/reject, and post-rental rating.</li>
+          <li><strong>Support Administrative Oversight:</strong> Provide an admin dashboard with aggregate statistics, listing moderation (approve/deactivate), user management (block/unblock/delete), and category CRUD.</li>
+          <li><strong>Deliver Bilingual UX:</strong> Support Arabic and English with RTL/LTR layout switching, bilingual category names, and locale-aware date/number formatting.</li>
+          <li><strong>Ensure Security Best Practices:</strong> Apply BCrypt password hashing, timing-attack mitigation, rate limiting, input validation, file upload security (extension whitelist, magic byte verification, GUID filenames), and security headers.</li>
+        </ol>
+      </section>
+
+      <!-- ============================================================
+           SECTION 05 — SCOPE
+           ============================================================ -->
+      <section class="doc-section" id="sec-scope">
+        <h2>05 — Scope</h2>
+
+        <h3>In Scope</h3>
+        <ul>
+          <li>User registration, login, and profile management via phone + OTP</li>
+          <li>Equipment listing CRUD with image upload and map-based location</li>
+          <li>Browse, search, and filter listings (text, category, price, unit, duration, map bounds)</li>
+          <li>Rental request lifecycle: send OTP, create request, accept/reject, cancel</li>
+          <li>Post-rental rating system (1–5 stars) with owner average recalculation</li>
+          <li>Admin dashboard, listing moderation, user management, category management</li>
+          <li>Full Arabic/English bilingual support with RTL layout</li>
+          <li>Dark mode / light mode toggle on all platforms</li>
+          <li>Web application (React 19 + TypeScript + Vite 8)</li>
+          <li>Mobile application (Flutter 3.38 + Dart 3.9)</li>
+          <li>Backend API (ASP.NET Core 8.0 with Clean Architecture)</li>
+          <li>SQL Server 2022 database with Entity Framework Core 8.0</li>
+          <li>Email notifications (configurable, disabled in development)</li>
+        </ul>
+
+        <h3>Out of Scope</h3>
+        <ul>
+          <li>Payment processing and financial transactions</li>
+          <li>Real-time chat or messaging between users</li>
+          <li>Push notifications for mobile devices</li>
+          <li>Equipment delivery or logistics tracking</li>
+          <li>Multi-language support beyond Arabic and English</li>
+          <li>Social media authentication (Google, Facebook, Apple)</li>
+          <li>Native iOS/Android builds (Flutter cross-platform only)</li>
+          <li>Load balancing or horizontal scaling infrastructure</li>
+          <li>CI/CD pipeline configuration</li>
+          <li>Automated integration or end-to-end testing suites</li>
+        </ul>
+      </section>
+
+      <!-- ============================================================
+           SECTION 06 — TARGET USERS
+           ============================================================ -->
+      <section class="doc-section" id="sec-users">
+        <h2>06 — Target Users</h2>
+        <p>The system defines three primary roles, each with distinct access levels and capabilities:</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Role</th><th>Access Level</th><th>Capabilities</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Guest</strong></td>
+                <td>Public (unauthenticated)</td>
+                <td>Browse listings, view listing details, view categories, search and filter, view map markers</td>
+              </tr>
+              <tr>
+                <td><strong>User</strong></td>
+                <td>Authenticated (JWT + role: User)</td>
+                <td>All Guest capabilities, plus: create/edit/delete own listings, send rental requests, accept/reject incoming requests, rate owners after completed rentals, edit profile, change password</td>
+              </tr>
+              <tr>
+                <td><strong>Admin</strong></td>
+                <td>Authenticated (JWT + role: Admin)</td>
+                <td>View dashboard statistics, approve/deactivate/delete any listing, block/unblock/delete users, create/edit/delete categories, view/delete all rental requests</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>User Personas</h3>
+        <ul>
+          <li><strong>Equipment Owner (User):</strong> An individual or business that owns equipment (tools, vehicles, electronics) and wants to generate income by renting it out. They create listings, manage availability, and respond to rental requests.</li>
+          <li><strong>Renter (User):</strong> A person who needs equipment temporarily — for a project, event, or short-term use. They search for equipment, compare options, and submit rental requests with OTP verification.</li>
+          <li><strong>Platform Administrator (Admin):</strong> A trusted operator who ensures marketplace quality by reviewing listings, managing user accounts, and maintaining categories.</li>
+        </ul>
+      </section>
+
+      <!-- ============================================================
+           SECTION 07 — FUNCTIONAL REQUIREMENTS
+           ============================================================ -->
+      <section class="doc-section" id="sec-func">
+        <h2>07 — Functional Requirements</h2>
+
+        <h3>FR-01: User Registration and Authentication</h3>
+        <ul>
+          <li>The system shall allow users to register using a phone number, first name, last name, email address, and password.</li>
+          <li>The system shall send an OTP to the provided phone number before completing registration.</li>
+          <li>The system shall hash passwords using BCrypt before storage.</li>
+          <li>The system shall issue a JWT access token (60-minute expiry) and a refresh token (7-day expiry) upon successful login.</li>
+          <li>The system shall support admin login via username and password with a separate 120-minute JWT (no refresh token).</li>
+          <li>The system shall provide a forgot-password flow using OTP verification.</li>
+        </ul>
+
+        <h3>FR-02: Equipment Listing Management</h3>
+        <ul>
+          <li>Authenticated users shall be able to create listings with title, description, category, location (address + latitude/longitude), rental unit, pricing, and images.</li>
+          <li>The system shall accept five rental units: <code>hour</code>, <code>day</code>, <code>week</code>, <code>month</code>, <code>year</code>.</li>
+          <li>The system shall accept up to 6 images per listing (5MB max, .jpg/.jpeg/.png/.gif/.webp).</li>
+          <li>New listings shall enter <code>Pending</code> status and require admin approval before becoming visible.</li>
+          <li>Owners shall be able to activate/deactivate their own listings.</li>
+          <li>Editing a listing shall revert its status to <code>Pending</code> for re-review.</li>
+        </ul>
+
+        <h3>FR-03: Search and Discovery</h3>
+        <ul>
+          <li>The system shall support text search across listing title, description, location address, and owner name (case-insensitive).</li>
+          <li>The system shall support filtering by category, price range, rental unit, and duration range.</li>
+          <li>The system shall support geographic viewport filtering via map bounds (west/south/east/north).</li>
+          <li>The system shall return paginated results with a maximum of 50 items per page.</li>
+        </ul>
+
+        <h3>FR-04: Rental Request Lifecycle</h3>
+        <ul>
+          <li>Authenticated users shall be able to send a rental request for a listing with date range and time range.</li>
+          <li>The system shall require OTP verification before creating a rental request.</li>
+          <li>The system shall detect and prevent overlapping rental requests for the same listing.</li>
+          <li>The listing owner shall be able to accept or reject incoming requests.</li>
+          <li>The renter shall be able to cancel their own request.</li>
+        </ul>
+
+        <h3>FR-05: Rating System</h3>
+        <ul>
+          <li>After an accepted rental, the renter shall be able to submit a 1–5 star rating for the owner.</li>
+          <li>The system shall enforce one rating per rental request (unique constraint).</li>
+          <li>The system shall recalculate the owner's average rating upon each new rating submission.</li>
+        </ul>
+
+        <h3>FR-06: Admin Operations</h3>
+        <ul>
+          <li>The admin shall be able to view aggregate dashboard statistics (total users, listings, active listings, pending listings, categories, requests, pending requests).</li>
+          <li>The admin shall be able to approve or deactivate any listing.</li>
+          <li>The admin shall be able to block/unblock or delete any user.</li>
+          <li>The admin shall be able to create, update, and delete categories (with bilingual names).</li>
+          <li>The admin shall be able to view and delete any rental request.</li>
+        </ul>
+
+        <h3>FR-07: Internationalization</h3>
+        <ul>
+          <li>The system shall default to Arabic (RTL) and support switching to English (LTR).</li>
+          <li>The web application shall provide 214 translation keys; the mobile application shall provide 130+ translation keys.</li>
+          <li>The system shall persist the user's language preference in localStorage (web) or SharedPreferences (mobile).</li>
+        </ul>
+      </section>
+
+      <!-- ============================================================
+           SECTION 08 — NON-FUNCTIONAL REQUIREMENTS
+           ============================================================ -->
+      <section class="doc-section" id="sec-nonfunc">
+        <h2>08 — Non-Functional Requirements</h2>
+
+        <h3>NFR-01: Security</h3>
+        <ul>
+          <li>Passwords shall be hashed using BCrypt with auto-generated salt.</li>
+          <li>The system shall implement timing-attack mitigation by running BCrypt even for unknown phone numbers.</li>
+          <li>JWT tokens shall use HMAC-SHA256 signing with a configurable secret key.</li>
+          <li>Refresh tokens shall be stored as SHA-256 hashes with a unique index.</li>
+          <li>The system shall enforce rate limiting: 10 requests/minute on auth endpoints, 5 requests/minute on OTP endpoints.</li>
+          <li>File uploads shall be validated against extension whitelist, Content-Type, and magic bytes.</li>
+          <li>The system shall set security headers: <code>X-Content-Type-Options: nosniff</code>, <code>X-Frame-Options: DENY</code>, <code>Referrer-Policy: no-referrer</code>.</li>
+        </ul>
+
+        <h3>NFR-02: Performance</h3>
+        <ul>
+          <li>The web application shall be built with Vite for fast development and optimized production builds.</li>
+          <li>All pages shall be lazy-loaded via <code>React.lazy()</code> and <code>Suspense</code>.</li>
+          <li>The API shall use Entity Framework Core with compiled queries for hot paths.</li>
+          <li>Images shall be served as static files from <code>wwwroot/uploads/</code>.</li>
+        </ul>
+
+        <h3>NFR-03: Reliability</h3>
+        <ul>
+          <li>All business logic shall return <code>ServiceResult</code> instead of throwing exceptions.</li>
+          <li>Global exception handling shall convert exceptions to RFC 7807 ProblemDetails responses.</li>
+          <li>The database shall use foreign key constraints with appropriate delete behaviors (Cascade, Restrict).</li>
+        </ul>
+
+        <h3>NFR-04: Usability</h3>
+        <ul>
+          <li>The interface shall support full Arabic/English bilingual display with RTL/LTR layout switching.</li>
+          <li>The design shall follow a consistent visual language with the Inter font family (English) and Cairo (Arabic).</li>
+          <li>The web shall use a glassmorphism-based design system; the mobile shall use Material 3 with custom theming.</li>
+        </ul>
+
+        <h3>NFR-05: Maintainability</h3>
+        <ul>
+          <li>The backend shall follow Clean Architecture with four layers: Domain, Data, Service, Api.</li>
+          <li>The system shall use the Repository + Unit of Work pattern for data access.</li>
+          <li>All services shall be registered via Dependency Injection (Scoped for most, Singleton for OTP and AdminAuth).</li>
+        </ul>
+      </section>
+
+      <!-- ============================================================
+           SECTION 09 — SYSTEM MODULES
+           ============================================================ -->
+      <section class="doc-section" id="sec-modules">
+        <h2>09 — System Modules</h2>
+        <p>The Equipify system is organized into seven functional modules, each implemented across the backend, web, and mobile platforms:</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Module</th><th>Description</th><th>Backend Services</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Auth</strong></td>
+                <td>Phone-based registration with OTP, JWT + Refresh tokens, admin login</td>
+                <td>UserService, OtpService, AdminAuthService, TokenService</td>
+              </tr>
+              <tr>
+                <td><strong>Listings</strong></td>
+                <td>CRUD with image upload, admin approval workflow, map search</td>
+                <td>ListingService, FileStorageService</td>
+              </tr>
+              <tr>
+                <td><strong>Categories</strong></td>
+                <td>Admin-managed with bilingual names (Name, NameAr)</td>
+                <td>CategoryService</td>
+              </tr>
+              <tr>
+                <td><strong>Rental Requests</strong></td>
+                <td>Booking flow with OTP verification, accept/reject, overlap detection</td>
+                <td>RentalRequestService, OtpService</td>
+              </tr>
+              <tr>
+                <td><strong>Ratings</strong></td>
+                <td>1–5 star ratings on completed rentals, owner average recalculation</td>
+                <td>RatingService</td>
+              </tr>
+              <tr>
+                <td><strong>Admin Dashboard</strong></td>
+                <td>Aggregate stats, content moderation, user/category management</td>
+                <td>DashboardService</td>
+              </tr>
+              <tr>
+                <td><strong>i18n</strong></td>
+                <td>Full Arabic/English support with RTL layout switching</td>
+                <td>N/A (client-side)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SECTION 10 — SYSTEM ARCHITECTURE
+           ============================================================ -->
+      <section class="doc-section" id="sec-arch">
+        <h2>10 — System Architecture</h2>
+        <p>Equipify follows a three-tier architecture with clear separation between presentation, business logic, and data storage layers:</p>
+
+        <div class="svg-diagram">
+          <div class="diagram-header">
+            <span>System Architecture</span>
+            <span class="diagram-tag">Figure 1</span>
+          </div>
+          <div class="diagram-body">
+            <svg viewBox="0 0 720 340" xmlns="http://www.w3.org/2000/svg">
+              <!-- Client Layer -->
+              <rect x="20" y="30" width="200" height="120" rx="10" fill="#EBF3FC" stroke="#0B5CAD" stroke-width="1.5"/>
+              <text x="120" y="52" text-anchor="middle" font-size="11" font-weight="700" fill="#0B5CAD">CLIENT LAYER</text>
+              <!-- React -->
+              <rect x="40" y="64" width="160" height="36" rx="6" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+              <text x="120" y="80" text-anchor="middle" font-size="11" font-weight="600" fill="#1F2937">React.js Web App</text>
+              <text x="120" y="93" text-anchor="middle" font-size="9" fill="#9CA3AF">Port 5173</text>
+              <!-- Flutter -->
+              <rect x="40" y="108" width="160" height="36" rx="6" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+              <text x="120" y="124" text-anchor="middle" font-size="11" font-weight="600" fill="#1F2937">Flutter Mobile App</text>
+              <text x="120" y="137" text-anchor="middle" font-size="9" fill="#9CA3AF">Android / iOS</text>
+
+              <!-- API Layer -->
+              <rect x="260" y="30" width="200" height="120" rx="10" fill="#EBF3FC" stroke="#0B5CAD" stroke-width="1.5"/>
+              <text x="360" y="52" text-anchor="middle" font-size="11" font-weight="700" fill="#0B5CAD">API LAYER</text>
+              <rect x="280" y="64" width="160" height="72" rx="6" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+              <text x="360" y="88" text-anchor="middle" font-size="11" font-weight="600" fill="#1F2937">ASP.NET Core</text>
+              <text x="360" y="102" text-anchor="middle" font-size="11" font-weight="600" fill="#1F2937">Web API</text>
+              <text x="360" y="118" text-anchor="middle" font-size="9" fill="#9CA3AF">Port 5000</text>
+
+              <!-- Data Layer -->
+              <rect x="500" y="30" width="200" height="120" rx="10" fill="#EBF3FC" stroke="#0B5CAD" stroke-width="1.5"/>
+              <text x="600" y="52" text-anchor="middle" font-size="11" font-weight="700" fill="#0B5CAD">DATA LAYER</text>
+              <!-- SQL Server -->
+              <rect x="520" y="64" width="160" height="36" rx="6" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+              <text x="600" y="80" text-anchor="middle" font-size="11" font-weight="600" fill="#1F2937">SQL Server 2022</text>
+              <text x="600" y="93" text-anchor="middle" font-size="9" fill="#9CA3AF">Port 1433</text>
+              <!-- File Storage -->
+              <rect x="520" y="108" width="160" height="36" rx="6" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+              <text x="600" y="124" text-anchor="middle" font-size="11" font-weight="600" fill="#1F2937">File Storage</text>
+              <text x="600" y="137" text-anchor="middle" font-size="9" fill="#9CA3AF">wwwroot/uploads</text>
+
+              <!-- Arrows: Client → API -->
+              <defs>
+                <marker id="ah1" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#0B5CAD"/></marker>
+                <marker id="ah2" markerWidth="8" markerHeight="6" refX="0" refY="3" orient="auto"><polygon points="8 0, 0 3, 8 6" fill="#0B5CAD"/></marker>
+              </defs>
+              <!-- React → API -->
+              <line x1="200" y1="82" x2="278" y2="82" stroke="#0B5CAD" stroke-width="1.5" marker-end="url(#ah1)"/>
+              <text x="239" y="76" text-anchor="middle" font-size="8" fill="#6B7280">HTTP/REST</text>
+              <!-- Flutter → API -->
+              <line x1="200" y1="126" x2="278" y2="126" stroke="#0B5CAD" stroke-width="1.5" marker-end="url(#ah1)"/>
+              <text x="239" y="142" text-anchor="middle" font-size="8" fill="#6B7280">HTTP/REST</text>
+              <!-- API → SQL -->
+              <line x1="440" y1="82" x2="518" y2="82" stroke="#0B5CAD" stroke-width="1.5" marker-end="url(#ah1)"/>
+              <text x="479" y="76" text-anchor="middle" font-size="8" fill="#6B7280">EF Core</text>
+              <!-- API → Files (dashed) -->
+              <line x1="440" y1="126" x2="518" y2="126" stroke="#0B5CAD" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#ah1)"/>
+              <text x="479" y="142" text-anchor="middle" font-size="8" fill="#6B7280">File I/O</text>
+
+              <!-- Title -->
+              <text x="360" y="200" text-anchor="middle" font-size="13" font-weight="700" fill="#1F2937">Three-Tier Architecture — Equipify</text>
+              <text x="360" y="218" text-anchor="middle" font-size="10" fill="#9CA3AF">Equipment Rental Marketplace Platform</text>
+
+              <!-- Color Legend -->
+              <rect x="180" y="250" width="12" height="12" rx="2" fill="#EBF3FC" stroke="#0B5CAD" stroke-width="1"/>
+              <text x="198" y="260" font-size="10" fill="#6B7280">Layer Boundary</text>
+              <rect x="310" y="250" width="12" height="12" rx="2" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+              <text x="328" y="260" font-size="10" fill="#6B7280">Component</text>
+              <line x1="430" y1="256" x2="460" y2="256" stroke="#0B5CAD" stroke-width="1.5" marker-end="url(#ah1)"/>
+              <text x="468" y="260" font-size="10" fill="#6B7280">Sync</text>
+              <line x1="510" y1="256" x2="540" y2="256" stroke="#0B5CAD" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#ah1)"/>
+              <text x="548" y="260" font-size="10" fill="#6B7280">Async</text>
+            </svg>
+          </div>
+          <div class="diagram-caption">Figure 1: Three-Tier System Architecture — Equipify</div>
+        </div>
+
+        <h3>Client Layer</h3>
+        <p>The client layer consists of two independent applications that communicate with the backend via HTTP/REST:</p>
+        <ul>
+          <li><strong>React Web App</strong> (port 5173): A single-page application built with React 19, TypeScript 6, and Vite 8. Uses Leaflet for interactive maps and React Context for state management.</li>
+          <li><strong>Flutter Mobile App</strong> (Android/iOS): A cross-platform mobile application built with Flutter 3.38 and Dart 3.9. Uses flutter_map for maps and the Provider package for state management.</li>
+        </ul>
+
+        <h3>API Layer</h3>
+        <p>The backend is an ASP.NET Core 8.0 Web API running on Kestrel (port 5000). It exposes 48 RESTful endpoints organized across 6 controllers and implements JWT authentication, rate limiting, and global exception handling.</p>
+
+        <h3>Data Layer</h3>
+        <p>The data layer consists of SQL Server 2022 (running in Docker container <code>equipify-sql</code> on port 1433) and a local file system for uploaded images under <code>wwwroot/uploads/</code>.</p>
+      </section>
+
+      <!-- ============================================================
+           SECTION 11 — BACKEND ARCHITECTURE
+           ============================================================ -->
+      <section class="doc-section" id="sec-backend">
+        <h2>11 — Backend Architecture</h2>
+        <p>The backend follows Clean Architecture with four distinct layers, each with well-defined responsibilities and dependency directions:</p>
+
+        <div class="svg-diagram">
+          <div class="diagram-header">
+            <span>Backend Layer Structure</span>
+            <span class="diagram-tag">Figure 2</span>
+          </div>
+          <div class="diagram-body">
+            <svg viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="arr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#0B5CAD"/></marker>
+              </defs>
+              <!-- Api Layer -->
+              <rect x="20" y="20" width="150" height="200" rx="10" fill="#0B5CAD" opacity="0.08" stroke="#0B5CAD" stroke-width="1.5"/>
+              <text x="95" y="42" text-anchor="middle" font-size="10" font-weight="700" fill="#0B5CAD">API LAYER</text>
+              <rect x="35" y="52" width="120" height="30" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+              <text x="95" y="71" text-anchor="middle" font-size="10" font-weight="500" fill="#1F2937">Controllers (6)</text>
+              <rect x="35" y="90" width="120" height="30" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+              <text x="95" y="109" text-anchor="middle" font-size="10" font-weight="500" fill="#1F2937">Swagger, JWT</text>
+              <rect x="35" y="128" width="120" height="30" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+              <text x="95" y="147" text-anchor="middle" font-size="10" font-weight="500" fill="#1F2937">Middleware</text>
+              <rect x="35" y="166" width="120" height="30" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+              <text x="95" y="185" text-anchor="middle" font-size="10" font-weight="500" fill="#1F2937">FileStorageService</text>
+              <text x="95" y="214" text-anchor="middle" font-size="9" fill="#9CA3AF">56 .cs files total</text>
+
+              <!-- Arrow -->
+              <line x1="170" y1="120" x2="210" y2="120" stroke="#0B5CAD" stroke-width="1.5" marker-end="url(#arr)"/>
+
+              <!-- Service Layer -->
+              <rect x="215" y="20" width="150" height="200" rx="10" fill="#2F80ED" opacity="0.08" stroke="#2F80ED" stroke-width="1.5"/>
+              <text x="290" y="42" text-anchor="middle" font-size="10" font-weight="700" fill="#2F80ED">SERVICE LAYER</text>
+              <rect x="230" y="52" width="120" height="30" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+              <text x="290" y="71" text-anchor="middle" font-size="10" font-weight="500" fill="#1F2937">Services (9)</text>
+              <rect x="230" y="90" width="120" height="30" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+              <text x="290" y="109" text-anchor="middle" font-size="10" font-weight="500" fill="#1F2937">Interfaces (9)</text>
+              <rect x="230" y="128" width="120" height="30" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+              <text x="290" y="147" text-anchor="middle" font-size="10" font-weight="500" fill="#1F2937">DTOs, Settings</text>
+              <rect x="230" y="166" width="120" height="30" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+              <text x="290" y="185" text-anchor="middle" font-size="10" font-weight="500" fill="#1F2937">ServiceResult</text>
+
+              <!-- Arrow -->
+              <line x1="365" y1="120" x2="405" y2="120" stroke="#2F80ED" stroke-width="1.5" marker-end="url(#arr)"/>
+
+              <!-- Data Layer -->
+              <rect x="410" y="20" width="150" height="200" rx="10" fill="#0D9488" opacity="0.08" stroke="#0D9488" stroke-width="1.5"/>
+              <text x="485" y="42" text-anchor="middle" font-size="10" font-weight="700" fill="#0D9488">DATA LAYER</text>
+              <rect x="425" y="52" width="120" height="30" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+              <text x="485" y="71" text-anchor="middle" font-size="10" font-weight="500" fill="#1F2937">DbContext</text>
+              <rect x="425" y="90" width="120" height="30" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+              <text x="485" y="109" text-anchor="middle" font-size="10" font-weight="500" fill="#1F2937">Repository (4)</text>
+              <rect x="425" y="128" width="120" height="30" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+              <text x="485" y="147" text-anchor="middle" font-size="10" font-weight="500" fill="#1F2937">Configs (7)</text>
+              <rect x="425" y="166" width="120" height="30" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+              <text x="485" y="185" text-anchor="middle" font-size="10" font-weight="500" fill="#1F2937">DbSeeder</text>
+
+              <!-- Arrow -->
+              <line x1="560" y1="120" x2="590" y2="120" stroke="#0D9488" stroke-width="1.5" marker-end="url(#arr)"/>
+
+              <!-- Domain Layer -->
+              <rect x="595" y="20" width="90" height="200" rx="10" fill="#083B66" opacity="0.08" stroke="#083B66" stroke-width="1.5"/>
+              <text x="640" y="42" text-anchor="middle" font-size="10" font-weight="700" fill="#083B66">DOMAIN</text>
+              <rect x="605" y="52" width="70" height="30" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+              <text x="640" y="71" text-anchor="middle" font-size="10" font-weight="500" fill="#1F2937">Entities</text>
+              <text x="640" y="86" text-anchor="middle" font-size="8" fill="#9CA3AF">(7)</text>
+              <rect x="605" y="100" width="70" height="30" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+              <text x="640" y="119" text-anchor="middle" font-size="10" font-weight="500" fill="#1F2937">Enums</text>
+              <text x="640" y="134" text-anchor="middle" font-size="8" fill="#9CA3AF">(3)</text>
+
+              <!-- Dependency label -->
+              <text x="350" y="250" text-anchor="middle" font-size="10" fill="#6B7280">Dependencies point inward → Domain has zero dependencies</text>
+            </svg>
+          </div>
+          <div class="diagram-caption">Figure 2: Backend Clean Architecture — Dependency Graph</div>
+        </div>
+
+        <h3>Project Breakdown</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Project</th><th>Layer</th><th>Contents</th><th>Dependencies</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>Equipify.Api</code></td>
+                <td>API</td>
+                <td>6 Controllers, Swagger, JWT, Rate Limiting, Exception Middleware, FileStorageService</td>
+                <td>Service</td>
+              </tr>
+              <tr>
+                <td><code>Equipify.Service</code></td>
+                <td>Business Logic</td>
+                <td>9 Services (with interfaces), DTOs, Settings, ServiceResult pattern</td>
+                <td>Data</td>
+              </tr>
+              <tr>
+                <td><code>Equipify.Data</code></td>
+                <td>Data Access</td>
+                <td>DbContext, Generic Repository, Unit of Work, 7 EF Configurations, DbSeeder</td>
+                <td>Domain</td>
+              </tr>
+              <tr>
+                <td><code>Equipify.Domain</code></td>
+                <td>Domain</td>
+                <td>7 Entities (User, Listing, Category, ListingImage, RefreshToken, RentalRequest, UserRating), 3 Enums</td>
+                <td>None</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Service Layer Details</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Service</th><th>Lines</th><th>Responsibility</th><th>Registration</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>UserService</td><td>226</td><td>User CRUD, authentication, search, admin operations</td><td>Scoped</td></tr>
+              <tr><td>ListingService</td><td>282</td><td>Listing CRUD, browse with filters, moderation</td><td>Scoped</td></tr>
+              <tr><td>RentalRequestService</td><td>150</td><td>Booking lifecycle, OTP verification, overlap detection</td><td>Scoped</td></tr>
+              <tr><td>RatingService</td><td>80</td><td>Rating submission, average recalculation, reviews</td><td>Scoped</td></tr>
+              <tr><td>CategoryService</td><td>60</td><td>Category CRUD with listing existence check</td><td>Scoped</td></tr>
+              <tr><td>DashboardService</td><td>24</td><td>Aggregate statistics</td><td>Scoped</td></tr>
+              <tr><td>EmailService</td><td>74</td><td>SMTP email (disabled in dev, logs instead)</td><td>Scoped</td></tr>
+              <tr><td>OtpService</td><td>88</td><td>OTP generation, verification, in-memory store</td><td>Singleton</td></tr>
+              <tr><td>AdminAuthService</td><td>26</td><td>Admin credential validation</td><td>Singleton</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Middleware Pipeline</h3>
+        <ol>
+          <li>Serilog (console + rolling file)</li>
+          <li>Data Layer registration (SQL Server + DI)</li>
+          <li>Service Layer registration (all services + settings)</li>
+          <li>JWT Authentication (HMAC-SHA256, 30s clock skew)</li>
+          <li>CORS (localhost:5173)</li>
+          <li>Rate Limiting (auth: 10/min, otp: 5/min)</li>
+          <li>Controllers (JSON enum converter, ignore nulls)</li>
+          <li>Swagger (always enabled, JWT Bearer support)</li>
+          <li>Database Seed (migrations + seed data on startup)</li>
+          <li>Security Headers (nosniff, DENY frame, no-referrer)</li>
+          <li>Static Files (wwwroot)</li>
+        </ol>
+      </section>
+
+      <!-- ============================================================
+           SECTION 12 — REACT ARCHITECTURE
+           ============================================================ -->
+      <section class="doc-section" id="sec-react">
+        <h2>12 — React Architecture</h2>
+
+        <h3>Technology Stack</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Technology</th><th>Version</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>React</td><td>19.2.8</td></tr>
+              <tr><td>TypeScript</td><td>6.0.2</td></tr>
+              <tr><td>Vite</td><td>8.2.0</td></tr>
+              <tr><td>react-router-dom</td><td>7.18.2</td></tr>
+              <tr><td>Leaflet / react-leaflet</td><td>1.9.4 / 5.0.0</td></tr>
+              <tr><td>oxlint</td><td>1.75.0</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Provider Hierarchy</h3>
+        <div class="svg-diagram">
+          <div class="diagram-header">
+            <span>React Provider Tree</span>
+            <span class="diagram-tag">Figure 3</span>
+          </div>
+          <div class="diagram-body">
+            <svg viewBox="0 0 500 420" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="ad3" markerWidth="8" markerHeight="6" refX="4" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#0B5CAD"/></marker>
+              </defs>
+              <!-- StrictMode -->
+              <rect x="160" y="10" width="180" height="36" rx="6" fill="#0B5CAD" stroke="none"/>
+              <text x="250" y="33" text-anchor="middle" font-size="11" font-weight="600" fill="#FFFFFF">React.StrictMode</text>
+              <line x1="250" y1="46" x2="250" y2="58" stroke="#0B5CAD" stroke-width="1.5" marker-end="url(#ad3)"/>
+
+              <!-- ThemeProvider -->
+              <rect x="160" y="60" width="180" height="36" rx="6" fill="#2F80ED" stroke="none"/>
+              <text x="250" y="83" text-anchor="middle" font-size="11" font-weight="600" fill="#FFFFFF">ThemeProvider</text>
+              <line x1="250" y1="96" x2="250" y2="108" stroke="#0B5CAD" stroke-width="1.5" marker-end="url(#ad3)"/>
+
+              <!-- I18nProvider -->
+              <rect x="160" y="110" width="180" height="36" rx="6" fill="#2F80ED" stroke="none"/>
+              <text x="250" y="133" text-anchor="middle" font-size="11" font-weight="600" fill="#FFFFFF">I18nProvider</text>
+              <line x1="250" y1="146" x2="250" y2="158" stroke="#0B5CAD" stroke-width="1.5" marker-end="url(#ad3)"/>
+
+              <!-- AuthProvider -->
+              <rect x="160" y="160" width="180" height="36" rx="6" fill="#0D9488" stroke="none"/>
+              <text x="250" y="183" text-anchor="middle" font-size="11" font-weight="600" fill="#FFFFFF">AuthProvider</text>
+              <line x1="250" y1="196" x2="250" y2="208" stroke="#0B5CAD" stroke-width="1.5" marker-end="url(#ad3)"/>
+
+              <!-- ToastProvider -->
+              <rect x="160" y="210" width="180" height="36" rx="6" fill="#D97706" stroke="none"/>
+              <text x="250" y="233" text-anchor="middle" font-size="11" font-weight="600" fill="#FFFFFF">ToastProvider</text>
+              <line x1="250" y1="246" x2="250" y2="258" stroke="#0B5CAD" stroke-width="1.5" marker-end="url(#ad3)"/>
+
+              <!-- App (Router) -->
+              <rect x="160" y="260" width="180" height="36" rx="6" fill="#083B66" stroke="none"/>
+              <text x="250" y="283" text-anchor="middle" font-size="11" font-weight="600" fill="#FFFFFF">App (Router)</text>
+              <line x1="250" y1="296" x2="250" y2="308" stroke="#0B5CAD" stroke-width="1.5" marker-end="url(#ad3)"/>
+
+              <!-- Layout -->
+              <rect x="120" y="310" width="260" height="90" rx="8" fill="#F5F8FC" stroke="#0B5CAD" stroke-width="1.5" stroke-dasharray="5,3"/>
+              <text x="250" y="330" text-anchor="middle" font-size="11" font-weight="600" fill="#0B5CAD">Layout</text>
+              <!-- Navbar -->
+              <rect x="135" y="338" width="70" height="24" rx="4" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+              <text x="170" y="354" text-anchor="middle" font-size="9" fill="#1F2937">Navbar</text>
+              <!-- Pages -->
+              <rect x="215" y="338" width="70" height="24" rx="4" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+              <text x="250" y="354" text-anchor="middle" font-size="9" fill="#1F2937">Pages</text>
+              <!-- Footer -->
+              <rect x="295" y="338" width="70" height="24" rx="4" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+              <text x="330" y="354" text-anchor="middle" font-size="9" fill="#1F2937">Footer</text>
+              <!-- Pages list -->
+              <text x="175" y="382" font-size="8" fill="#6B7280">Home, Browse, Auth,</text>
+              <text x="310" y="382" font-size="8" fill="#6B7280">Profile, Admin...</text>
+
+              <!-- Annotation -->
+              <text x="45" y="30" font-size="9" fill="#9CA3AF">Provider Hierarchy</text>
+              <text x="45" y="44" font-size="9" fill="#9CA3AF">(wraps entire app)</text>
+            </svg>
+          </div>
+          <div class="diagram-caption">Figure 3: React Provider Hierarchy and Component Tree</div>
+        </div>
+
+        <h3>State Management</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Context</th><th>State</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>AuthContext</td><td>user, isAdmin, ready, login(), adminLogin(), register(), logout()</td></tr>
+              <tr><td>I18nContext</td><td>lang, dir, setLang(), toggle(), t()</td></tr>
+              <tr><td>ThemeContext</td><td>theme, toggle()</td></tr>
+              <tr><td>ToastContext</td><td>toast(message, kind?)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Routes</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Path</th><th>Component</th><th>Auth</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>/</code></td><td>Home</td><td>Public</td></tr>
+              <tr><td><code>/browse</code></td><td>Browse</td><td>Public</td></tr>
+              <tr><td><code>/listings/:id</code></td><td>ListingDetails</td><td>Public</td></tr>
+              <tr><td><code>/login</code></td><td>Login</td><td>Public</td></tr>
+              <tr><td><code>/register</code></td><td>Register</td><td>Public</td></tr>
+              <tr><td><code>/profile</code></td><td>Profile</td><td>User</td></tr>
+              <tr><td><code>/my-listings</code></td><td>MyListings</td><td>User</td></tr>
+              <tr><td><code>/my-listings/new</code></td><td>ListingForm</td><td>User</td></tr>
+              <tr><td><code>/my-listings/:id/edit</code></td><td>ListingForm</td><td>User</td></tr>
+              <tr><td><code>/requests</code></td><td>MyRequests</td><td>User</td></tr>
+              <tr><td><code>/incoming</code></td><td>IncomingRequests</td><td>User</td></tr>
+              <tr><td><code>/faq</code></td><td>FAQ</td><td>Public</td></tr>
+              <tr><td><code>/terms</code></td><td>Terms</td><td>Public</td></tr>
+              <tr><td><code>/admin</code></td><td>AdminLayout</td><td>Admin</td></tr>
+              <tr><td><code>/admin/listings</code></td><td>AdminListings</td><td>Admin</td></tr>
+              <tr><td><code>/admin/users</code></td><td>AdminUsers</td><td>Admin</td></tr>
+              <tr><td><code>/admin/categories</code></td><td>AdminCategories</td><td>Admin</td></tr>
+              <tr><td><code>/admin/requests</code></td><td>AdminRequests</td><td>Admin</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>All pages are lazy-loaded via <code>React.lazy()</code> and <code>Suspense</code>.</p>
+
+        <h3>API Client</h3>
+        <p>The API client (<code>src/api/client.ts</code>) provides a fetch-based wrapper that auto-attaches JWT Bearer tokens, implements single-flight refresh on 401 responses, and supports both JSON and FormData payloads.</p>
+      </section>
+
+      <!-- ============================================================
+           SECTION 13 — FLUTTER ARCHITECTURE
+           ============================================================ -->
+      <section class="doc-section" id="sec-flutter">
+        <h2>13 — Flutter Architecture</h2>
+
+        <h3>Technology Stack</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Technology</th><th>Version</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Flutter</td><td>3.38.5</td></tr>
+              <tr><td>Dart SDK</td><td>^3.9.0</td></tr>
+              <tr><td>provider</td><td>6.1.2</td></tr>
+              <tr><td>dio</td><td>5.7.0</td></tr>
+              <tr><td>flutter_map</td><td>7.0.2</td></tr>
+              <tr><td>shared_preferences</td><td>2.3.3</td></tr>
+              <tr><td>image_picker</td><td>1.1.2</td></tr>
+              <tr><td>cached_network_image</td><td>3.4.1</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>State Management</h3>
+        <p>The Flutter application uses the Provider package with ChangeNotifier. Three providers manage application state: <code>AuthProvider</code>, <code>ThemeProvider</code>, and <code>LocaleProvider</code>.</p>
+
+        <h3>Core Layer</h3>
+        <ul>
+          <li><strong>ApiClient</strong> (Singleton): Dio-based HTTP client with auto-attach Bearer token, refresh-token rotation on 401 via Completer (single-flight), and multipart form support.</li>
+          <li><strong>Constants</strong>: API URL configuration — <code>http://10.0.2.2:5000</code> (Android emulator), <code>http://localhost:5000</code> (iOS/desktop). Overridable via <code>--dart-define=API_URL=...</code>.</li>
+          <li><strong>i18n</strong>: Custom <code>S</code> class with map-based dictionary, 130+ keys, Arabic (default) + English.</li>
+          <li><strong>Theme</strong>: Material 3 with <code>ColorScheme.fromSeed</code> using accent <code>#2563EB</code>, custom component themes.</li>
+        </ul>
+
+        <h3>Models (14 Classes)</h3>
+        <p>User, AuthSession, Category, ListingSummary, Listing, Owner, Paged&lt;T&gt;, MapMarker, OtpSent, RentalRequest, Renter, DashboardStats, Review.</p>
+
+        <h3>Services (5 Classes)</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Service</th><th>Methods</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>AuthService</td><td>register, sendOtp, login, adminLogin, forgotPassword, resetPassword, restore, me, updateProfile, changePassword, logout</td></tr>
+              <tr><td>CategoryService</td><td>all()</td></tr>
+              <tr><td>ListingService</td><td>browse, mapMarkers, details, mine, create, update, setStatus, delete, userReviews, listingReviews</td></tr>
+              <tr><td>RequestService</td><td>sendOtp, create, mine, incoming, accept, reject, cancel, rate</td></tr>
+              <tr><td>AdminService</td><td>dashboard, users, toggleUserStatus, deleteUser, listings, approveListing, deactivateListing, deleteListing, createCategory, updateCategory, deleteCategory, requests</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Screens (12 Screens)</h3>
+        <p>RootShell (bottom nav with IndexedStack), HomeScreen, BrowseScreen, ListingDetailsScreen, ListingFormScreen, MyListingsScreen, RequestsScreen, ProfileScreen, AdminHomeScreen, LoginScreen, RegisterScreen.</p>
+      </section>
+
+      <!-- ============================================================
+           SECTION 14 — DATABASE DESIGN
+           ============================================================ -->
+      <section class="doc-section" id="sec-database">
+        <h2>14 — Database Design</h2>
+        <p>The Equipify database is hosted on SQL Server 2022 (Docker container <code>equipify-sql</code>) and managed via Entity Framework Core 8.0. It consists of 7 tables with well-defined relationships and constraints.</p>
+
+        <h3>Tables</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Table</th><th>Primary Key</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Users</td><td>Id (INT, Identity)</td><td>Registered users with phone, email, password hash, status, and average rating</td></tr>
+              <tr><td>Categories</td><td>Id (INT, Identity)</td><td>Equipment categories with bilingual names (Name, NameAr)</td></tr>
+              <tr><td>Listings</td><td>Id (INT, Identity)</td><td>Equipment listings with pricing, location, and status</td></tr>
+              <tr><td>ListingImages</td><td>Id (INT, Identity)</td><td>Image references for listings</td></tr>
+              <tr><td>RefreshTokens</td><td>Id (INT, Identity)</td><td>JWT refresh tokens (SHA-256 hashed)</td></tr>
+              <tr><td>RentalRequests</td><td>Id (INT, Identity)</td><td>Booking requests with date/time ranges and OTP verification</td></tr>
+              <tr><td>UserRatings</td><td>Id (INT, Identity)</td><td>Rental ratings and reviews (1–5 stars)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Relationships</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Relationship</th><th>Cardinality</th><th>Delete Behavior</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>User → Listings</td><td>1:N</td><td>CASCADE</td></tr>
+              <tr><td>User → RentalRequests</td><td>1:N</td><td>RESTRICT</td></tr>
+              <tr><td>User → RefreshTokens</td><td>1:N</td><td>CASCADE</td></tr>
+              <tr><td>User → UserRatings (as Renter)</td><td>1:N</td><td>RESTRICT</td></tr>
+              <tr><td>User → UserRatings (as Owner)</td><td>1:N</td><td>RESTRICT</td></tr>
+              <tr><td>Category → Listings</td><td>1:N</td><td>RESTRICT</td></tr>
+              <tr><td>Listing → ListingImages</td><td>1:N</td><td>CASCADE</td></tr>
+              <tr><td>Listing → RentalRequests</td><td>1:N</td><td>CASCADE</td></tr>
+              <tr><td>Listing → UserRatings</td><td>1:N</td><td>RESTRICT</td></tr>
+              <tr><td>RentalRequest → UserRating</td><td>1:0..1</td><td>CASCADE</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Seed Data</h3>
+        <p>The <code>DbSeeder</code> runs on application startup and populates the database with:</p>
+        <ul>
+          <li><strong>9 Categories:</strong> Electronics, Computers, Services, Vehicles, Motorcycles, Video Games, Fitness Machines, Real Estate, Equipments — each with Arabic names</li>
+          <li><strong>3 Users:</strong> Mahmoud Sanazmi, Mohammad Ali, Khaled Ahmad — with BCrypt-hashed password "123456"</li>
+          <li><strong>4 Active Listings:</strong> Tilt Trailer, Canon EOS M50, Lenovo ThinkPad X1 Carbon, BMW M5 — with images</li>
+        </ul>
+      </section>
+
+      <!-- ============================================================
+           SECTION 15 — ER DIAGRAM
+           ============================================================ -->
+      <section class="doc-section" id="sec-er">
+        <h2>15 — ER Diagram</h2>
+        <p>The Entity-Relationship diagram below shows all database tables, their columns, primary keys, foreign keys, and relationships. Crow's foot notation is used for cardinality.</p>
+
+        <div class="svg-diagram">
+          <div class="diagram-header">
+            <span>Entity-Relationship Diagram</span>
+            <span class="diagram-tag">Figure 4</span>
+          </div>
+          <div class="diagram-body">
+            <svg viewBox="0 0 780 520" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="fk" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#0B5CAD"/></marker>
+                <marker id="pk" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><rect x="0" y="0" width="6" height="6" rx="1" fill="#0B5CAD"/></marker>
+              </defs>
+
+              <!-- Users -->
+              <rect x="30" y="20" width="170" height="200" rx="8" fill="#FFFFFF" stroke="#0B5CAD" stroke-width="1.5"/>
+              <rect x="30" y="20" width="170" height="28" rx="8" fill="#0B5CAD"/>
+              <rect x="30" y="36" width="170" height="12" fill="#0B5CAD"/>
+              <text x="115" y="40" text-anchor="middle" font-size="12" font-weight="700" fill="#FFFFFF">Users</text>
+              <text x="42" y="66" font-size="9" font-weight="700" fill="#0B5CAD">PK</text>
+              <text x="62" y="66" font-size="9" fill="#1F2937">Id: INT</text>
+              <text x="62" y="82" font-size="9" fill="#1F2937">FirstName: NVARCHAR(100)</text>
+              <text x="62" y="96" font-size="9" fill="#1F2937">LastName: NVARCHAR(100)</text>
+              <text x="62" y="110" font-size="9" fill="#1F2937">EmailAddress: NVARCHAR(200)</text>
+              <text x="62" y="124" font-size="9" fill="#9CA3AF">  UNIQUE</text>
+              <text x="62" y="138" font-size="9" fill="#1F2937">PhoneNumber: NVARCHAR(20)</text>
+              <text x="62" y="152" font-size="9" fill="#9CA3AF">  UNIQUE</text>
+              <text x="62" y="166" font-size="9" fill="#1F2937">PasswordHash: NVARCHAR(200)</text>
+              <text x="62" y="180" font-size="9" fill="#1F2937">Status: INT</text>
+              <text x="62" y="194" font-size="9" fill="#1F2937">Rating: FLOAT</text>
+              <text x="62" y="208" font-size="9" fill="#1F2937">CreatedAt: DATETIME</text>
+
+              <!-- Categories -->
+              <rect x="300" y="20" width="170" height="130" rx="8" fill="#FFFFFF" stroke="#0D9488" stroke-width="1.5"/>
+              <rect x="300" y="20" width="170" height="28" rx="8" fill="#0D9488"/>
+              <rect x="300" y="36" width="170" height="12" fill="#0D9488"/>
+              <text x="385" y="40" text-anchor="middle" font-size="12" font-weight="700" fill="#FFFFFF">Categories</text>
+              <text x="312" y="66" font-size="9" font-weight="700" fill="#0D9488">PK</text>
+              <text x="332" y="66" font-size="9" fill="#1F2937">Id: INT</text>
+              <text x="332" y="82" font-size="9" fill="#1F2937">Name: NVARCHAR(120)</text>
+              <text x="332" y="96" font-size="9" fill="#9CA3AF">  UNIQUE</text>
+              <text x="332" y="110" font-size="9" fill="#1F2937">NameAr: NVARCHAR(120)</text>
+              <text x="332" y="124" font-size="9" fill="#1F2937">Picture: NVARCHAR(300)</text>
+              <text x="332" y="138" font-size="9" fill="#1F2937">CreatedAt: DATETIME</text>
+
+              <!-- Listings -->
+              <rect x="300" y="200" width="180" height="300" rx="8" fill="#FFFFFF" stroke="#2F80ED" stroke-width="1.5"/>
+              <rect x="300" y="200" width="180" height="28" rx="8" fill="#2F80ED"/>
+              <rect x="300" y="216" width="180" height="12" fill="#2F80ED"/>
+              <text x="390" y="220" text-anchor="middle" font-size="12" font-weight="700" fill="#FFFFFF">Listings</text>
+              <text x="312" y="246" font-size="9" font-weight="700" fill="#2F80ED">PK</text>
+              <text x="332" y="246" font-size="9" fill="#1F2937">Id: INT</text>
+              <text x="312" y="260" font-size="9" fill="#D97706">FK</text>
+              <text x="332" y="260" font-size="9" fill="#1F2937">OwnerId: INT → Users</text>
+              <text x="332" y="274" font-size="9" fill="#1F2937">Title: NVARCHAR(200)</text>
+              <text x="332" y="288" font-size="9" fill="#1F2937">Description: NVARCHAR(MAX)</text>
+              <text x="332" y="302" font-size="9" fill="#1F2937">MainImage: NVARCHAR(300)</text>
+              <text x="312" y="316" font-size="9" fill="#D97706">FK</text>
+              <text x="332" y="316" font-size="9" fill="#1F2937">CategoryId: INT → Categories</text>
+              <text x="332" y="330" font-size="9" fill="#1F2937">LocationAddress: NVARCHAR(200)</text>
+              <text x="332" y="344" font-size="9" fill="#1F2937">RentalUnit: NVARCHAR(20)</text>
+              <text x="332" y="358" font-size="9" fill="#1F2937">CostPerHour/Day/Week/Month/Year</text>
+              <text x="332" y="372" font-size="9" fill="#1F2937">  DECIMAL(12,2)</text>
+              <text x="332" y="386" font-size="9" fill="#1F2937">MinRentalDays / MaxRentalDays</text>
+              <text x="332" y="400" font-size="9" fill="#1F2937">Latitude / Longitude: FLOAT</text>
+              <text x="332" y="414" font-size="9" fill="#1F2937">TotalRates: INT</text>
+              <text x="332" y="428" font-size="9" fill="#1F2937">Status: INT</text>
+              <text x="332" y="442" font-size="9" fill="#1F2937">CreatedAt: DATETIME</text>
+
+              <!-- ListingImages -->
+              <rect x="540" y="200" width="160" height="80" rx="8" fill="#FFFFFF" stroke="#D97706" stroke-width="1.5"/>
+              <rect x="540" y="200" width="160" height="28" rx="8" fill="#D97706"/>
+              <rect x="540" y="216" width="160" height="12" fill="#D97706"/>
+              <text x="620" y="220" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">ListingImages</text>
+              <text x="552" y="246" font-size="9" font-weight="700" fill="#D97706">PK</text>
+              <text x="572" y="246" font-size="9" fill="#1F2937">Id: INT</text>
+              <text x="552" y="260" font-size="9" fill="#D97706">FK</text>
+              <text x="572" y="260" font-size="9" fill="#1F2937">ListingId: INT</text>
+              <text x="572" y="274" font-size="9" fill="#1F2937">ImagePath: NVARCHAR(300)</text>
+
+              <!-- RentalRequests -->
+              <rect x="540" y="320" width="180" height="180" rx="8" fill="#FFFFFF" stroke="#EF4444" stroke-width="1.5"/>
+              <rect x="540" y="320" width="180" height="28" rx="8" fill="#EF4444"/>
+              <rect x="540" y="336" width="180" height="12" fill="#EF4444"/>
+              <text x="630" y="340" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">RentalRequests</text>
+              <text x="552" y="366" font-size="9" font-weight="700" fill="#EF4444">PK</text>
+              <text x="572" y="366" font-size="9" fill="#1F2937">Id: INT</text>
+              <text x="552" y="380" font-size="9" fill="#D97706">FK</text>
+              <text x="572" y="380" font-size="9" fill="#1F2937">ListingId: INT</text>
+              <text x="552" y="394" font-size="9" fill="#D97706">FK</text>
+              <text x="572" y="394" font-size="9" fill="#1F2937">UserId: INT</text>
+              <text x="572" y="408" font-size="9" fill="#1F2937">FromDate / ToDate: DATE</text>
+              <text x="572" y="422" font-size="9" fill="#1F2937">FromTime / ToTime: TIME</text>
+              <text x="572" y="436" font-size="9" fill="#1F2937">TotalCost: DECIMAL(12,2)</text>
+              <text x="572" y="450" font-size="9" fill="#1F2937">OtpVerified: BIT</text>
+              <text x="572" y="464" font-size="9" fill="#1F2937">Status: INT</text>
+              <text x="572" y="478" font-size="9" fill="#1F2937">CreatedAt: DATETIME</text>
+
+              <!-- UserRatings -->
+              <rect x="30" y="320" width="180" height="160" rx="8" fill="#FFFFFF" stroke="#8B5CF6" stroke-width="1.5"/>
+              <rect x="30" y="320" width="180" height="28" rx="8" fill="#8B5CF6"/>
+              <rect x="30" y="336" width="180" height="12" fill="#8B5CF6"/>
+              <text x="120" y="340" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">UserRatings</text>
+              <text x="42" y="366" font-size="9" font-weight="700" fill="#8B5CF6">PK</text>
+              <text x="62" y="366" font-size="9" fill="#1F2937">Id: INT</text>
+              <text x="42" y="380" font-size="9" fill="#D97706">FK</text>
+              <text x="62" y="380" font-size="9" fill="#1F2937">RenterId: INT</text>
+              <text x="42" y="394" font-size="9" fill="#D97706">FK</text>
+              <text x="62" y="394" font-size="9" fill="#1F2937">OwnerId: INT</text>
+              <text x="42" y="408" font-size="9" fill="#D97706">FK</text>
+              <text x="62" y="408" font-size="9" fill="#1F2937">ListingId: INT</text>
+              <text x="42" y="422" font-size="9" fill="#D97706">FK</text>
+              <text x="62" y="422" font-size="9" fill="#1F2937">RentalRequestId: INT</text>
+              <text x="62" y="436" font-size="8" fill="#9CA3AF">  UNIQUE</text>
+              <text x="62" y="450" font-size="9" fill="#1F2937">Rating: FLOAT (1-5)</text>
+              <text x="62" y="464" font-size="9" fill="#1F2937">CreatedAt: DATETIME</text>
+
+              <!-- RefreshTokens -->
+              <rect x="300" y="160" width="0" height="0" rx="8" fill="#FFFFFF" stroke="#6B7280" stroke-width="1"/>
+
+              <!-- Relationship Lines -->
+              <!-- Users → Listings (1:N CASCADE) -->
+              <line x1="200" y1="140" x2="300" y2="260" stroke="#0B5CAD" stroke-width="1.5" marker-end="url(#fk)"/>
+              <text x="230" y="190" font-size="8" fill="#0B5CAD" font-weight="600">1 : N</text>
+              <text x="218" y="200" font-size="7" fill="#6B7280">CASCADE</text>
+
+              <!-- Categories → Listings (1:N RESTRICT) -->
+              <line x1="385" y1="150" x2="385" y2="200" stroke="#0D9488" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#fk)"/>
+              <text x="395" y="178" font-size="8" fill="#0D9488" font-weight="600">1 : N</text>
+              <text x="395" y="188" font-size="7" fill="#6B7280">RESTRICT</text>
+
+              <!-- Listings → ListingImages (1:N CASCADE) -->
+              <line x1="480" y1="240" x2="540" y2="240" stroke="#D97706" stroke-width="1.5" marker-end="url(#fk)"/>
+              <text x="500" y="234" font-size="8" fill="#D97706" font-weight="600">1 : N</text>
+
+              <!-- Listings → RentalRequests (1:N CASCADE) -->
+              <line x1="480" y1="360" x2="540" y2="380" stroke="#EF4444" stroke-width="1.5" marker-end="url(#fk)"/>
+              <text x="498" y="364" font-size="8" fill="#EF4444" font-weight="600">1 : N</text>
+
+              <!-- Users → RentalRequests (1:N RESTRICT) -->
+              <line x1="200" y1="160" x2="540" y2="380" stroke="#6B7280" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#fk)"/>
+              <text x="360" y="290" font-size="8" fill="#6B7280">1 : N RESTRICT</text>
+
+              <!-- Users → UserRatings (1:N RESTRICT) -->
+              <line x1="120" y1="220" x2="120" y2="320" stroke="#8B5CF6" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#fk)"/>
+              <text x="128" y="275" font-size="8" fill="#8B5CF6" font-weight="600">1 : N</text>
+
+              <!-- Listings → UserRatings (1:N RESTRICT) -->
+              <line x1="300" y1="400" x2="210" y2="400" stroke="#8B5CF6" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#fk)"/>
+
+              <!-- RentalRequests → UserRatings (1:0..1 CASCADE) -->
+              <line x1="540" y1="430" x2="210" y2="430" stroke="#EF4444" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#fk)"/>
+              <text x="360" y="444" font-size="8" fill="#EF4444">1 : 0..1 CASCADE</text>
+            </svg>
+          </div>
+          <div class="diagram-legend">
+            <div class="legend-item"><div class="legend-swatch" style="background:#0B5CAD"></div> Users</div>
+            <div class="legend-item"><div class="legend-swatch" style="background:#0D9488"></div> Categories</div>
+            <div class="legend-item"><div class="legend-swatch" style="background:#2F80ED"></div> Listings</div>
+            <div class="legend-item"><div class="legend-swatch" style="background:#D97706"></div> ListingImages</div>
+            <div class="legend-item"><div class="legend-swatch" style="background:#EF4444"></div> RentalRequests</div>
+            <div class="legend-item"><div class="legend-swatch" style="background:#8B5CF6"></div> UserRatings</div>
+            <div class="legend-item"><span style="font-size:11px">——</span> CASCADE</div>
+            <div class="legend-item"><span style="font-size:11px">- - -</span> RESTRICT</div>
+          </div>
+          <div class="diagram-caption">Figure 4: Entity-Relationship Diagram — Equipify Database</div>
+        </div>
+
+        <h3>Key Constraints</h3>
+        <ul>
+          <li><strong>Users:</strong> Unique on <code>PhoneNumber</code>, Unique on <code>EmailAddress</code></li>
+          <li><strong>RefreshTokens:</strong> Unique on <code>TokenHash</code></li>
+          <li><strong>UserRatings:</strong> Unique on <code>RentalRequestId</code> (one rating per rental)</li>
+          <li><strong>Categories:</strong> Unique on <code>Name</code></li>
+          <li><strong>Listings:</strong> <code>Precision(12,2)</code> on CostPerHour, CostPerDay, CostPerWeek, CostPerMonth, CostPerYear</li>
+        </ul>
+
+        <h3>Enum Values in Database</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Column</th><th>Table</th><th>Values</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Status</td><td>Users</td><td>Active (0), Blocked (1)</td></tr>
+              <tr><td>Status</td><td>Listings</td><td>Pending (0), Active (1), Inactive (2)</td></tr>
+              <tr><td>Status</td><td>RentalRequests</td><td>Pending (0), Accepted (1), Rejected (2)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SECTION 16 — USE CASE DIAGRAM
+           ============================================================ -->
+      <section class="doc-section" id="sec-usecase">
+        <h2>16 — Use Case Diagram</h2>
+        <p>The Use Case diagram identifies three actors — Guest, User (including Owner), and Admin — and their respective interactions with the system.</p>
+
+        <div class="svg-diagram">
+          <div class="diagram-header">
+            <span>Use Case Diagram</span>
+            <span class="diagram-tag">Figure 5</span>
+          </div>
+          <div class="diagram-body">
+            <svg viewBox="0 0 760 440" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="uc1" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#0B5CAD"/></marker>
+              </defs>
+              <!-- System Boundary -->
+              <rect x="200" y="20" width="380" height="400" rx="10" fill="none" stroke="#0B5CAD" stroke-width="1.5" stroke-dasharray="8,4"/>
+              <text x="390" y="42" text-anchor="middle" font-size="12" font-weight="700" fill="#0B5CAD">Equipify System</text>
+
+              <!-- Actors — Left -->
+              <!-- Guest -->
+              <circle cx="80" cy="100" r="14" fill="none" stroke="#1F2937" stroke-width="1.5"/>
+              <line x1="80" y1="114" x2="80" y2="150" stroke="#1F2937" stroke-width="1.5"/>
+              <line x1="60" y1="130" x2="100" y2="130" stroke="#1F2937" stroke-width="1.5"/>
+              <line x1="80" y1="150" x2="60" y2="175" stroke="#1F2937" stroke-width="1.5"/>
+              <line x1="80" y1="150" x2="100" y2="175" stroke="#1F2937" stroke-width="1.5"/>
+              <text x="80" y="195" text-anchor="middle" font-size="10" font-weight="600" fill="#1F2937">Guest</text>
+
+              <!-- User -->
+              <circle cx="80" cy="250" r="14" fill="none" stroke="#0B5CAD" stroke-width="1.5"/>
+              <line x1="80" y1="264" x2="80" y2="300" stroke="#0B5CAD" stroke-width="1.5"/>
+              <line x1="60" y1="280" x2="100" y2="280" stroke="#0B5CAD" stroke-width="1.5"/>
+              <line x1="80" y1="300" x2="60" y2="325" stroke="#0B5CAD" stroke-width="1.5"/>
+              <line x1="80" y1="300" x2="100" y2="325" stroke="#0B5CAD" stroke-width="1.5"/>
+              <text x="80" y="345" text-anchor="middle" font-size="10" font-weight="600" fill="#0B5CAD">User</text>
+
+              <!-- Owner -->
+              <circle cx="80" cy="390" r="14" fill="none" stroke="#0D9488" stroke-width="1.5"/>
+              <line x1="80" y1="404" x2="80" y2="420" stroke="#0D9488" stroke-width="1.5"/>
+              <text x="80" y="435" text-anchor="middle" font-size="10" font-weight="600" fill="#0D9488">Owner</text>
+
+              <!-- Admin — Right -->
+              <circle cx="680" cy="160" r="14" fill="none" stroke="#EF4444" stroke-width="1.5"/>
+              <line x1="680" y1="174" x2="680" y2="210" stroke="#EF4444" stroke-width="1.5"/>
+              <line x1="660" y1="190" x2="700" y2="190" stroke="#EF4444" stroke-width="1.5"/>
+              <line x1="680" y1="210" x2="660" y2="235" stroke="#EF4444" stroke-width="1.5"/>
+              <line x1="680" y1="210" x2="700" y2="235" stroke="#EF4444" stroke-width="1.5"/>
+              <text x="680" y="255" text-anchor="middle" font-size="10" font-weight="600" fill="#EF4444">Admin</text>
+
+              <!-- Use Cases — Guest -->
+              <ellipse cx="310" cy="75" rx="85" ry="20" fill="#F5F8FC" stroke="#E2E8F0" stroke-width="1"/>
+              <text x="310" y="79" text-anchor="middle" font-size="9" fill="#1F2937">Browse Listings</text>
+              <ellipse cx="310" cy="120" rx="85" ry="20" fill="#F5F8FC" stroke="#E2E8F0" stroke-width="1"/>
+              <text x="310" y="124" text-anchor="middle" font-size="9" fill="#1F2937">Search Equipment</text>
+              <ellipse cx="310" cy="165" rx="85" ry="20" fill="#F5F8FC" stroke="#E2E8F0" stroke-width="1"/>
+              <text x="310" y="169" text-anchor="middle" font-size="9" fill="#1F2937">View Details</text>
+              <ellipse cx="310" cy="210" rx="85" ry="20" fill="#F5F8FC" stroke="#E2E8F0" stroke-width="1"/>
+              <text x="310" y="214" text-anchor="middle" font-size="9" fill="#1F2937">View Categories</text>
+              <ellipse cx="490" cy="75" rx="75" ry="20" fill="#EBF3FC" stroke="#0B5CAD" stroke-width="1"/>
+              <text x="490" y="79" text-anchor="middle" font-size="9" fill="#0B5CAD">Register</text>
+              <ellipse cx="490" cy="120" rx="75" ry="20" fill="#EBF3FC" stroke="#0B5CAD" stroke-width="1"/>
+              <text x="490" y="124" text-anchor="middle" font-size="9" fill="#0B5CAD">Login</text>
+
+              <!-- Use Cases — User -->
+              <ellipse cx="310" cy="260" rx="95" ry="20" fill="#EBF3FC" stroke="#0B5CAD" stroke-width="1"/>
+              <text x="310" y="264" text-anchor="middle" font-size="9" fill="#0B5CAD">Send Rental Request</text>
+              <ellipse cx="310" cy="305" rx="95" ry="20" fill="#EBF3FC" stroke="#0B5CAD" stroke-width="1"/>
+              <text x="310" y="309" text-anchor="middle" font-size="9" fill="#0B5CAD">Rate Owner (1-5)</text>
+              <ellipse cx="490" cy="260" rx="75" ry="20" fill="#EBF3FC" stroke="#0B5CAD" stroke-width="1"/>
+              <text x="490" y="264" text-anchor="middle" font-size="9" fill="#0B5CAD">Edit Profile</text>
+              <ellipse cx="490" cy="305" rx="75" ry="20" fill="#EBF3FC" stroke="#0B5CAD" stroke-width="1"/>
+              <text x="490" y="309" text-anchor="middle" font-size="9" fill="#0B5CAD">View Requests</text>
+
+              <!-- Use Cases — Owner -->
+              <ellipse cx="310" cy="355" rx="95" ry="20" fill="#F0FDFA" stroke="#0D9488" stroke-width="1"/>
+              <text x="310" y="359" text-anchor="middle" font-size="9" fill="#0D9488">Create / Edit Listing</text>
+              <ellipse cx="310" cy="400" rx="95" ry="20" fill="#F0FDFA" stroke="#0D9488" stroke-width="1"/>
+              <text x="310" y="404" text-anchor="middle" font-size="9" fill="#0D9488">Accept / Reject</text>
+              <ellipse cx="490" cy="355" rx="75" ry="20" fill="#F0FDFA" stroke="#0D9488" stroke-width="1"/>
+              <text x="490" y="359" text-anchor="middle" font-size="9" fill="#0D9488">View Incoming</text>
+
+              <!-- Use Cases — Admin -->
+              <ellipse cx="590" cy="120" rx="75" ry="20" fill="#FEF2F2" stroke="#EF4444" stroke-width="1"/>
+              <text x="590" y="124" text-anchor="middle" font-size="9" fill="#EF4444">Dashboard</text>
+              <ellipse cx="590" cy="170" rx="85" ry="20" fill="#FEF2F2" stroke="#EF4444" stroke-width="1"/>
+              <text x="590" y="174" text-anchor="middle" font-size="9" fill="#EF4444">Approve Listings</text>
+              <ellipse cx="590" cy="220" rx="85" ry="20" fill="#FEF2F2" stroke="#EF4444" stroke-width="1"/>
+              <text x="590" y="224" text-anchor="middle" font-size="9" fill="#EF4444">Manage Users</text>
+              <ellipse cx="590" cy="270" rx="85" ry="20" fill="#FEF2F2" stroke="#EF4444" stroke-width="1"/>
+              <text x="590" y="274" text-anchor="middle" font-size="9" fill="#EF4444">Manage Categories</text>
+
+              <!-- OTP include marker -->
+              <rect x="380" y="370" width="80" height="22" rx="4" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+              <text x="420" y="385" text-anchor="middle" font-size="8" fill="#D97706">«include» OTP</text>
+
+              <!-- Association Lines -->
+              <line x1="94" y1="100" x2="225" y2="75" stroke="#1F2937" stroke-width="1"/>
+              <line x1="94" y1="100" x2="225" y2="120" stroke="#1F2937" stroke-width="1"/>
+              <line x1="94" y1="100" x2="225" y2="165" stroke="#1F2937" stroke-width="1"/>
+              <line x1="94" y1="100" x2="225" y2="210" stroke="#1F2937" stroke-width="1"/>
+              <line x1="94" y1="100" x2="415" y2="75" stroke="#1F2937" stroke-width="1"/>
+              <line x1="94" y1="100" x2="415" y2="120" stroke="#1F2937" stroke-width="1"/>
+
+              <line x1="94" y1="250" x2="215" y2="260" stroke="#0B5CAD" stroke-width="1"/>
+              <line x1="94" y1="250" x2="215" y2="305" stroke="#0B5CAD" stroke-width="1"/>
+              <line x1="94" y1="250" x2="415" y2="260" stroke="#0B5CAD" stroke-width="1"/>
+              <line x1="94" y1="250" x2="415" y2="305" stroke="#0B5CAD" stroke-width="1"/>
+
+              <line x1="94" y1="390" x2="215" y2="355" stroke="#0D9488" stroke-width="1"/>
+              <line x1="94" y1="390" x2="215" y2="400" stroke="#0D9488" stroke-width="1"/>
+              <line x1="94" y1="390" x2="415" y2="355" stroke="#0D9488" stroke-width="1"/>
+
+              <line x1="666" y1="160" x2="515" y2="120" stroke="#EF4444" stroke-width="1"/>
+              <line x1="666" y1="160" x2="505" y2="170" stroke="#EF4444" stroke-width="1"/>
+              <line x1="666" y1="160" x2="505" y2="220" stroke="#EF4444" stroke-width="1"/>
+              <line x1="666" y1="160" x2="505" y2="270" stroke="#EF4444" stroke-width="1"/>
+
+              <!-- Generalization arrows (User → Guest, Owner → User) -->
+              <polygon points="80,185 74,195 86,195" fill="#0B5CAD"/>
+              <polygon points="80,335 74,345 86,345" fill="#0D9488"/>
+            </svg>
+          </div>
+          <div class="diagram-legend">
+            <div class="legend-item"><span style="font-size:11px">○</span> Actor</div>
+            <div class="legend-item"><span style="font-size:11px">⬭</span> Use Case</div>
+            <div class="legend-item"><span style="font-size:11px">△</span> Generalization</div>
+            <div class="legend-item"><span style="font-size:11px">—</span> Association</div>
+            <div class="legend-item"><span style="font-size:11px">▪</span> «include»</div>
+          </div>
+          <div class="diagram-caption">Figure 5: Use Case Diagram — Equipify</div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SECTION 17 — CLASS DIAGRAM
+           ============================================================ -->
+      <section class="doc-section" id="sec-class">
+        <h2>17 — Class Diagram</h2>
+        <p>The Class diagram shows the seven domain entity classes, their fields, computed properties, navigation properties, and relationships.</p>
+
+        <div class="svg-diagram">
+          <div class="diagram-header">
+            <span>Class Diagram — Domain Entities</span>
+            <span class="diagram-tag">Figure 6</span>
+          </div>
+          <div class="diagram-body">
+            <svg viewBox="0 0 780 360" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="cls1" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#0B5CAD"/></marker>
+                <marker id="cls2" markerWidth="12" markerHeight="8" refX="12" refY="4" orient="auto"><polygon points="0 0,12 4,0 8" fill="none" stroke="#0B5CAD" stroke-width="1"/></marker>
+              </defs>
+
+              <!-- User Class -->
+              <rect x="20" y="30" width="180" height="140" rx="6" fill="#FFFFFF" stroke="#0B5CAD" stroke-width="1.5"/>
+              <rect x="20" y="30" width="180" height="26" rx="6" fill="#0B5CAD"/>
+              <rect x="20" y="46" width="180" height="10" fill="#0B5CAD"/>
+              <text x="110" y="49" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">User</text>
+              <text x="30" y="72" font-size="8.5" fill="#1F2937">+Id: int</text>
+              <text x="30" y="84" font-size="8.5" fill="#1F2937">+FirstName: string</text>
+              <text x="30" y="96" font-size="8.5" fill="#1F2937">+LastName: string</text>
+              <text x="30" y="108" font-size="8.5" fill="#1F2937">+EmailAddress: string</text>
+              <text x="30" y="120" font-size="8.5" fill="#1F2937">+PhoneNumber: string</text>
+              <text x="30" y="132" font-size="8.5" fill="#1F2937">+Status: UserStatus</text>
+              <text x="30" y="144" font-size="8.5" fill="#1F2937">+Rating: double?</text>
+              <text x="30" y="156" font-size="8.5" fill="#6B7280">+FullName {get}</text>
+
+              <!-- Listing Class -->
+              <rect x="250" y="30" width="180" height="160" rx="6" fill="#FFFFFF" stroke="#2F80ED" stroke-width="1.5"/>
+              <rect x="250" y="30" width="180" height="26" rx="6" fill="#2F80ED"/>
+              <rect x="250" y="46" width="180" height="10" fill="#2F80ED"/>
+              <text x="340" y="49" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">Listing</text>
+              <text x="260" y="72" font-size="8.5" fill="#1F2937">+Id: int</text>
+              <text x="260" y="84" font-size="8.5" fill="#D97706">+OwnerId: int (FK)</text>
+              <text x="260" y="96" font-size="8.5" fill="#1F2937">+Title: string</text>
+              <text x="260" y="108" font-size="8.5" fill="#1F2937">+CategoryId: int (FK)</text>
+              <text x="260" y="120" font-size="8.5" fill="#1F2937">+RentalUnit: string</text>
+              <text x="260" y="132" font-size="8.5" fill="#1F2937">+CostPerDay: decimal</text>
+              <text x="260" y="144" font-size="8.5" fill="#1F2937">+Latitude/Longitude: double</text>
+              <text x="260" y="156" font-size="8.5" fill="#1F2937">+Status: ListingStatus</text>
+              <text x="260" y="168" font-size="8.5" fill="#1F2937">+TotalRates: int</text>
+              <text x="260" y="180" font-size="8.5" fill="#6B7280">+CreatedAt: DateTime</text>
+
+              <!-- Category Class -->
+              <rect x="490" y="30" width="160" height="110" rx="6" fill="#FFFFFF" stroke="#0D9488" stroke-width="1.5"/>
+              <rect x="490" y="30" width="160" height="26" rx="6" fill="#0D9488"/>
+              <rect x="490" y="46" width="160" height="10" fill="#0D9488"/>
+              <text x="570" y="49" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">Category</text>
+              <text x="500" y="72" font-size="8.5" fill="#1F2937">+Id: int</text>
+              <text x="500" y="84" font-size="8.5" fill="#1F2937">+Name: string</text>
+              <text x="500" y="96" font-size="8.5" fill="#1F2937">+NameAr: string?</text>
+              <text x="500" y="108" font-size="8.5" fill="#1F2937">+Picture: string?</text>
+              <text x="500" y="120" font-size="8.5" fill="#6B7280">+CreatedAt: DateTime</text>
+
+              <!-- RentalRequest Class -->
+              <rect x="20" y="230" width="200" height="120" rx="6" fill="#FFFFFF" stroke="#EF4444" stroke-width="1.5"/>
+              <rect x="20" y="230" width="200" height="26" rx="6" fill="#EF4444"/>
+              <rect x="20" y="246" width="200" height="10" fill="#EF4444"/>
+              <text x="120" y="249" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">RentalRequest</text>
+              <text x="30" y="272" font-size="8.5" fill="#1F2937">+Id: int</text>
+              <text x="30" y="284" font-size="8.5" fill="#D97706">+ListingId: int (FK)</text>
+              <text x="30" y="296" font-size="8.5" fill="#D97706">+UserId: int (FK)</text>
+              <text x="30" y="308" font-size="8.5" fill="#1F2937">+FromDate/ToDate: DateOnly</text>
+              <text x="30" y="320" font-size="8.5" fill="#1F2937">+TotalCost: decimal</text>
+              <text x="30" y="332" font-size="8.5" fill="#1F2937">+Status: RequestStatus</text>
+              <text x="30" y="344" font-size="8.5" fill="#1F2937">+OtpVerified: bool</text>
+
+              <!-- UserRating Class -->
+              <rect x="290" y="230" width="200" height="110" rx="6" fill="#FFFFFF" stroke="#8B5CF6" stroke-width="1.5"/>
+              <rect x="290" y="230" width="200" height="26" rx="6" fill="#8B5CF6"/>
+              <rect x="290" y="246" width="200" height="10" fill="#8B5CF6"/>
+              <text x="390" y="249" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">UserRating</text>
+              <text x="300" y="272" font-size="8.5" fill="#1F2937">+Id: int</text>
+              <text x="300" y="284" font-size="8.5" fill="#D97706">+RenterId: int (FK)</text>
+              <text x="300" y="296" font-size="8.5" fill="#D97706">+OwnerId: int (FK)</text>
+              <text x="300" y="308" font-size="8.5" fill="#D97706">+ListingId: int (FK)</text>
+              <text x="300" y="320" font-size="8.5" fill="#D97706">+RentalRequestId: int (FK)</text>
+              <text x="300" y="332" font-size="8.5" fill="#1F2937">+Rating: double (1-5)</text>
+
+              <!-- Relationship Lines -->
+              <!-- User 1──N Listing -->
+              <line x1="110" y1="170" x2="250" y2="110" stroke="#0B5CAD" stroke-width="1.2"/>
+              <text x="160" y="134" font-size="8" fill="#0B5CAD" font-weight="600">1</text>
+              <text x="228" y="104" font-size="8" fill="#0B5CAD" font-weight="600">N</text>
+
+              <!-- Category 1──N Listing -->
+              <line x1="490" y1="100" x2="430" y2="100" stroke="#0D9488" stroke-width="1.2" stroke-dasharray="4,3"/>
+              <text x="462" y="94" font-size="8" fill="#0D9488" font-weight="600">1 : N</text>
+
+              <!-- User 1──N RentalRequest -->
+              <line x1="110" y1="170" x2="110" y2="230" stroke="#EF4444" stroke-width="1.2"/>
+              <text x="116" y="204" font-size="8" fill="#EF4444" font-weight="600">1 : N</text>
+
+              <!-- Listing 1──N RentalRequest -->
+              <line x1="340" y1="190" x2="170" y2="230" stroke="#EF4444" stroke-width="1.2"/>
+              <text x="260" y="210" font-size="8" fill="#EF4444" font-weight="600">1 : N</text>
+
+              <!-- RentalRequest 1──0..1 UserRating -->
+              <line x1="220" y1="310" x2="290" y2="300" stroke="#8B5CF6" stroke-width="1.2"/>
+              <text x="248" y="300" font-size="8" fill="#8B5CF6" font-weight="600">1 : 0..1</text>
+
+              <!-- User 1──N UserRating (as Renter) -->
+              <line x1="200" y1="140" x2="300" y2="260" stroke="#8B5CF6" stroke-width="1" stroke-dasharray="4,3"/>
+              <text x="236" y="200" font-size="8" fill="#8B5CF6">1 : N (Renter)</text>
+
+              <!-- Annotation -->
+              <text x="550" y="200" font-size="9" fill="#6B7280">Solid line = Required</text>
+              <text x="550" y="214" font-size="9" fill="#6B7280">Dashed line = Optional</text>
+              <text x="550" y="230" font-size="9" fill="#6B7280">FK = Foreign Key</text>
+            </svg>
+          </div>
+          <div class="diagram-caption">Figure 6: Class Diagram — Domain Entities and Relationships</div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SECTION 18 — ACTIVITY DIAGRAMS
+           ============================================================ -->
+      <section class="doc-section" id="sec-activity">
+        <h2>18 — Activity Diagrams</h2>
+
+        <h3>18a: User Registration Flow</h3>
+        <div class="svg-diagram">
+          <div class="diagram-header">
+            <span>User Registration Activity</span>
+            <span class="diagram-tag">Figure 7</span>
+          </div>
+          <div class="diagram-body">
+            <svg viewBox="0 0 600 520" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="act1" markerWidth="8" markerHeight="6" refX="4" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#0B5CAD"/></marker>
+              </defs>
+              <!-- Start -->
+              <circle cx="300" cy="30" r="12" fill="#0B5CAD"/>
+              <line x1="300" y1="42" x2="300" y2="60" stroke="#0B5CAD" stroke-width="1.5" marker-end="url(#act1)"/>
+
+              <!-- Step 1 -->
+              <rect x="220" y="62" width="160" height="32" rx="16" fill="#EBF3FC" stroke="#0B5CAD" stroke-width="1"/>
+              <text x="300" y="82" text-anchor="middle" font-size="10" fill="#0B5CAD">Open Register Screen</text>
+              <line x1="300" y1="94" x2="300" y2="112" stroke="#0B5CAD" stroke-width="1.5" marker-end="url(#act1)"/>
+
+              <!-- Step 2 -->
+              <rect x="220" y="114" width="160" height="32" rx="16" fill="#EBF3FC" stroke="#0B5CAD" stroke-width="1"/>
+              <text x="300" y="134" text-anchor="middle" font-size="10" fill="#0B5CAD">Fill Phone Number</text>
+              <line x1="300" y1="146" x2="300" y2="164" stroke="#0B5CAD" stroke-width="1.5" marker-end="url(#act1)"/>
+
+              <!-- Step 3 -->
+              <rect x="220" y="166" width="160" height="32" rx="16" fill="#EBF3FC" stroke="#0B5CAD" stroke-width="1"/>
+              <text x="300" y="186" text-anchor="middle" font-size="10" fill="#0B5CAD">Tap "Send OTP"</text>
+              <line x1="300" y1="198" x2="300" y2="216" stroke="#0B5CAD" stroke-width="1.5" marker-end="url(#act1)"/>
+
+              <!-- Step 4 -->
+              <rect x="220" y="218" width="160" height="32" rx="16" fill="#EBF3FC" stroke="#0B5CAD" stroke-width="1"/>
+              <text x="300" y="238" text-anchor="middle" font-size="10" fill="#0B5CAD">Enter OTP Code</text>
+              <line x1="300" y1="250" x2="300" y2="268" stroke="#0B5CAD" stroke-width="1.5" marker-end="url(#act1)"/>
+
+              <!-- Decision: OTP Valid? -->
+              <polygon points="300,270 360,300 300,330 240,300" fill="#FFFBEB" stroke="#D97706" stroke-width="1.5"/>
+              <text x="300" y="297" text-anchor="middle" font-size="9" fill="#D97706">OTP Valid?</text>
+              <!-- No branch -->
+              <line x1="360" y1="300" x2="440" y2="300" stroke="#EF4444" stroke-width="1.2"/>
+              <text x="390" y="294" font-size="8" fill="#EF4444">No</text>
+              <rect x="442" y="286" width="100" height="28" rx="6" fill="#FEF2F2" stroke="#EF4444" stroke-width="1"/>
+              <text x="492" y="304" text-anchor="middle" font-size="9" fill="#EF4444">Show Error</text>
+              <!-- Yes branch -->
+              <line x1="300" y1="330" x2="300" y2="348" stroke="#0B5CAD" stroke-width="1.5" marker-end="url(#act1)"/>
+              <text x="310" y="340" font-size="8" fill="#0D9488">Yes</text>
+
+              <!-- Step 5 -->
+              <rect x="220" y="350" width="160" height="32" rx="16" fill="#EBF3FC" stroke="#0B5CAD" stroke-width="1"/>
+              <text x="300" y="370" text-anchor="middle" font-size="10" fill="#0B5CAD">Fill Name, Email, Password</text>
+              <line x1="300" y1="382" x2="300" y2="400" stroke="#0B5CAD" stroke-width="1.5" marker-end="url(#act1)"/>
+
+              <!-- Step 6 -->
+              <rect x="220" y="402" width="160" height="32" rx="16" fill="#EBF3FC" stroke="#0B5CAD" stroke-width="1"/>
+              <text x="300" y="422" text-anchor="middle" font-size="10" fill="#0B5CAD">Submit (BCrypt Hash)</text>
+              <line x1="300" y1="434" x2="300" y2="452" stroke="#0B5CAD" stroke-width="1.5" marker-end="url(#act1)"/>
+
+              <!-- Step 7 -->
+              <rect x="220" y="454" width="160" height="32" rx="16" fill="#D1FAE5" stroke="#0D9488" stroke-width="1"/>
+              <text x="300" y="474" text-anchor="middle" font-size="10" fill="#0D9488">Issue JWT + Refresh</text>
+              <line x1="300" y1="486" x2="300" y2="500" stroke="#0D9488" stroke-width="1.5" marker-end="url(#act1)"/>
+
+              <!-- End -->
+              <circle cx="300" cy="510" r="8" fill="none" stroke="#0B5CAD" stroke-width="2"/>
+              <circle cx="300" cy="510" r="4" fill="#0B5CAD"/>
+            </svg>
+          </div>
+          <div class="diagram-caption">Figure 7: User Registration Activity Diagram</div>
+        </div>
+
+        <h3>18b: Create Listing Flow</h3>
+        <div class="svg-diagram">
+          <div class="diagram-header">
+            <span>Create Listing Activity</span>
+            <span class="diagram-tag">Figure 8</span>
+          </div>
+          <div class="diagram-body">
+            <svg viewBox="0 0 600 480" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="act2" markerWidth="8" markerHeight="6" refX="4" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#0B5CAD"/></marker>
+              </defs>
+              <circle cx="300" cy="30" r="12" fill="#0B5CAD"/>
+              <line x1="300" y1="42" x2="300" y2="60" stroke="#0B5CAD" stroke-width="1.5" marker-end="url(#act2)"/>
+
+              <rect x="220" y="62" width="160" height="32" rx="16" fill="#EBF3FC" stroke="#0B5CAD" stroke-width="1"/>
+              <text x="300" y="82" text-anchor="middle" font-size="10" fill="#0B5CAD">Fill Listing Form</text>
+              <line x1="300" y1="94" x2="300" y2="112" stroke="#0B5CAD" stroke-width="1.5" marker-end="url(#act2)"/>
+
+              <rect x="220" y="114" width="160" height="32" rx="16" fill="#EBF3FC" stroke="#0B5CAD" stroke-width="1"/>
+              <text x="300" y="134" text-anchor="middle" font-size="10" fill="#0B5CAD">Select Rental Unit</text>
+              <text x="300" y="146" text-anchor="middle" font-size="8" fill="#9CA3AF">(hour/day/week/month/year)</text>
+              <line x1="300" y1="152" x2="300" y2="168" stroke="#0B5CAD" stroke-width="1.5" marker-end="url(#act2)"/>
+
+              <rect x="220" y="170" width="160" height="32" rx="16" fill="#EBF3FC" stroke="#0B5CAD" stroke-width="1"/>
+              <text x="300" y="190" text-anchor="middle" font-size="10" fill="#0B5CAD">Set Price + Duration</text>
+              <line x1="300" y1="202" x2="300" y2="220" stroke="#0B5CAD" stroke-width="1.5" marker-end="url(#act2)"/>
+
+              <rect x="220" y="222" width="160" height="32" rx="16" fill="#EBF3FC" stroke="#0B5CAD" stroke-width="1"/>
+              <text x="300" y="242" text-anchor="middle" font-size="10" fill="#0B5CAD">Pick Location on Map</text>
+              <line x1="300" y1="254" x2="300" y2="272" stroke="#0B5CAD" stroke-width="1.5" marker-end="url(#act2)"/>
+
+              <rect x="220" y="274" width="160" height="32" rx="16" fill="#EBF3FC" stroke="#0B5CAD" stroke-width="1"/>
+              <text x="300" y="294" text-anchor="middle" font-size="10" fill="#0B5CAD">Upload Images (max 6)</text>
+              <line x1="300" y1="306" x2="300" y2="324" stroke="#0B5CAD" stroke-width="1.5" marker-end="url(#act2)"/>
+
+              <rect x="220" y="326" width="160" height="32" rx="16" fill="#EBF3FC" stroke="#0B5CAD" stroke-width="1"/>
+              <text x="300" y="346" text-anchor="middle" font-size="10" fill="#0B5CAD">Submit Form</text>
+              <line x1="300" y1="358" x2="300" y2="376" stroke="#0B5CAD" stroke-width="1.5" marker-end="url(#act2)"/>
+
+              <polygon points="300,378 360,408 300,438 240,408" fill="#FFFBEB" stroke="#D97706" stroke-width="1.5"/>
+              <text x="300" y="405" text-anchor="middle" font-size="9" fill="#D97706">Valid?</text>
+              <line x1="360" y1="408" x2="440" y2="408" stroke="#EF4444" stroke-width="1.2"/>
+              <text x="390" y="402" font-size="8" fill="#EF4444">No</text>
+              <rect x="442" y="394" width="100" height="28" rx="6" fill="#FEF2F2" stroke="#EF4444" stroke-width="1"/>
+              <text x="492" y="412" text-anchor="middle" font-size="9" fill="#EF4444">Show Errors</text>
+
+              <line x1="300" y1="438" x2="300" y2="456" stroke="#0B5CAD" stroke-width="1.5" marker-end="url(#act2)"/>
+              <text x="310" y="450" font-size="8" fill="#0D9488">Yes</text>
+
+              <rect x="220" y="458" width="160" height="32" rx="16" fill="#D1FAE5" stroke="#0D9488" stroke-width="1"/>
+              <text x="300" y="478" text-anchor="middle" font-size="10" fill="#0D9488">Save (Status: Pending)</text>
+
+              <circle cx="300" cy="498" r="8" fill="none" stroke="#0B5CAD" stroke-width="2"/>
+              <circle cx="300" cy="498" r="4" fill="#0B5CAD"/>
+            </svg>
+          </div>
+          <div class="diagram-caption">Figure 8: Create Listing Activity Diagram</div>
+        </div>
+
+        <h3>18c: Rental Request Flow</h3>
+        <div class="svg-diagram">
+          <div class="diagram-header">
+            <span>Rental Request Activity</span>
+            <span class="diagram-tag">Figure 9</span>
+          </div>
+          <div class="diagram-body">
+            <svg viewBox="0 0 600 480" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="act3" markerWidth="8" markerHeight="6" refX="4" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#0B5CAD"/></marker>
+              </defs>
+              <circle cx="300" cy="30" r="12" fill="#0B5CAD"/>
+              <line x1="300" y1="42" x2="300" y2="60" stroke="#0B5CAD" stroke-width="1.5" marker-end="url(#act3)"/>
+
+              <rect x="220" y="62" width="160" height="32" rx="16" fill="#EBF3FC" stroke="#0B5CAD" stroke-width="1"/>
+              <text x="300" y="82" text-anchor="middle" font-size="10" fill="#0B5CAD">View Listing Details</text>
+              <line x1="300" y1="94" x2="300" y2="112" stroke="#0B5CAD" stroke-width="1.5" marker-end="url(#act3)"/>
+
+              <rect x="220" y="114" width="160" height="32" rx="16" fill="#EBF3FC" stroke="#0B5CAD" stroke-width="1"/>
+              <text x="300" y="134" text-anchor="middle" font-size="10" fill="#0B5CAD">Select Dates + Times</text>
+              <line x1="300" y1="146" x2="300" y2="164" stroke="#0B5CAD" stroke-width="1.5" marker-end="url(#act3)"/>
+
+              <rect x="220" y="166" width="160" height="32" rx="16" fill="#EBF3FC" stroke="#0B5CAD" stroke-width="1"/>
+              <text x="300" y="186" text-anchor="middle" font-size="10" fill="#0B5CAD">Calculate Total Cost</text>
+              <line x1="300" y1="198" x2="300" y2="216" stroke="#0B5CAD" stroke-width="1.5" marker-end="url(#act3)"/>
+
+              <rect x="220" y="218" width="160" height="32" rx="16" fill="#EBF3FC" stroke="#0B5CAD" stroke-width="1"/>
+              <text x="300" y="238" text-anchor="middle" font-size="10" fill="#0B5CAD">Send OTP → Enter Code</text>
+              <line x1="300" y1="250" x2="300" y2="268" stroke="#0B5CAD" stroke-width="1.5" marker-end="url(#act3)"/>
+
+              <polygon points="300,270 360,300 300,330 240,300" fill="#FFFBEB" stroke="#D97706" stroke-width="1.5"/>
+              <text x="300" y="297" text-anchor="middle" font-size="9" fill="#D97706">OTP Valid?</text>
+              <line x1="360" y1="300" x2="440" y2="300" stroke="#EF4444" stroke-width="1.2"/>
+              <text x="390" y="294" font-size="8" fill="#EF4444">No</text>
+              <rect x="442" y="286" width="100" height="28" rx="6" fill="#FEF2F2" stroke="#EF4444" stroke-width="1"/>
+              <text x="492" y="304" text-anchor="middle" font-size="9" fill="#EF4444">Show Error</text>
+
+              <line x1="300" y1="330" x2="300" y2="348" stroke="#0B5CAD" stroke-width="1.5" marker-end="url(#act3)"/>
+              <text x="310" y="340" font-size="8" fill="#0D9488">Yes</text>
+
+              <rect x="220" y="350" width="160" height="32" rx="16" fill="#EBF3FC" stroke="#0B5CAD" stroke-width="1"/>
+              <text x="300" y="370" text-anchor="middle" font-size="10" fill="#0B5CAD">Check Overlap</text>
+              <line x1="300" y1="382" x2="300" y2="400" stroke="#0B5CAD" stroke-width="1.5" marker-end="url(#act3)"/>
+
+              <polygon points="300,402 360,432 300,462 240,432" fill="#FFFBEB" stroke="#D97706" stroke-width="1.5"/>
+              <text x="300" y="429" text-anchor="middle" font-size="9" fill="#D97706">Available?</text>
+              <line x1="360" y1="432" x2="440" y2="432" stroke="#EF4444" stroke-width="1.2"/>
+              <text x="390" y="426" font-size="8" fill="#EF4444">No</text>
+              <rect x="442" y="418" width="100" height="28" rx="6" fill="#FEF2F2" stroke="#EF4444" stroke-width="1"/>
+              <text x="492" y="436" text-anchor="middle" font-size="9" fill="#EF4444">Show Conflict</text>
+
+              <line x1="300" y1="462" x2="300" y2="478" stroke="#0B5CAD" stroke-width="1.5" marker-end="url(#act3)"/>
+              <text x="310" y="472" font-size="8" fill="#0D9488">Yes</text>
+
+              <circle cx="300" cy="490" r="8" fill="none" stroke="#0B5CAD" stroke-width="2"/>
+              <circle cx="300" cy="490" r="4" fill="#0B5CAD"/>
+            </svg>
+          </div>
+          <div class="diagram-caption">Figure 9: Rental Request Activity Diagram</div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SECTION 19 — SEQUENCE DIAGRAMS
+           ============================================================ -->
+      <section class="doc-section" id="sec-sequence">
+        <h2>19 — Sequence Diagrams</h2>
+
+        <h3>19a: Login Sequence</h3>
+        <div class="svg-diagram">
+          <div class="diagram-header">
+            <span>Login Sequence</span>
+            <span class="diagram-tag">Figure 10</span>
+          </div>
+          <div class="diagram-body">
+            <svg viewBox="0 0 760 340" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="seq1" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#0B5CAD"/></marker>
+                <marker id="seq2" markerWidth="8" markerHeight="6" refX="0" refY="3" orient="auto"><polygon points="8 0,0 3,8 6" fill="#6B7280"/></marker>
+              </defs>
+
+              <!-- Lifelines -->
+              <rect x="40" y="10" width="80" height="30" rx="4" fill="#0B5CAD"/>
+              <text x="80" y="30" text-anchor="middle" font-size="10" font-weight="600" fill="#FFFFFF">Client</text>
+              <line x1="80" y1="40" x2="80" y2="330" stroke="#0B5CAD" stroke-width="1" stroke-dasharray="4,3"/>
+
+              <rect x="200" y="10" width="80" height="30" rx="4" fill="#2F80ED"/>
+              <text x="240" y="30" text-anchor="middle" font-size="10" font-weight="600" fill="#FFFFFF">API</text>
+              <line x1="240" y1="40" x2="240" y2="330" stroke="#2F80ED" stroke-width="1" stroke-dasharray="4,3"/>
+
+              <rect x="360" y="10" width="80" height="30" rx="4" fill="#0D9488"/>
+              <text x="400" y="30" text-anchor="middle" font-size="10" font-weight="600" fill="#FFFFFF">UserService</text>
+              <line x1="400" y1="40" x2="400" y2="330" stroke="#0D9488" stroke-width="1" stroke-dasharray="4,3"/>
+
+              <rect x="520" y="10" width="80" height="30" rx="4" fill="#D97706"/>
+              <text x="560" y="30" text-anchor="middle" font-size="10" font-weight="600" fill="#FFFFFF">TokenService</text>
+              <line x1="560" y1="40" x2="560" y2="330" stroke="#D97706" stroke-width="1" stroke-dasharray="4,3"/>
+
+              <rect x="660" y="10" width="80" height="30" rx="4" fill="#8B5CF6"/>
+              <text x="700" y="30" text-anchor="middle" font-size="10" font-weight="600" fill="#FFFFFF">Database</text>
+              <line x1="700" y1="40" x2="700" y2="330" stroke="#8B5CF6" stroke-width="1" stroke-dasharray="4,3"/>
+
+              <!-- Messages -->
+              <line x1="80" y1="70" x2="232" y2="70" stroke="#0B5CAD" stroke-width="1.2" marker-end="url(#seq1)"/>
+              <text x="156" y="64" text-anchor="middle" font-size="8" fill="#0B5CAD">POST /auth/login {phone, password}</text>
+
+              <line x1="240" y1="90" x2="392" y2="90" stroke="#2F80ED" stroke-width="1.2" marker-end="url(#seq1)"/>
+              <text x="316" y="84" text-anchor="middle" font-size="8" fill="#2F80ED">AuthenticateAsync()</text>
+
+              <line x1="400" y1="110" x2="692" y2="110" stroke="#0D9488" stroke-width="1.2" marker-end="url(#seq1)"/>
+              <text x="546" y="104" text-anchor="middle" font-size="8" fill="#0D9488">SELECT Users WHERE Phone=?</text>
+
+              <line x1="692" y1="130" x2="408" y2="130" stroke="#8B5CF6" stroke-width="1.2" marker-end="url(#seq2)"/>
+              <text x="546" y="124" text-anchor="middle" font-size="8" fill="#8B5CF6">User (or null)</text>
+
+              <rect x="370" y="140" width="60" height="20" rx="3" fill="#FEF2F2" stroke="#EF4444" stroke-width="0.8"/>
+              <text x="400" y="154" text-anchor="middle" font-size="7" fill="#EF4444">BCrypt.Verify()</text>
+
+              <line x1="400" y1="170" x2="552" y2="170" stroke="#0D9488" stroke-width="1.2" marker-end="url(#seq1)"/>
+              <text x="476" y="164" text-anchor="middle" font-size="8" fill="#0D9488">GenerateToken()</text>
+
+              <line x1="560" y1="190" x2="692" y2="190" stroke="#D97706" stroke-width="1.2" marker-end="url(#seq1)"/>
+              <text x="626" y="184" text-anchor="middle" font-size="8" fill="#D97706">INSERT RefreshToken</text>
+
+              <line x1="552" y1="210" x2="408" y2="210" stroke="#D97706" stroke-width="1.2" marker-end="url(#seq2)"/>
+              <text x="476" y="204" text-anchor="middle" font-size="8" fill="#D97706">AuthResponse</text>
+
+              <line x1="392" y1="230" x2="248" y2="230" stroke="#2F80ED" stroke-width="1.2" marker-end="url(#seq2)"/>
+              <text x="316" y="224" text-anchor="middle" font-size="8" fill="#2F80ED">ServiceResult.Ok</text>
+
+              <line x1="232" y1="250" x2="88" y2="250" stroke="#0B5CAD" stroke-width="1.2" marker-end="url(#seq2)"/>
+              <text x="156" y="244" text-anchor="middle" font-size="8" fill="#0B5CAD">200 {accessToken, refreshToken, user}</text>
+
+              <rect x="50" y="270" width="60" height="20" rx="3" fill="#EBF3FC" stroke="#0B5CAD" stroke-width="0.8"/>
+              <text x="80" y="284" text-anchor="middle" font-size="7" fill="#0B5CAD">Store JWT</text>
+            </svg>
+          </div>
+          <div class="diagram-caption">Figure 10: Login Sequence Diagram</div>
+        </div>
+
+        <h3>19b: Create Listing Sequence</h3>
+        <div class="svg-diagram">
+          <div class="diagram-header">
+            <span>Create Listing Sequence</span>
+            <span class="diagram-tag">Figure 11</span>
+          </div>
+          <div class="diagram-body">
+            <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="sq1" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#0B5CAD"/></marker>
+                <marker id="sq2" markerWidth="8" markerHeight="6" refX="0" refY="3" orient="auto"><polygon points="8 0,0 3,8 6" fill="#6B7280"/></marker>
+              </defs>
+              <rect x="30" y="10" width="70" height="26" rx="4" fill="#0B5CAD"/>
+              <text x="65" y="28" text-anchor="middle" font-size="9" font-weight="600" fill="#FFFFFF">Client</text>
+              <line x1="65" y1="36" x2="65" y2="290" stroke="#0B5CAD" stroke-width="1" stroke-dasharray="4,3"/>
+
+              <rect x="170" y="10" width="50" height="26" rx="4" fill="#2F80ED"/>
+              <text x="195" y="28" text-anchor="middle" font-size="9" font-weight="600" fill="#FFFFFF">API</text>
+              <line x1="195" y1="36" x2="195" y2="290" stroke="#2F80ED" stroke-width="1" stroke-dasharray="4,3"/>
+
+              <rect x="290" y="10" width="90" height="26" rx="4" fill="#D97706"/>
+              <text x="335" y="28" text-anchor="middle" font-size="9" font-weight="600" fill="#FFFFFF">FileStorage</text>
+              <line x1="335" y1="36" x2="335" y2="290" stroke="#D97706" stroke-width="1" stroke-dasharray="4,3"/>
+
+              <rect x="440" y="10" width="80" height="26" rx="4" fill="#0D9488"/>
+              <text x="480" y="28" text-anchor="middle" font-size="9" font-weight="600" fill="#FFFFFF">ListingService</text>
+              <line x1="480" y1="36" x2="480" y2="290" stroke="#0D9488" stroke-width="1" stroke-dasharray="4,3"/>
+
+              <rect x="580" y="10" width="60" height="26" rx="4" fill="#8B5CF6"/>
+              <text x="610" y="28" text-anchor="middle" font-size="9" font-weight="600" fill="#FFFFFF">DB</text>
+              <line x1="610" y1="36" x2="610" y2="290" stroke="#8B5CF6" stroke-width="1" stroke-dasharray="4,3"/>
+
+              <line x1="65" y1="56" x2="188" y2="56" stroke="#0B5CAD" stroke-width="1.2" marker-end="url(#sq1)"/>
+              <text x="126" y="50" text-anchor="middle" font-size="7.5" fill="#0B5CAD">POST /listings (FormData)</text>
+
+              <line x1="195" y1="76" x2="328" y2="76" stroke="#2F80ED" stroke-width="1.2" marker-end="url(#sq1)"/>
+              <text x="262" y="70" text-anchor="middle" font-size="7.5" fill="#2F80ED">SaveImagesAsync()</text>
+
+              <rect x="255" y="86" width="160" height="22" rx="3" fill="#FEF2F2" stroke="#EF4444" stroke-width="0.7"/>
+              <text x="335" y="100" text-anchor="middle" font-size="7" fill="#EF4444">Validate (ext, size, magic) → Save</text>
+
+              <line x1="195" y1="120" x2="472" y2="120" stroke="#2F80ED" stroke-width="1.2" marker-end="url(#sq1)"/>
+              <text x="334" y="114" text-anchor="middle" font-size="7.5" fill="#2F80ED">CreateAsync(dto)</text>
+
+              <rect x="400" y="130" width="160" height="22" rx="3" fill="#FEF2F2" stroke="#EF4444" stroke-width="0.7"/>
+              <text x="480" y="144" text-anchor="middle" font-size="7" fill="#EF4444">Validate inputs, Check category</text>
+
+              <line x1="480" y1="160" x2="602" y2="160" stroke="#0D9488" stroke-width="1.2" marker-end="url(#sq1)"/>
+              <text x="541" y="154" text-anchor="middle" font-size="7.5" fill="#0D9488">AddAsync(listing)</text>
+
+              <line x1="602" y1="180" x2="488" y2="180" stroke="#8B5CF6" stroke-width="1.2" marker-end="url(#sq2)"/>
+              <text x="541" y="174" text-anchor="middle" font-size="7.5" fill="#8B5CF6">INSERT INTO Listings</text>
+
+              <line x1="472" y1="200" x2="203" y2="200" stroke="#0D9488" stroke-width="1.2" marker-end="url(#sq2)"/>
+              <text x="334" y="194" text-anchor="middle" font-size="7.5" fill="#0D9488">ServiceResult.Ok(id)</text>
+
+              <line x1="188" y1="220" x2="73" y2="220" stroke="#2F80ED" stroke-width="1.2" marker-end="url(#sq2)"/>
+              <text x="126" y="214" text-anchor="middle" font-size="7.5" fill="#2F80ED">201 {id}</text>
+            </svg>
+          </div>
+          <div class="diagram-caption">Figure 11: Create Listing Sequence Diagram</div>
+        </div>
+
+        <h3>19c: Rental Request Sequence</h3>
+        <div class="svg-diagram">
+          <div class="diagram-header">
+            <span>Rental Request Sequence</span>
+            <span class="diagram-tag">Figure 12</span>
+          </div>
+          <div class="diagram-body">
+            <svg viewBox="0 0 760 340" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="sq3" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#0B5CAD"/></marker>
+                <marker id="sq4" markerWidth="8" markerHeight="6" refX="0" refY="3" orient="auto"><polygon points="8 0,0 3,8 6" fill="#6B7280"/></marker>
+              </defs>
+              <rect x="30" y="10" width="70" height="26" rx="4" fill="#0B5CAD"/>
+              <text x="65" y="28" text-anchor="middle" font-size="9" font-weight="600" fill="#FFFFFF">Client</text>
+              <line x1="65" y1="36" x2="65" y2="330" stroke="#0B5CAD" stroke-width="1" stroke-dasharray="4,3"/>
+
+              <rect x="170" y="10" width="50" height="26" rx="4" fill="#2F80ED"/>
+              <text x="195" y="28" text-anchor="middle" font-size="9" font-weight="600" fill="#FFFFFF">API</text>
+              <line x1="195" y1="36" x2="195" y2="330" stroke="#2F80ED" stroke-width="1" stroke-dasharray="4,3"/>
+
+              <rect x="310" y="10" width="70" height="26" rx="4" fill="#D97706"/>
+              <text x="345" y="28" text-anchor="middle" font-size="9" font-weight="600" fill="#FFFFFF">OtpService</text>
+              <line x1="345" y1="36" x2="345" y2="330" stroke="#D97706" stroke-width="1" stroke-dasharray="4,3"/>
+
+              <rect x="450" y="10" width="100" height="26" rx="4" fill="#0D9488"/>
+              <text x="500" y="28" text-anchor="middle" font-size="9" font-weight="600" fill="#FFFFFF">RequestService</text>
+              <line x1="500" y1="36" x2="500" y2="330" stroke="#0D9488" stroke-width="1" stroke-dasharray="4,3"/>
+
+              <rect x="640" y="10" width="60" height="26" rx="4" fill="#8B5CF6"/>
+              <text x="670" y="28" text-anchor="middle" font-size="9" font-weight="600" fill="#FFFFFF">DB</text>
+              <line x1="670" y1="36" x2="670" y2="330" stroke="#8B5CF6" stroke-width="1" stroke-dasharray="4,3"/>
+
+              <!-- Step 1: Send OTP -->
+              <line x1="65" y1="56" x2="188" y2="56" stroke="#0B5CAD" stroke-width="1.2" marker-end="url(#sq3)"/>
+              <text x="126" y="50" text-anchor="middle" font-size="7.5" fill="#0B5CAD">POST /requests/otp/send</text>
+
+              <line x1="195" y1="76" x2="338" y2="76" stroke="#2F80ED" stroke-width="1.2" marker-end="url(#sq3)"/>
+              <text x="266" y="70" text-anchor="middle" font-size="7.5" fill="#2F80ED">IssueOtpAsync()</text>
+
+              <rect x="270" y="86" width="150" height="20" rx="3" fill="#FEF2F2" stroke="#EF4444" stroke-width="0.7"/>
+              <text x="345" y="100" text-anchor="middle" font-size="7" fill="#EF4444">Store code (SHA-256), 5min expiry</text>
+
+              <line x1="338" y1="112" x2="203" y2="112" stroke="#D97706" stroke-width="1.2" marker-end="url(#sq4)"/>
+              <text x="266" y="106" text-anchor="middle" font-size="7.5" fill="#D97706">OtpSent</text>
+
+              <line x1="188" y1="132" x2="73" y2="132" stroke="#2F80ED" stroke-width="1.2" marker-end="url(#sq4)"/>
+              <text x="126" y="126" text-anchor="middle" font-size="7.5" fill="#2F80ED">200 {sent, devCode}</text>
+
+              <!-- Step 2: Create Request -->
+              <line x1="65" y1="162" x2="188" y2="162" stroke="#0B5CAD" stroke-width="1.2" marker-end="url(#sq3)"/>
+              <text x="126" y="156" text-anchor="middle" font-size="7.5" fill="#0B5CAD">POST /requests {dates, otpCode}</text>
+
+              <line x1="195" y1="182" x2="338" y2="182" stroke="#2F80ED" stroke-width="1.2" marker-end="url(#sq3)"/>
+              <text x="266" y="176" text-anchor="middle" font-size="7.5" fill="#2F80ED">Verify()</text>
+
+              <rect x="270" y="192" width="150" height="20" rx="3" fill="#FEF2F2" stroke="#EF4444" stroke-width="0.7"/>
+              <text x="345" y="206" text-anchor="middle" font-size="7" fill="#EF4444">Check code + expiry, Invalidate</text>
+
+              <line x1="195" y1="222" x2="492" y2="222" stroke="#2F80ED" stroke-width="1.2" marker-end="url(#sq3)"/>
+              <text x="344" y="216" text-anchor="middle" font-size="7.5" fill="#2F80ED">CreateAsync()</text>
+
+              <rect x="400" y="232" width="200" height="20" rx="3" fill="#FEF2F2" stroke="#EF4444" stroke-width="0.7"/>
+              <text x="500" y="246" text-anchor="middle" font-size="7" fill="#EF4444">Validate listing, Check overlap, Calculate cost</text>
+
+              <line x1="500" y1="262" x2="662" y2="262" stroke="#0D9488" stroke-width="1.2" marker-end="url(#sq3)"/>
+              <text x="581" y="256" text-anchor="middle" font-size="7.5" fill="#0D9488">AddAsync(request)</text>
+
+              <line x1="662" y1="282" x2="508" y2="282" stroke="#8B5CF6" stroke-width="1.2" marker-end="url(#sq4)"/>
+              <text x="581" y="276" text-anchor="middle" font-size="7.5" fill="#8B5CF6">INSERT RentalRequests</text>
+
+              <line x1="492" y1="302" x2="203" y2="302" stroke="#0D9488" stroke-width="1.2" marker-end="url(#sq4)"/>
+              <text x="344" y="296" text-anchor="middle" font-size="7.5" fill="#0D9488">ServiceResult.Ok(id)</text>
+
+              <line x1="188" y1="322" x2="73" y2="322" stroke="#2F80ED" stroke-width="1.2" marker-end="url(#sq4)"/>
+              <text x="126" y="316" text-anchor="middle" font-size="7.5" fill="#2F80ED">201 {id}</text>
+            </svg>
+          </div>
+          <div class="diagram-caption">Figure 12: Rental Request Sequence Diagram</div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SECTION 20 — AUTHENTICATION FLOW
+           ============================================================ -->
+      <section class="doc-section" id="sec-auth-flow">
+        <h2>20 — Authentication Flow</h2>
+        <p>The authentication system implements a multi-step flow with JWT access tokens, refresh token rotation, and OTP verification for sensitive operations.</p>
+
+        <div class="svg-diagram">
+          <div class="diagram-header">
+            <span>Authentication Flow</span>
+            <span class="diagram-tag">Figure 13</span>
+          </div>
+          <div class="diagram-body">
+            <svg viewBox="0 0 700 460" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="af1" markerWidth="8" markerHeight="6" refX="4" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#0B5CAD"/></marker>
+              </defs>
+              <circle cx="350" cy="30" r="12" fill="#0B5CAD"/>
+              <line x1="350" y1="42" x2="350" y2="60" stroke="#0B5CAD" stroke-width="1.5" marker-end="url(#af1)"/>
+
+              <polygon points="350,62 430,100 350,138 270,100" fill="#FFFBEB" stroke="#D97706" stroke-width="1.5"/>
+              <text x="350" y="97" text-anchor="middle" font-size="9" fill="#D97706">Has stored</text>
+              <text x="350" y="108" text-anchor="middle" font-size="9" fill="#D97706">token?</text>
+
+              <line x1="270" y1="100" x2="180" y2="100" stroke="#0D9488" stroke-width="1.2"/>
+              <text x="220" y="94" font-size="8" fill="#0D9488">Yes</text>
+              <rect x="100" y="86" width="80" height="28" rx="6" fill="#EBF3FC" stroke="#0B5CAD" stroke-width="1"/>
+              <text x="140" y="104" text-anchor="middle" font-size="9" fill="#0B5CAD">GET /auth/me</text>
+              <line x1="140" y1="114" x2="140" y2="134" stroke="#0B5CAD" stroke-width="1.2" marker-end="url(#af1)"/>
+
+              <polygon points="140,136 190,160 140,184 90,160" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+              <text x="140" y="163" text-anchor="middle" font-size="8" fill="#D97706">Valid?</text>
+              <line x1="90" y1="160" x2="60" y2="160" stroke="#EF4444" stroke-width="1"/>
+              <text x="72" y="154" font-size="7" fill="#EF4444">No</text>
+              <line x1="140" y1="184" x2="140" y2="200" stroke="#0D9488" stroke-width="1.2"/>
+              <text x="150" y="194" font-size="7" fill="#0D9488">Yes</text>
+              <rect x="80" y="202" width="120" height="28" rx="6" fill="#D1FAE5" stroke="#0D9488" stroke-width="1"/>
+              <text x="140" y="220" text-anchor="middle" font-size="9" fill="#0D9488">App Ready (Logged In)</text>
+
+              <line x1="350" y1="138" x2="350" y2="160" stroke="#0B5CAD" stroke-width="1.2"/>
+              <text x="360" y="152" font-size="8" fill="#EF4444">No</text>
+              <rect x="290" y="162" width="120" height="28" rx="6" fill="#EBF3FC" stroke="#0B5CAD" stroke-width="1"/>
+              <text x="350" y="180" text-anchor="middle" font-size="9" fill="#0B5CAD">Show Login Screen</text>
+              <line x1="350" y1="190" x2="350" y2="208" stroke="#0B5CAD" stroke-width="1.2" marker-end="url(#af1)"/>
+              <rect x="290" y="210" width="120" height="28" rx="6" fill="#EBF3FC" stroke="#0B5CAD" stroke-width="1"/>
+              <text x="350" y="228" text-anchor="middle" font-size="9" fill="#0B5CAD">Enter Phone + Password</text>
+              <line x1="350" y1="238" x2="350" y2="256" stroke="#0B5CAD" stroke-width="1.2" marker-end="url(#af1)"/>
+              <rect x="290" y="258" width="120" height="28" rx="6" fill="#EBF3FC" stroke="#0B5CAD" stroke-width="1"/>
+              <text x="350" y="276" text-anchor="middle" font-size="9" fill="#0B5CAD">POST /auth/login</text>
+              <line x1="350" y1="286" x2="350" y2="304" stroke="#0B5CAD" stroke-width="1.2" marker-end="url(#af1)"/>
+
+              <polygon points="350,306 420,336 350,366 280,336" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+              <text x="350" y="333" text-anchor="middle" font-size="9" fill="#D97706">Credentials</text>
+              <text x="350" y="344" text-anchor="middle" font-size="9" fill="#D97706">valid?</text>
+              <line x1="280" y1="336" x2="200" y2="336" stroke="#EF4444" stroke-width="1"/>
+              <text x="234" y="330" font-size="7" fill="#EF4444">No</text>
+              <rect x="120" y="322" width="80" height="28" rx="6" fill="#FEF2F2" stroke="#EF4444" stroke-width="1"/>
+              <text x="160" y="340" text-anchor="middle" font-size="9" fill="#EF4444">Show Error</text>
+
+              <line x1="350" y1="366" x2="350" y2="384" stroke="#0D9488" stroke-width="1.2"/>
+              <text x="360" y="378" font-size="8" fill="#0D9488">Yes</text>
+              <rect x="290" y="386" width="120" height="28" rx="6" fill="#D1FAE5" stroke="#0D9488" stroke-width="1"/>
+              <text x="350" y="404" text-anchor="middle" font-size="9" fill="#0D9488">Issue JWT + Refresh</text>
+              <line x1="350" y1="414" x2="350" y2="432" stroke="#0D9488" stroke-width="1.2" marker-end="url(#af1)"/>
+              <rect x="290" y="434" width="120" height="28" rx="6" fill="#D1FAE5" stroke="#0D9488" stroke-width="1"/>
+              <text x="350" y="452" text-anchor="middle" font-size="9" fill="#0D9488">Store &amp; Hydrate</text>
+              <circle cx="350" cy="472" r="8" fill="none" stroke="#0B5CAD" stroke-width="2"/>
+              <circle cx="350" cy="472" r="4" fill="#0B5CAD"/>
+            </svg>
+          </div>
+          <div class="diagram-legend">
+            <div class="legend-item"><div class="legend-swatch" style="background:#0D9488"></div> Success Path</div>
+            <div class="legend-item"><div class="legend-swatch" style="background:#EF4444"></div> Error Path</div>
+            <div class="legend-item"><div class="legend-swatch" style="background:#D97706"></div> Decision</div>
+          </div>
+          <div class="diagram-caption">Figure 13: Authentication Flow Diagram</div>
+        </div>
+
+        <h3>Security Properties</h3>
+        <ul>
+          <li><strong>BCrypt Timing-Attack Mitigation:</strong> BCrypt always runs even for unknown phone numbers, preventing timing-based user enumeration.</li>
+          <li><strong>Refresh Token Rotation:</strong> Old tokens are revoked on refresh, and new tokens are issued. SHA-256 hashes are stored in the database.</li>
+          <li><strong>OTP Security:</strong> Codes are stored as SHA-256 hashes with 5-minute expiry, 3 max attempts, and 60-second resend cooldown. Fixed code <code>0000</code> in development mode.</li>
+          <li><strong>JWT Configuration:</strong> HMAC-SHA256 signing, 60-minute user tokens, 120-minute admin tokens, 30-second clock skew tolerance.</li>
+        </ul>
+      </section>
+
+      <!-- ============================================================
+           SECTION 21 — DATA FLOW DIAGRAMS
+           ============================================================ -->
+      <section class="doc-section" id="sec-dfd">
+        <h2>21 — Data Flow Diagrams</h2>
+
+        <h3>DFD Level 0 (Context Diagram)</h3>
+        <div class="svg-diagram">
+          <div class="diagram-header">
+            <span>DFD Level 0 — Context</span>
+            <span class="diagram-tag">Figure 14</span>
+          </div>
+          <div class="diagram-body">
+            <svg viewBox="0 0 700 380" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="dfd1" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#0B5CAD"/></marker>
+                <marker id="dfd2" markerWidth="8" markerHeight="6" refX="0" refY="3" orient="auto"><polygon points="8 0,0 3,8 6" fill="#0B5CAD"/></marker>
+              </defs>
+              <!-- Central Process -->
+              <circle cx="350" cy="190" r="70" fill="#EBF3FC" stroke="#0B5CAD" stroke-width="2"/>
+              <text x="350" y="184" text-anchor="middle" font-size="12" font-weight="700" fill="#0B5CAD">Equipify</text>
+              <text x="350" y="200" text-anchor="middle" font-size="12" font-weight="700" fill="#0B5CAD">System</text>
+              <text x="350" y="216" text-anchor="middle" font-size="9" fill="#6B7280">0.0</text>
+
+              <!-- External Entities -->
+              <!-- Guest/User -->
+              <rect x="20" y="60" width="120" height="40" rx="4" fill="#F5F8FC" stroke="#6B7280" stroke-width="1.5"/>
+              <text x="80" y="84" text-anchor="middle" font-size="10" fill="#1F2937">Guest / User</text>
+              <!-- Owner -->
+              <rect x="20" y="180" width="120" height="40" rx="4" fill="#F5F8FC" stroke="#6B7280" stroke-width="1.5"/>
+              <text x="80" y="204" text-anchor="middle" font-size="10" fill="#1F2937">Owner</text>
+              <!-- Admin -->
+              <rect x="560" y="120" width="120" height="40" rx="4" fill="#FEF2F2" stroke="#EF4444" stroke-width="1.5"/>
+              <text x="620" y="144" text-anchor="middle" font-size="10" fill="#EF4444">Admin</text>
+
+              <!-- Data Flows -->
+              <!-- Guest → System -->
+              <line x1="140" y1="80" x2="282" y2="160" stroke="#0B5CAD" stroke-width="1.2" marker-end="url(#dfd1)"/>
+              <text x="180" y="110" font-size="8" fill="#0B5CAD">Search / View</text>
+              <!-- System → Guest -->
+              <line x1="282" y1="180" x2="140" y2="80" stroke="#0B5CAD" stroke-width="1.2" marker-end="url(#dfd2)"/>
+              <text x="180" y="140" font-size="8" fill="#0B5CAD">Listing Results</text>
+
+              <!-- Owner → System -->
+              <line x1="140" y1="200" x2="282" y2="200" stroke="#0B5CAD" stroke-width="1.2" marker-end="url(#dfd1)"/>
+              <text x="190" y="194" font-size="8" fill="#0B5CAD">Create/Edit</text>
+              <!-- System → Owner -->
+              <line x1="282" y1="210" x2="140" y2="210" stroke="#0B5CAD" stroke-width="1.2" marker-end="url(#dfd2)"/>
+              <text x="190" y="226" font-size="8" fill="#0B5CAD">Listing Status</text>
+
+              <!-- Admin → System -->
+              <line x1="560" y1="140" x2="422" y2="170" stroke="#EF4444" stroke-width="1.2" marker-end="url(#dfd1)"/>
+              <text x="480" y="144" font-size="8" fill="#EF4444">Moderate</text>
+              <!-- System → Admin -->
+              <line x1="422" y1="200" x2="560" y2="150" stroke="#EF4444" stroke-width="1.2" marker-end="url(#dfd2)"/>
+              <text x="480" y="194" font-size="8" fill="#EF4444">Dashboard Stats</text>
+
+              <!-- Data Stores -->
+              <text x="260" y="310" font-size="9" fill="#6B7280">D1 Users</text>
+              <text x="350" y="310" font-size="9" fill="#6B7280">D2 Listings</text>
+              <text x="450" y="310" font-size="9" fill="#6B7280">D3 Requests</text>
+              <line x1="300" y1="260" x2="280" y2="300" stroke="#9CA3AF" stroke-width="1" stroke-dasharray="3,2"/>
+              <line x1="350" y1="260" x2="370" y2="300" stroke="#9CA3AF" stroke-width="1" stroke-dasharray="3,2"/>
+              <line x1="400" y1="260" x2="450" y2="300" stroke="#9CA3AF" stroke-width="1" stroke-dasharray="3,2"/>
+              <text x="360" y="340" font-size="9" fill="#6B7280">D4 File Storage</text>
+              <line x1="350" y1="260" x2="360" y2="330" stroke="#9CA3AF" stroke-width="1" stroke-dasharray="3,2"/>
+            </svg>
+          </div>
+          <div class="diagram-caption">Figure 14: DFD Level 0 — Context Diagram</div>
+        </div>
+
+        <h3>DFD Level 1</h3>
+        <div class="svg-diagram">
+          <div class="diagram-header">
+            <span>DFD Level 1 — Processes</span>
+            <span class="diagram-tag">Figure 15</span>
+          </div>
+          <div class="diagram-body">
+            <svg viewBox="0 0 740 380" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="df1" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#0B5CAD"/></marker>
+              </defs>
+
+              <!-- Process 1.0: Auth -->
+              <circle cx="140" cy="80" r="40" fill="#EBF3FC" stroke="#0B5CAD" stroke-width="1.5"/>
+              <text x="140" y="76" text-anchor="middle" font-size="9" font-weight="700" fill="#0B5CAD">1.0</text>
+              <text x="140" y="90" text-anchor="middle" font-size="8" fill="#0B5CAD">Auth Mgmt</text>
+
+              <!-- Process 2.0: Listings -->
+              <circle cx="370" cy="80" r="40" fill="#EBF3FC" stroke="#2F80ED" stroke-width="1.5"/>
+              <text x="370" y="76" text-anchor="middle" font-size="9" font-weight="700" fill="#2F80ED">2.0</text>
+              <text x="370" y="90" text-anchor="middle" font-size="8" fill="#2F80ED">Listing Mgmt</text>
+
+              <!-- Process 3.0: Requests -->
+              <circle cx="600" cy="80" r="40" fill="#EBF3FC" stroke="#0D9488" stroke-width="1.5"/>
+              <text x="600" y="76" text-anchor="middle" font-size="9" font-weight="700" fill="#0D9488">3.0</text>
+              <text x="600" y="90" text-anchor="middle" font-size="8" fill="#0D9488">Request Mgmt</text>
+
+              <!-- Process 4.0: Ratings -->
+              <circle cx="250" cy="220" r="40" fill="#EBF3FC" stroke="#D97706" stroke-width="1.5"/>
+              <text x="250" y="216" text-anchor="middle" font-size="9" font-weight="700" fill="#D97706">4.0</text>
+              <text x="250" y="230" text-anchor="middle" font-size="8" fill="#D97706">Rating Mgmt</text>
+
+              <!-- Process 5.0: Admin -->
+              <circle cx="500" cy="220" r="40" fill="#EBF3FC" stroke="#EF4444" stroke-width="1.5"/>
+              <text x="500" y="216" text-anchor="middle" font-size="9" font-weight="700" fill="#EF4444">5.0</text>
+              <text x="500" y="230" text-anchor="middle" font-size="8" fill="#EF4444">Admin Mgmt</text>
+
+              <!-- Data Stores -->
+              <rect x="40" y="310" width="80" height="24" rx="4" fill="#F5F8FC" stroke="#6B7280" stroke-width="1"/>
+              <text x="80" y="326" text-anchor="middle" font-size="8" fill="#6B7280">D1 Users</text>
+
+              <rect x="140" y="310" width="80" height="24" rx="4" fill="#F5F8FC" stroke="#6B7280" stroke-width="1"/>
+              <text x="180" y="326" text-anchor="middle" font-size="8" fill="#6B7280">D2 Listings</text>
+
+              <rect x="240" y="310" width="80" height="24" rx="4" fill="#F5F8FC" stroke="#6B7280" stroke-width="1"/>
+              <text x="280" y="326" text-anchor="middle" font-size="8" fill="#6B7280">D3 Requests</text>
+
+              <rect x="340" y="310" width="90" height="24" rx="4" fill="#F5F8FC" stroke="#6B7280" stroke-width="1"/>
+              <text x="385" y="326" text-anchor="middle" font-size="8" fill="#6B7280">D4 Ratings</text>
+
+              <rect x="450" y="310" width="80" height="24" rx="4" fill="#F5F8FC" stroke="#6B7280" stroke-width="1"/>
+              <text x="490" y="326" text-anchor="middle" font-size="8" fill="#6B7280">D6 Categories</text>
+
+              <rect x="550" y="310" width="90" height="24" rx="4" fill="#F5F8FC" stroke="#6B7280" stroke-width="1"/>
+              <text x="595" y="326" text-anchor="middle" font-size="8" fill="#6B7280">D7 Files</text>
+
+              <rect x="650" y="310" width="80" height="24" rx="4" fill="#F5F8FC" stroke="#6B7280" stroke-width="1"/>
+              <text x="690" y="326" text-anchor="middle" font-size="8" fill="#6B7280">D5 Tokens</text>
+
+              <!-- Process → Data Store lines -->
+              <line x1="140" y1="120" x2="80" y2="310" stroke="#0B5CAD" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#df1)"/>
+              <line x1="140" y1="120" x2="690" y2="310" stroke="#0B5CAD" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#df1)"/>
+
+              <line x1="370" y1="120" x2="180" y2="310" stroke="#2F80ED" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#df1)"/>
+              <line x1="370" y1="120" x2="595" y2="310" stroke="#2F80ED" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#df1)"/>
+
+              <line x1="600" y1="120" x2="280" y2="310" stroke="#0D9488" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#df1)"/>
+
+              <line x1="250" y1="260" x2="385" y2="310" stroke="#D97706" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#df1)"/>
+              <line x1="250" y1="260" x2="80" y2="310" stroke="#D97706" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#df1)"/>
+
+              <line x1="500" y1="260" x2="180" y2="310" stroke="#EF4444" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#df1)"/>
+              <line x1="500" y1="260" x2="490" y2="310" stroke="#EF4444" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#df1)"/>
+
+              <!-- External entities -->
+              <rect x="40" y="60" width="60" height="30" rx="4" fill="#FFFFFF" stroke="#1F2937" stroke-width="1"/>
+              <text x="70" y="80" text-anchor="middle" font-size="8" fill="#1F2937">User</text>
+              <line x1="100" y1="80" x2="100" y2="80" stroke="#1F2937" stroke-width="1"/>
+
+              <rect x="660" y="60" width="60" height="30" rx="4" fill="#FFFFFF" stroke="#EF4444" stroke-width="1"/>
+              <text x="690" y="80" text-anchor="middle" font-size="8" fill="#EF4444">Admin</text>
+            </svg>
+          </div>
+          <div class="diagram-caption">Figure 15: DFD Level 1 — Process Breakdown</div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SECTION 22 — COMPONENT DIAGRAM
+           ============================================================ -->
+      <section class="doc-section" id="sec-component">
+        <h2>22 — Component Diagram</h2>
+        <p>The Component diagram shows the software components and their dependencies across the three platforms.</p>
+
+        <div class="svg-diagram">
+          <div class="diagram-header">
+            <span>Component Diagram</span>
+            <span class="diagram-tag">Figure 16</span>
+          </div>
+          <div class="diagram-body">
+            <svg viewBox="0 0 740 380" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="cp1" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#0B5CAD"/></marker>
+              </defs>
+              <rect x="20" y="20" width="300" height="340" rx="10" fill="#F5F8FC" stroke="#0B5CAD" stroke-width="1.5"/>
+              <text x="170" y="42" text-anchor="middle" font-size="11" font-weight="700" fill="#0B5CAD">Backend (ASP.NET Core)</text>
+              <rect x="40" y="56" width="120" height="28" rx="4" fill="#0B5CAD"/>
+              <text x="100" y="74" text-anchor="middle" font-size="9" font-weight="600" fill="#FFFFFF">Api (6 Controllers)</text>
+              <rect x="40" y="92" width="120" height="28" rx="4" fill="#2F80ED"/>
+              <text x="100" y="110" text-anchor="middle" font-size="9" font-weight="600" fill="#FFFFFF">Service (9 Services)</text>
+              <rect x="40" y="128" width="120" height="28" rx="4" fill="#0D9488"/>
+              <text x="100" y="146" text-anchor="middle" font-size="9" font-weight="600" fill="#FFFFFF">Data (DbContext)</text>
+              <rect x="40" y="164" width="120" height="28" rx="4" fill="#083B66"/>
+              <text x="100" y="182" text-anchor="middle" font-size="9" font-weight="600" fill="#FFFFFF">Domain (7 Entities)</text>
+              <line x1="100" y1="84" x2="100" y2="92" stroke="#0B5CAD" stroke-width="1" marker-end="url(#cp1)"/>
+              <line x1="100" y1="120" x2="100" y2="128" stroke="#2F80ED" stroke-width="1" marker-end="url(#cp1)"/>
+              <line x1="100" y1="156" x2="100" y2="164" stroke="#0D9488" stroke-width="1" marker-end="url(#cp1)"/>
+              <rect x="180" y="56" width="120" height="120" rx="6" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+              <text x="240" y="74" text-anchor="middle" font-size="9" font-weight="600" fill="#1F2937">Infrastructure</text>
+              <text x="192" y="96" font-size="8" fill="#6B7280">• TokenService</text>
+              <text x="192" y="112" font-size="8" fill="#6B7280">• FileStorageService</text>
+              <text x="192" y="128" font-size="8" fill="#6B7280">• JwtSettings</text>
+              <text x="192" y="144" font-size="8" fill="#6B7280">• ExceptionMiddleware</text>
+              <text x="192" y="160" font-size="8" fill="#6B7280">• Swagger</text>
+              <rect x="360" y="20" width="170" height="160" rx="10" fill="#EBF3FC" stroke="#2F80ED" stroke-width="1.5"/>
+              <text x="445" y="42" text-anchor="middle" font-size="11" font-weight="700" fill="#2F80ED">React Web App</text>
+              <text x="375" y="62" font-size="8" fill="#6B7280">• Pages (11 files)</text>
+              <text x="375" y="78" font-size="8" fill="#6B7280">• Components (8 files)</text>
+              <text x="375" y="94" font-size="8" fill="#6B7280">• API Client</text>
+              <text x="375" y="110" font-size="8" fill="#6B7280">• AuthContext</text>
+              <text x="375" y="126" font-size="8" fill="#6B7280">• I18n (214 keys)</text>
+              <text x="375" y="142" font-size="8" fill="#6B7280">• ThemeProvider</text>
+              <text x="375" y="158" font-size="8" fill="#6B7280">• React 19 + TS 6 + Vite 8</text>
+              <rect x="360" y="200" width="170" height="160" rx="10" fill="#F0FDFA" stroke="#0D9488" stroke-width="1.5"/>
+              <text x="445" y="222" text-anchor="middle" font-size="11" font-weight="700" fill="#0D9488">Flutter Mobile App</text>
+              <text x="375" y="242" font-size="8" fill="#6B7280">• Screens (12 files)</text>
+              <text x="375" y="258" font-size="8" fill="#6B7280">• Widgets (5 files)</text>
+              <text x="375" y="274" font-size="8" fill="#6B7280">• Services (5 files)</text>
+              <text x="375" y="290" font-size="8" fill="#6B7280">• Models (14 classes)</text>
+              <text x="375" y="306" font-size="8" fill="#6B7280">• Core (5 files)</text>
+              <text x="375" y="322" font-size="8" fill="#6B7280">• Flutter 3.38 + Dart 3.9</text>
+              <line x1="310" y1="100" x2="358" y2="100" stroke="#2F80ED" stroke-width="1.5" marker-end="url(#cp1)"/>
+              <text x="334" y="94" text-anchor="middle" font-size="8" fill="#6B7280">HTTP</text>
+              <line x1="310" y1="260" x2="358" y2="260" stroke="#0D9488" stroke-width="1.5" marker-end="url(#cp1)"/>
+              <text x="334" y="254" text-anchor="middle" font-size="8" fill="#6B7280">HTTP</text>
+              <rect x="560" y="120" width="160" height="60" rx="8" fill="#FFFFFF" stroke="#8B5CF6" stroke-width="1.5"/>
+              <text x="640" y="148" text-anchor="middle" font-size="10" font-weight="600" fill="#8B5CF6">SQL Server 2022</text>
+              <text x="640" y="164" text-anchor="middle" font-size="8" fill="#6B7280">Docker :1433</text>
+              <line x1="320" y1="160" x2="558" y2="148" stroke="#8B5CF6" stroke-width="1.2" marker-end="url(#cp1)"/>
+              <text x="440" y="146" font-size="8" fill="#8B5CF6">TCP/IP</text>
+              <rect x="560" y="220" width="160" height="50" rx="8" fill="#FFFFFF" stroke="#D97706" stroke-width="1.5"/>
+              <text x="640" y="244" text-anchor="middle" font-size="10" font-weight="600" fill="#D97706">File Storage</text>
+              <text x="640" y="260" text-anchor="middle" font-size="8" fill="#6B7280">wwwroot/uploads</text>
+              <line x1="320" y1="180" x2="558" y2="240" stroke="#D97706" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#cp1)"/>
+              <text x="440" y="216" font-size="8" fill="#D97706">File I/O</text>
+            </svg>
+          </div>
+          <div class="diagram-caption">Figure 16: Component Diagram — Equipify</div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SECTION 23 — DEPLOYMENT DIAGRAM
+           ============================================================ -->
+      <section class="doc-section" id="sec-deploy-diag">
+        <h2>23 — Deployment Diagram</h2>
+        <p>The Deployment diagram shows the development environment topology and communication paths between components.</p>
+
+        <div class="svg-diagram">
+          <div class="diagram-header">
+            <span>Deployment Diagram</span>
+            <span class="diagram-tag">Figure 17</span>
+          </div>
+          <div class="diagram-body">
+            <svg viewBox="0 0 720 340" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="dep1" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#0B5CAD"/></marker>
+              </defs>
+              <!-- Developer Machine -->
+              <rect x="20" y="20" width="680" height="300" rx="12" fill="#F5F8FC" stroke="#0B5CAD" stroke-width="1.5" stroke-dasharray="8,4"/>
+              <text x="360" y="42" text-anchor="middle" font-size="12" font-weight="700" fill="#0B5CAD">Developer Machine</text>
+
+              <!-- Vite Dev Server -->
+              <rect x="50" y="70" width="150" height="60" rx="8" fill="#FFFFFF" stroke="#2F80ED" stroke-width="1.5"/>
+              <text x="125" y="92" text-anchor="middle" font-size="10" font-weight="600" fill="#2F80ED">Vite Dev Server</text>
+              <text x="125" y="108" text-anchor="middle" font-size="9" fill="#6B7280">React 19 + Vite 8</text>
+              <text x="125" y="122" text-anchor="middle" font-size="9" fill="#6B7280">:5173</text>
+
+              <!-- ASP.NET Core -->
+              <rect x="280" y="70" width="160" height="60" rx="8" fill="#FFFFFF" stroke="#0B5CAD" stroke-width="1.5"/>
+              <text x="360" y="92" text-anchor="middle" font-size="10" font-weight="600" fill="#0B5CAD">ASP.NET Core</text>
+              <text x="360" y="108" text-anchor="middle" font-size="9" fill="#6B7280">Kestrel :5000</text>
+              <text x="360" y="122" text-anchor="middle" font-size="9" fill="#6B7280">Swagger / API</text>
+
+              <!-- Flutter -->
+              <rect x="50" y="200" width="150" height="60" rx="8" fill="#FFFFFF" stroke="#0D9488" stroke-width="1.5"/>
+              <text x="125" y="222" text-anchor="middle" font-size="10" font-weight="600" fill="#0D9488">Flutter Run</text>
+              <text x="125" y="238" text-anchor="middle" font-size="9" fill="#6B7280">Android Emulator</text>
+              <text x="125" y="252" text-anchor="middle" font-size="9" fill="#6B7280">→ :5000</text>
+
+              <!-- SQL Server -->
+              <rect x="280" y="180" width="160" height="100" rx="8" fill="#FFFFFF" stroke="#8B5CF6" stroke-width="1.5"/>
+              <text x="360" y="202" text-anchor="middle" font-size="10" font-weight="600" fill="#8B5CF6">SQL Server 2022</text>
+              <text x="360" y="218" text-anchor="middle" font-size="9" fill="#6B7280">Docker Container</text>
+              <text x="360" y="232" text-anchor="middle" font-size="9" fill="#6B7280">equipify-sql</text>
+              <text x="360" y="248" text-anchor="middle" font-size="9" fill="#6B7280">:1433</text>
+              <text x="360" y="264" text-anchor="middle" font-size="9" fill="#6B7280">DB: EquipifyDb</text>
+
+              <!-- File Storage -->
+              <rect x="500" y="180" width="150" height="60" rx="8" fill="#FFFFFF" stroke="#D97706" stroke-width="1.5"/>
+              <text x="575" y="202" text-anchor="middle" font-size="10" font-weight="600" fill="#D97706">File Storage</text>
+              <text x="575" y="218" text-anchor="middle" font-size="9" fill="#6B7280">wwwroot/uploads/</text>
+              <text x="575" y="232" text-anchor="middle" font-size="9" fill="#6B7280">Local filesystem</text>
+
+              <!-- Arrows -->
+              <line x1="200" y1="100" x2="278" y2="100" stroke="#2F80ED" stroke-width="1.5" marker-end="url(#dep1)"/>
+              <text x="239" y="94" text-anchor="middle" font-size="8" fill="#6B7280">HTTP :5000</text>
+
+              <line x1="200" y1="230" x2="278" y2="210" stroke="#0D9488" stroke-width="1.5" marker-end="url(#dep1)"/>
+              <text x="228" y="214" font-size="8" fill="#6B7280">HTTP</text>
+
+              <line x1="440" y1="130" x2="360" y2="178" stroke="#8B5CF6" stroke-width="1.5" marker-end="url(#dep1)"/>
+              <text x="388" y="156" font-size="8" fill="#8B5CF6">TCP/IP :1433</text>
+
+              <line x1="440" y1="110" x2="498" y2="190" stroke="#D97706" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#dep1)"/>
+              <text x="476" y="148" font-size="8" fill="#D97706">File I/O</text>
+
+              <!-- Artifacts table -->
+              <text x="500" y="80" font-size="9" font-weight="600" fill="#1F2937">Artifacts:</text>
+              <text x="500" y="96" font-size="8" fill="#6B7280">• Web: localhost:5173</text>
+              <text x="500" y="110" font-size="8" fill="#6B7280">• API: localhost:5000</text>
+              <text x="500" y="124" font-size="8" fill="#6B7280">• DB: localhost:1433</text>
+            </svg>
+          </div>
+          <div class="diagram-caption">Figure 17: Deployment Diagram — Development Environment</div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SECTION 24 — API ARCHITECTURE
+           ============================================================ -->
+      <section class="doc-section" id="sec-api-arch">
+        <h2>24 — API Architecture</h2>
+        <p>The Equipify API follows RESTful conventions with a consistent request/response pattern and a middleware pipeline that handles cross-cutting concerns.</p>
+
+        <h3>Request/Response Flow</h3>
+        <div class="svg-diagram">
+          <div class="diagram-header">
+            <span>API Request Lifecycle</span>
+            <span class="diagram-tag">Figure 18</span>
+          </div>
+          <div class="diagram-body">
+            <svg viewBox="0 0 740 160" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="api1" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#0B5CAD"/></marker>
+                <marker id="api2" markerWidth="8" markerHeight="6" refX="0" refY="3" orient="auto"><polygon points="8 0,0 3,8 6" fill="#6B7280"/></marker>
+              </defs>
+              <!-- Request flow -->
+              <rect x="20" y="50" width="80" height="50" rx="6" fill="#0B5CAD"/>
+              <text x="60" y="72" text-anchor="middle" font-size="10" font-weight="600" fill="#FFFFFF">Client</text>
+              <text x="60" y="86" text-anchor="middle" font-size="8" fill="#B0C4DE">React/Flutter</text>
+
+              <line x1="100" y1="75" x2="138" y2="75" stroke="#0B5CAD" stroke-width="1.5" marker-end="url(#api1)"/>
+              <text x="119" y="68" text-anchor="middle" font-size="7" fill="#6B7280">HTTP</text>
+
+              <rect x="140" y="40" width="100" height="70" rx="6" fill="#EBF3FC" stroke="#0B5CAD" stroke-width="1"/>
+              <text x="190" y="58" text-anchor="middle" font-size="8" font-weight="600" fill="#0B5CAD">Middleware</text>
+              <text x="190" y="72" font-size="7" fill="#6B7280">Exception</text>
+              <text x="190" y="84" font-size="7" fill="#6B7280">RateLimit</text>
+              <text x="190" y="96" font-size="7" fill="#6B7280">JWT Auth</text>
+
+              <line x1="240" y1="75" x2="278" y2="75" stroke="#0B5CAD" stroke-width="1.5" marker-end="url(#api1)"/>
+
+              <rect x="280" y="50" width="90" height="50" rx="6" fill="#2F80ED"/>
+              <text x="325" y="72" text-anchor="middle" font-size="10" font-weight="600" fill="#FFFFFF">Controller</text>
+              <text x="325" y="86" text-anchor="middle" font-size="8" fill="#B0C4DE">6 Controllers</text>
+
+              <line x1="370" y1="75" x2="408" y2="75" stroke="#2F80ED" stroke-width="1.5" marker-end="url(#api1)"/>
+
+              <rect x="410" y="50" width="90" height="50" rx="6" fill="#0D9488"/>
+              <text x="455" y="72" text-anchor="middle" font-size="10" font-weight="600" fill="#FFFFFF">Service</text>
+              <text x="455" y="86" text-anchor="middle" font-size="8" fill="#B0C4DE">9 Services</text>
+
+              <line x1="500" y1="75" x2="538" y2="75" stroke="#0D9488" stroke-width="1.5" marker-end="url(#api1)"/>
+
+              <rect x="540" y="50" width="90" height="50" rx="6" fill="#D97706"/>
+              <text x="585" y="72" text-anchor="middle" font-size="10" font-weight="600" fill="#FFFFFF">Repository</text>
+              <text x="585" y="86" text-anchor="middle" font-size="8" fill="#B0C4DE">EF Core</text>
+
+              <line x1="630" y1="75" x2="668" y2="75" stroke="#D97706" stroke-width="1.5" marker-end="url(#api1)"/>
+
+              <rect x="670" y="50" width="60" height="50" rx="6" fill="#8B5CF6"/>
+              <text x="700" y="72" text-anchor="middle" font-size="10" font-weight="600" fill="#FFFFFF">DB</text>
+              <text x="700" y="86" text-anchor="middle" font-size="8" fill="#B0C4DE">SQL</text>
+
+              <!-- Return arrow -->
+              <line x1="670" y1="115" x2="100" y2="115" stroke="#6B7280" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#api2)"/>
+              <text x="385" y="130" text-anchor="middle" font-size="8" fill="#6B7280">HTTP Response (JSON)</text>
+            </svg>
+          </div>
+          <div class="diagram-caption">Figure 18: API Request/Response Lifecycle</div>
+        </div>
+
+        <h3>Middleware Pipeline</h3>
+        <p>Every incoming request passes through the following middleware in order:</p>
+        <ol>
+          <li><strong>ExceptionHandlingMiddleware:</strong> Catches unhandled exceptions and converts them to RFC 7807 ProblemDetails responses.</li>
+          <li><strong>Rate Limiting:</strong> Enforces per-IP throttling (10/min for auth, 5/min for OTP).</li>
+          <li><strong>JWT Authentication:</strong> Validates Bearer tokens using HMAC-SHA256.</li>
+          <li><strong>CORS:</strong> Allows requests from <code>localhost:5173</code>.</li>
+        </ol>
+
+        <h3>Endpoint Groups</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Group</th><th>Base Path</th><th>Endpoints</th><th>Auth Required</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Auth</td><td><code>/api/auth</code></td><td>13</td><td>Public / User</td></tr>
+              <tr><td>Admin</td><td><code>/api/admin</code></td><td>14</td><td>Admin</td></tr>
+              <tr><td>Listings</td><td><code>/api/listings</code></td><td>8</td><td>Public / User</td></tr>
+              <tr><td>Categories</td><td><code>/api/categories</code></td><td>2</td><td>Public</td></tr>
+              <tr><td>Requests</td><td><code>/api/requests</code></td><td>9</td><td>User</td></tr>
+              <tr><td>Ratings</td><td><code>/api</code></td><td>2</td><td>Public / User</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>ServiceResult Pattern</h3>
+        <p>All business logic returns <code>ServiceResult</code> instead of throwing exceptions:</p>
+        <pre><code>ServiceResult { bool Success; string? Error; }
+ServiceResult&lt;T&gt; : ServiceResult { T? Value; }</code></pre>
+      </section>
+
+      <!-- ============================================================
+           SECTION 25 — API ENDPOINTS
+           ============================================================ -->
+      <section class="doc-section" id="sec-api-endpoints">
+        <h2>25 — API Endpoints</h2>
+        <p>The following tables list all 48 API endpoints with their HTTP methods, authentication requirements, and rate limits.</p>
+
+        <h3>Authentication Endpoints</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>#</th><th>Method</th><th>Endpoint</th><th>Body/Params</th><th>Rate Limit</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>POST</td><td><code>/api/auth/send-otp</code></td><td>{ phoneNumber }</td><td>10/min</td></tr>
+              <tr><td>2</td><td>GET</td><td><code>/api/auth/check-email</code></td><td>query: email</td><td>—</td></tr>
+              <tr><td>3</td><td>GET</td><td><code>/api/auth/check-phone</code></td><td>query: phone</td><td>—</td></tr>
+              <tr><td>4</td><td>POST</td><td><code>/api/auth/register</code></td><td>{ firstName, lastName, emailAddress, phoneNumber, password, otpCode }</td><td>10/min</td></tr>
+              <tr><td>5</td><td>POST</td><td><code>/api/auth/login</code></td><td>{ phoneNumber, password }</td><td>10/min</td></tr>
+              <tr><td>6</td><td>POST</td><td><code>/api/auth/admin-login</code></td><td>{ username, password }</td><td>10/min</td></tr>
+              <tr><td>7</td><td>POST</td><td><code>/api/auth/forgot-password</code></td><td>{ phoneNumber }</td><td>10/min</td></tr>
+              <tr><td>8</td><td>POST</td><td><code>/api/auth/reset-password</code></td><td>{ phoneNumber, otpCode, newPassword }</td><td>10/min</td></tr>
+              <tr><td>9</td><td>POST</td><td><code>/api/auth-refresh</code></td><td>{ refreshToken }</td><td>—</td></tr>
+              <tr><td>10</td><td>POST</td><td><code>/api/auth/logout</code></td><td>{ refreshToken }</td><td>—</td></tr>
+              <tr><td>11</td><td>GET</td><td><code>/api/auth/me</code></td><td>—</td><td>—</td></tr>
+              <tr><td>12</td><td>PUT</td><td><code>/api/auth/me</code></td><td>{ firstName, lastName, emailAddress, phoneNumber }</td><td>—</td></tr>
+              <tr><td>13</td><td>POST</td><td><code>/api/auth/change-password</code></td><td>{ currentPassword, newPassword }</td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Listings Endpoints</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>#</th><th>Method</th><th>Endpoint</th><th>Auth</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>14</td><td>GET</td><td><code>/api/listings</code> (browse)</td><td>Public</td></tr>
+              <tr><td>15</td><td>GET</td><td><code>/api/listings/map</code></td><td>Public</td></tr>
+              <tr><td>16</td><td>GET</td><td><code>/api/listings/{id}</code></td><td>Public</td></tr>
+              <tr><td>17</td><td>GET</td><td><code>/api/listings/mine</code></td><td>User</td></tr>
+              <tr><td>18</td><td>POST</td><td><code>/api/listings</code> (multipart)</td><td>User</td></tr>
+              <tr><td>19</td><td>PUT</td><td><code>/api/listings/{id}</code> (multipart)</td><td>User</td></tr>
+              <tr><td>20</td><td>POST</td><td><code>/api/listings/{id}/status</code></td><td>User</td></tr>
+              <tr><td>21</td><td>DELETE</td><td><code>/api/listings/{id}</code></td><td>User</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Categories Endpoints</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>#</th><th>Method</th><th>Endpoint</th><th>Auth</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>22</td><td>GET</td><td><code>/api/categories</code></td><td>Public</td></tr>
+              <tr><td>23</td><td>GET</td><td><code>/api/categories/{id}</code></td><td>Public</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Rental Requests Endpoints</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>#</th><th>Method</th><th>Endpoint</th><th>Auth</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>24</td><td>POST</td><td><code>/api/requests/otp/send</code></td><td>User</td></tr>
+              <tr><td>25</td><td>POST</td><td><code>/api/requests</code></td><td>User</td></tr>
+              <tr><td>26</td><td>GET</td><td><code>/api/requests/mine</code></td><td>User</td></tr>
+              <tr><td>27</td><td>GET</td><td><code>/api/requests/incoming</code></td><td>User</td></tr>
+              <tr><td>28</td><td>GET</td><td><code>/api/requests/for-listing/{listingId}</code></td><td>User</td></tr>
+              <tr><td>29</td><td>POST</td><td><code>/api/requests/{id}/accept</code></td><td>User</td></tr>
+              <tr><td>30</td><td>POST</td><td><code>/api/requests/{id}/reject</code></td><td>User</td></tr>
+              <tr><td>31</td><td>DELETE</td><td><code>/api/requests/{id}</code></td><td>User</td></tr>
+              <tr><td>32</td><td>POST</td><td><code>/api/requests/{id}/rating</code></td><td>User</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Ratings Endpoints</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>#</th><th>Method</th><th>Endpoint</th><th>Auth</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>33</td><td>GET</td><td><code>/api/users/{id}/reviews</code></td><td>Public</td></tr>
+              <tr><td>34</td><td>GET</td><td><code>/api/listings/{id}/reviews</code></td><td>Public</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Admin Endpoints</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>#</th><th>Method</th><th>Endpoint</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>35</td><td>GET</td><td><code>/api/admin/dashboard</code></td><td>Aggregate stats</td></tr>
+              <tr><td>36</td><td>GET</td><td><code>/api/admin/users</code></td><td>All users</td></tr>
+              <tr><td>37</td><td>PUT</td><td><code>/api/admin/users/{id}</code></td><td>Update user</td></tr>
+              <tr><td>38</td><td>POST</td><td><code>/api/admin/users/{id}/toggle-status</code></td><td>Block/unblock</td></tr>
+              <tr><td>39</td><td>DELETE</td><td><code>/api/admin/users/{id}</code></td><td>Delete user</td></tr>
+              <tr><td>40</td><td>GET</td><td><code>/api/admin/listings</code></td><td>All listings</td></tr>
+              <tr><td>41</td><td>POST</td><td><code>/api/admin/listings/{id}/approve</code></td><td>Approve listing</td></tr>
+              <tr><td>42</td><td>POST</td><td><code>/api/admin/listings/{id}/deactivate</code></td><td>Deactivate listing</td></tr>
+              <tr><td>43</td><td>DELETE</td><td><code>/api/admin/listings/{id}</code></td><td>Delete listing</td></tr>
+              <tr><td>44</td><td>POST</td><td><code>/api/admin/categories</code></td><td>Create category</td></tr>
+              <tr><td>45</td><td>PUT</td><td><code>/api/admin/categories/{id}</code></td><td>Update category</td></tr>
+              <tr><td>46</td><td>DELETE</td><td><code>/api/admin/categories/{id}</code></td><td>Delete category</td></tr>
+              <tr><td>47</td><td>GET</td><td><code>/api/admin/requests</code></td><td>All requests</td></tr>
+              <tr><td>48</td><td>DELETE</td><td><code>/api/admin/requests/{id}</code></td><td>Delete request</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SECTION 26 — SECURITY ARCHITECTURE
+           ============================================================ -->
+      <section class="doc-section" id="sec-security">
+        <h2>26 — Security Architecture</h2>
+        <p>The Equipify security architecture implements eight layered defenses to protect against common web application threats.</p>
+
+        <div class="svg-diagram">
+          <div class="diagram-header">
+            <span>Security Layers</span>
+            <span class="diagram-tag">Figure 19</span>
+          </div>
+          <div class="diagram-body">
+            <svg viewBox="0 0 700 420" xmlns="http://www.w3.org/2000/svg">
+              <!-- Layer 1 -->
+              <rect x="40" y="20" width="620" height="44" rx="8" fill="#EBF3FC" stroke="#0B5CAD" stroke-width="1.5"/>
+              <text x="60" y="38" font-size="10" font-weight="700" fill="#0B5CAD">Layer 1: Transport Security</text>
+              <text x="60" y="52" font-size="8.5" fill="#6B7280">HTTPS • CORS (localhost:5173) • Security Headers (nosniff, DENY, no-referrer)</text>
+
+              <!-- Layer 2 -->
+              <rect x="40" y="72" width="620" height="44" rx="8" fill="#D1FAE5" stroke="#0D9488" stroke-width="1.5"/>
+              <text x="60" y="90" font-size="10" font-weight="700" fill="#0D9488">Layer 2: Authentication</text>
+              <text x="60" y="104" font-size="8.5" fill="#6B7280">JWT (HMAC-SHA256) • Refresh Token Rotation • OTP (SHA-256) • BCrypt Hashing</text>
+
+              <!-- Layer 3 -->
+              <rect x="40" y="124" width="620" height="44" rx="8" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
+              <text x="60" y="142" font-size="10" font-weight="700" fill="#D97706">Layer 3: Authorization</text>
+              <text x="60" y="156" font-size="8.5" fill="#6B7280">Role-Based (User/Admin) • Resource Ownership • Admin Gate Validation</text>
+
+              <!-- Layer 4 -->
+              <rect x="40" y="176" width="620" height="44" rx="8" fill="#EBF3FC" stroke="#2F80ED" stroke-width="1.5"/>
+              <text x="60" y="194" font-size="10" font-weight="700" fill="#2F80ED">Layer 4: Input Validation</text>
+              <text x="60" y="208" font-size="8.5" fill="#6B7280">Server-side validation • File validation (ext+content-type+magic) • EF Core (SQL injection) • React (XSS)</text>
+
+              <!-- Layer 5 -->
+              <rect x="40" y="228" width="620" height="44" rx="8" fill="#FEE2E2" stroke="#EF4444" stroke-width="1.5"/>
+              <text x="60" y="246" font-size="10" font-weight="700" fill="#EF4444">Layer 5: Rate Limiting</text>
+              <text x="60" y="260" font-size="8.5" fill="#6B7280">Auth: 10 req/min • OTP: 5 req/min • Per-IP throttling</text>
+
+              <!-- Layer 6 -->
+              <rect x="40" y="280" width="620" height="44" rx="8" fill="#F3E8FF" stroke="#8B5CF6" stroke-width="1.5"/>
+              <text x="60" y="298" font-size="10" font-weight="700" fill="#8B5CF6">Layer 6: Timing Attack Prevention</text>
+              <text x="60" y="312" font-size="8.5" fill="#6B7280">Dummy BCrypt for unknown phones • Dummy BCrypt for wrong admin username • Constant-time comparison</text>
+
+              <!-- Layer 7 -->
+              <rect x="40" y="332" width="620" height="44" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.5"/>
+              <text x="60" y="350" font-size="10" font-weight="700" fill="#D97706">Layer 7: Token Security</text>
+              <text x="60" y="364" font-size="8.5" fill="#6B7280">SHA-256 hashed refresh tokens • 60min/120min expiry • Rotation on refresh • Revocation on logout</text>
+
+              <!-- Layer 8 -->
+              <rect x="40" y="384" width="620" height="44" rx="8" fill="#F0FDFA" stroke="#0D9488" stroke-width="1.5"/>
+              <text x="60" y="402" font-size="10" font-weight="700" fill="#0D9488">Layer 8: File Security</text>
+              <text x="60" y="416" font-size="8.5" fill="#6B7280">GUID filenames • 5MB limit • Extension whitelist • Content-type validation • Magic byte verification</text>
+            </svg>
+          </div>
+          <div class="diagram-caption">Figure 19: Security Architecture — Eight-Layer Defense</div>
+        </div>
+
+        <h3>Threat Mitigation</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Threat</th><th>Mitigation</th><th>Layer</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Brute Force</td><td>Rate limiting + BCrypt cost</td><td>5, 2</td></tr>
+              <tr><td>Credential Stuffing</td><td>Rate limiting</td><td>5</td></tr>
+              <tr><td>Token Theft</td><td>Short expiry + rotation</td><td>7</td></tr>
+              <tr><td>Path Traversal</td><td>GUID filenames</td><td>8</td></tr>
+              <tr><td>SQL Injection</td><td>EF Core ORM</td><td>4</td></tr>
+              <tr><td>XSS</td><td>React auto-escaping</td><td>4</td></tr>
+              <tr><td>Timing Attacks</td><td>Dummy BCrypt</td><td>6</td></tr>
+              <tr><td>File Upload Attacks</td><td>Multi-layer validation</td><td>8</td></tr>
+              <tr><td>CORS Bypass</td><td>Origin whitelist</td><td>1</td></tr>
+              <tr><td>Clickjacking</td><td>X-Frame-Options: DENY</td><td>1</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SECTION 27 — ERROR HANDLING
+           ============================================================ -->
+      <section class="doc-section" id="sec-errors">
+        <h2>27 — Error Handling</h2>
+        <p>The backend implements a global exception handling strategy through <code>ExceptionHandlingMiddleware</code> that converts all unhandled exceptions into standardized RFC 7807 ProblemDetails responses.</p>
+
+        <h3>Exception Mapping</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Exception Type</th><th>HTTP Status</th><th>Response</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>InvalidOperationException</code></td><td>409 Conflict</td><td>ProblemDetails with error message</td></tr>
+              <tr><td><code>UnauthorizedAccessException</code></td><td>403 Forbidden</td><td>ProblemDetails</td></tr>
+              <tr><td>All other exceptions</td><td>500 Internal Server Error</td><td>Sanitized ProblemDetails (no stack trace in production)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>ServiceResult Pattern</h3>
+        <p>All service methods return <code>ServiceResult</code> or <code>ServiceResult&lt;T&gt;</code> instead of throwing exceptions. Controllers inspect the <code>Success</code> property and map failures to appropriate HTTP status codes:</p>
+        <pre><code>ServiceResult { bool Success; string? Error; }
+ServiceResult&lt;T&gt; : ServiceResult { T? Value; }</code></pre>
+      </section>
+
+      <!-- ============================================================
+           SECTION 28 — VALIDATION
+           ============================================================ -->
+      <section class="doc-section" id="sec-validation">
+        <h2>28 — Validation</h2>
+        <p>Input validation is enforced at multiple layers to ensure data integrity and prevent malicious input.</p>
+
+        <h3>Server-Side Validation</h3>
+        <ul>
+          <li><strong>Data Annotations:</strong> Entity properties use <code>[Required]</code>, <code>[MaxLength]</code>, <code>[Precision]</code> attributes enforced by EF Core.</li>
+          <li><strong>EF Configurations:</strong> Fluent API configurations define unique indexes (PhoneNumber, EmailAddress, TokenHash, RentalRequestId), precision for decimal fields, and delete behaviors.</li>
+          <li><strong>Service Layer:</strong> Business rules are validated before persistence (e.g., category existence, listing ownership, overlap detection, OTP verification).</li>
+        </ul>
+
+        <h3>File Upload Validation</h3>
+        <ul>
+          <li><strong>Extension Whitelist:</strong> .jpg, .jpeg, .png, .gif, .webp only.</li>
+          <li><strong>Content-Type Check:</strong> MIME type must match expected image types.</li>
+          <li><strong>Magic Byte Verification:</strong> File header bytes are validated against known image signatures.</li>
+          <li><strong>Size Limit:</strong> Maximum 5MB per file, maximum 6 files per upload.</li>
+          <li><strong>GUID Filenames:</strong> User-provided filenames are replaced with GUIDs to prevent path traversal.</li>
+        </ul>
+
+        <h3>Client-Side Validation</h3>
+        <ul>
+          <li><strong>React:</strong> Form validation in Auth.tsx and ListingForm.tsx with real-time feedback.</li>
+          <li><strong>Flutter:</strong> Form validation in RegisterScreen and ListingFormScreen with translated error messages.</li>
+          <li><strong>SQL Injection:</strong> Prevented by Entity Framework Core's parameterized queries.</li>
+          <li><strong>XSS:</strong> Prevented by React's automatic HTML escaping and Flutter's widget-based rendering.</li>
+        </ul>
+      </section>
+
+      <!-- ============================================================
+           SECTION 29 — PERFORMANCE
+           ============================================================ -->
+      <section class="doc-section" id="sec-performance">
+        <h2>29 — Performance</h2>
+
+        <h3>Frontend Performance</h3>
+        <ul>
+          <li><strong>Lazy Loading:</strong> All pages are loaded via <code>React.lazy()</code> and <code>Suspense</code>, reducing initial bundle size.</li>
+          <li><strong>Vite:</strong> Fast HMR in development and optimized production builds with tree-shaking.</li>
+          <li><strong>Image Optimization:</strong> Listing images are served as static files from <code>wwwroot/uploads/</code> with browser caching.</li>
+          <li><strong>Provider-Based State:</strong> Minimal re-rendering through targeted Context providers.</li>
+        </ul>
+
+        <h3>Backend Performance</h3>
+        <ul>
+          <li><strong>Scoped Services:</strong> Per-request DI lifetime prevents state leakage and enables efficient resource management.</li>
+          <li><strong>Repository Pattern:</strong> Abstracts EF Core queries and enables future query optimization.</li>
+          <li><strong>Pagination:</strong> Browse endpoint limits results to 50 per page to prevent large payload transfers.</li>
+          <li><strong>Static File Serving:</strong> Images served directly by Kestrel without going through the application pipeline.</li>
+        </ul>
+
+        <h3>Database Performance</h3>
+        <ul>
+          <li><strong>Unique Indexes:</strong> On PhoneNumber, EmailAddress, TokenHash, and RentalRequestId for O(log n) lookups.</li>
+          <li><strong>Appropriate Delete Behaviors:</strong> CASCADE for owned data, RESTRICT to prevent accidental cascades.</li>
+          <li><strong>Decimal Precision:</strong> <code>Precision(12,2)</code> on all cost fields for efficient storage.</li>
+        </ul>
+      </section>
+
+      <!-- ============================================================
+           SECTION 30 — SCALABILITY
+           ============================================================ -->
+      <section class="doc-section" id="sec-scalability">
+        <h2>30 — Scalability</h2>
+        <p>The current architecture is designed for single-server deployment. The following areas have been identified for future scalability improvements:</p>
+
+        <h3>Current Limitations</h3>
+        <ul>
+          <li><strong>Single Server:</strong> API, database, and file storage run on a single machine.</li>
+          <li><strong>In-Memory OTP:</strong> OTP codes are stored in a <code>ConcurrentDictionary</code>, which does not survive restarts or scale across instances.</li>
+          <li><strong>Local File Storage:</strong> Uploaded images are stored on the local filesystem under <code>wwwroot/uploads/</code>.</li>
+          <li><strong>No Caching Layer:</strong> No Redis or distributed cache is implemented.</li>
+        </ul>
+
+        <h3>Scaling Path</h3>
+        <ul>
+          <li><strong>Horizontal Scaling:</strong> The stateless API (except OTP) can be load-balanced behind a reverse proxy.</li>
+          <li><strong>Distributed Cache:</strong> Redis could replace the in-memory OTP store and add response caching.</li>
+          <li><strong>Cloud File Storage:</strong> Azure Blob Storage or AWS S3 could replace local file storage for images.</li>
+          <li><strong>Database Scaling:</strong> Read replicas for browse-heavy workloads, connection pooling via EF Core.</li>
+          <li><strong>Containerization:</strong> Dockerfiles for API and frontend would enable consistent deployment across environments.</li>
+        </ul>
+      </section>
+
+      <!-- ============================================================
+           SECTION 31 — TESTING
+           ============================================================ -->
+      <section class="doc-section" id="sec-testing">
+        <h2>31 — Testing</h2>
+
+        <h3>Current State</h3>
+        <p>The project has been validated through the following methods:</p>
+        <ul>
+          <li><strong>Backend Build Verification:</strong> <code>dotnet build</code> compiles successfully with no errors across all four projects.</li>
+          <li><strong>Frontend Build Verification:</strong> <code>npm run build</code> produces a production-ready bundle.</li>
+          <li><strong>Flutter Static Analysis:</strong> <code>flutter analyze</code> reports "No issues found" across all 22 source files.</li>
+          <li><strong>Manual Testing:</strong> Core workflows (registration, login, listing creation, booking, rating) have been manually tested via Swagger UI and the web frontend.</li>
+        </ul>
+
+        <h3>Testing Gaps</h3>
+        <ul>
+          <li>No automated unit tests are implemented.</li>
+          <li>No integration tests for API endpoints.</li>
+          <li>No end-to-end tests for web or mobile flows.</li>
+          <li>No load testing or performance benchmarks.</li>
+        </ul>
+
+        <h3>Recommended Testing Strategy</h3>
+        <ul>
+          <li><strong>Unit Tests:</strong> xUnit for service layer logic, mock repositories.</li>
+          <li><strong>Integration Tests:</strong> WebApplicationFactory for API endpoint testing.</li>
+          <li><strong>E2E Tests:</strong> Playwright for web, integration_test for Flutter.</li>
+          <li><strong>Load Tests:</strong> k6 or Artillery for API performance under concurrent load.</li>
+        </ul>
+      </section>
+
+      <!-- ============================================================
+           SECTION 32 — DEPLOYMENT
+           ============================================================ -->
+      <section class="doc-section" id="sec-deploy">
+        <h2>32 — Deployment</h2>
+
+        <h3>Development Environment</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Component</th><th>Value</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Backend</td><td><code>http://localhost:5000</code> (ASP.NET Core, HTTP)</td></tr>
+              <tr><td>Frontend</td><td><code>http://localhost:5173</code> (Vite dev server)</td></tr>
+              <tr><td>Database</td><td><code>localhost:1433</code> (SQL Server 2022, Docker)</td></tr>
+              <tr><td>Docker Container</td><td><code>equipify-sql</code></td></tr>
+              <tr><td>DB Credentials</td><td><code>sa</code> / <code>Abs@12345</code></td></tr>
+              <tr><td>Database Name</td><td><code>EquipifyDb</code></td></tr>
+              <tr><td>OTP Code (Dev)</td><td><code>0000</code> (fixed)</td></tr>
+              <tr><td>Admin Login</td><td><code>admin</code> / <code>Admin@12345</code></td></tr>
+              <tr><td>Test User</td><td><code>0790666835</code> / <code>123456</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>CORS Configuration</h3>
+        <pre><code>Origins: http://localhost:5173, http://127.0.0.1:5173
+Methods: GET, POST, PUT, DELETE
+Headers: Content-Type, Authorization</code></pre>
+
+        <h3>Rate Limiting</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Policy</th><th>Limit</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>auth</td><td>10 requests per minute</td></tr>
+              <tr><td>otp</td><td>5 requests per minute</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Logging</h3>
+        <p>Serilog is configured for console output and rolling file storage at <code>logs/equipify-api-.log</code> with Information, Warning, and Error levels.</p>
+      </section>
+
+      <!-- ============================================================
+           SECTION 33 — FUTURE IMPROVEMENTS
+           ============================================================ -->
+      <section class="doc-section" id="sec-future">
+        <h2>33 — Future Improvements</h2>
+        <p>The following enhancements have been identified for future development iterations:</p>
+
+        <h3>High Priority</h3>
+        <ul>
+          <li><strong>Payment Integration:</strong> Implement Stripe or PayTabs for secure online payments and escrow-based rental transactions.</li>
+          <li><strong>Push Notifications:</strong> Firebase Cloud Messaging for real-time notifications on rental status changes.</li>
+          <li><strong>Unit Testing Suite:</strong> xUnit tests for service layer, integration tests for API endpoints.</li>
+        </ul>
+
+        <h3>Medium Priority</h3>
+        <ul>
+          <li><strong>Real-Time Chat:</strong> SignalR-based messaging between renters and owners.</li>
+          <li><strong>Email Notifications:</strong> Enable the existing EmailService for booking confirmations, status updates, and welcome emails.</li>
+          <li><strong>Advanced Search:</strong> Elasticsearch integration for full-text search with typo tolerance and ranking.</li>
+          <li><strong>Image Optimization:</strong> Automatic thumbnail generation and WebP conversion on upload.</li>
+        </ul>
+
+        <h3>Low Priority</h3>
+        <ul>
+          <li><strong>Social Authentication:</strong> Google, Facebook, and Apple OAuth integration.</li>
+          <li><strong>Equipment Delivery:</strong> Integration with logistics providers for delivery tracking.</li>
+          <li><strong>Analytics Dashboard:</strong> Advanced analytics with charts, trends, and exportable reports.</li>
+          <li><strong>CI/CD Pipeline:</strong> GitHub Actions for automated build, test, and deployment.</li>
+          <li><strong>Docker Compose:</strong> Full-stack development environment with a single <code>docker-compose up</code> command.</li>
+        </ul>
+      </section>
+
+      <!-- ============================================================
+           SECTION 34 — CONCLUSION
+           ============================================================ -->
+      <section class="doc-section" id="sec-conclusion">
+        <h2>34 — Conclusion</h2>
+        <p>Equipify successfully demonstrates the design and implementation of a multi-platform equipment rental marketplace that addresses the challenges of fragmented discovery, trust deficits, and manual scheduling in the equipment rental industry.</p>
+        <p>The system delivers a cohesive experience across three platforms — a React web application, a Flutter mobile application, and an ASP.NET Core backend API — unified by a shared RESTful API, consistent data models, and a bilingual (Arabic/English) user interface.</p>
+        <p>Key achievements of the project include:</p>
+        <ul>
+          <li>A secure authentication system with phone-based OTP verification, JWT tokens, and refresh token rotation.</li>
+          <li>A complete rental lifecycle with OTP-verified booking, overlap detection, owner acceptance, and post-rental rating.</li>
+          <li>An admin moderation layer ensuring marketplace quality through listing approval and user management.</li>
+          <li>A bilingual architecture supporting Arabic and English with full RTL layout switching.</li>
+          <li>An eight-layer security architecture addressing common web application threats.</li>
+          <li>A Clean Architecture backend with 48 API endpoints, 9 services, and a generic repository pattern.</li>
+        </ul>
+        <p>The project establishes a solid foundation for future enhancements including payment integration, real-time messaging, push notifications, and advanced search capabilities. The modular architecture ensures that these additions can be implemented with minimal disruption to existing functionality.</p>
+      </section>
+
+      <!-- ============================================================
+           APPENDIX A — GLOSSARY
+           ============================================================ -->
+      <section class="doc-section" id="sec-glossary">
+        <h2>Appendix A — Glossary</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Term</th><th>Definition</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Listing</strong></td><td>An equipment item posted by an owner for rent, including images, pricing, location, and availability.</td></tr>
+              <tr><td><strong>Rental Request</strong></td><td>A booking submission from a renter for a specific listing, with date/time range and OTP verification.</td></tr>
+              <tr><td><strong>OTP</strong></td><td>One-Time Password — a temporary code sent to a phone number for verification purposes.</td></tr>
+              <tr><td><strong>JWT</strong></td><td>JSON Web Token — a compact, URL-safe token for securely transmitting information between parties.</td></tr>
+              <tr><td><strong>Refresh Token</strong></td><td>A long-lived token used to obtain new JWT access tokens without requiring re-authentication.</td></tr>
+              <tr><td><strong>BCrypt</strong></td><td>A password hashing function designed to be slow and computationally expensive, resisting brute-force attacks.</td></tr>
+              <tr><td><strong>Rental Unit</strong></td><td>The time-based pricing unit for a listing: hour, day, week, month, or year.</td></tr>
+              <tr><td><strong>Admin Moderation</strong></td><td>The process by which administrators review and approve or reject listing submissions before they become publicly visible.</td></tr>
+              <tr><td><strong>ServiceResult</strong></td><td>A response pattern used in the service layer that wraps success/error status and optional data, avoiding exception-based control flow.</td></tr>
+              <tr><td><strong>Clean Architecture</strong></td><td>An architectural pattern that organizes code into concentric layers (Domain, Data, Service, Api) with dependencies pointing inward.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           APPENDIX B — ABBREVIATIONS
+           ============================================================ -->
+      <section class="doc-section" id="sec-abbrev">
+        <h2>Appendix B — Abbreviations</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Abbreviation</th><th>Full Form</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>API</td><td>Application Programming Interface</td></tr>
+              <tr><td>AR</td><td>Arabic</td></tr>
+              <tr><td>CRUD</td><td>Create, Read, Update, Delete</td></tr>
+              <tr><td>CORS</td><td>Cross-Origin Resource Sharing</td></tr>
+              <tr><td>DB / Db</td><td>Database</td></tr>
+              <tr><td>DFD</td><td>Data Flow Diagram</td></tr>
+              <tr><td>DI</td><td>Dependency Injection</td></tr>
+              <tr><td>EF Core</td><td>Entity Framework Core</td></tr>
+              <tr><td>EN</td><td>English</td></tr>
+              <tr><td>ER</td><td>Entity-Relationship</td></tr>
+              <tr><td>FK</td><td>Foreign Key</td></tr>
+              <tr><td>HMAC</td><td>Hash-based Message Authentication Code</td></tr>
+              <tr><td>JWT</td><td>JSON Web Token</td></tr>
+              <tr><td>LTR</td><td>Left-to-Right</td></tr>
+              <tr><td>ORM</td><td>Object-Relational Mapping</td></tr>
+              <tr><td>OTP</td><td>One-Time Password</td></tr>
+              <tr><td>PK</td><td>Primary Key</td></tr>
+              <tr><td>REST</td><td>Representational State Transfer</td></tr>
+              <tr><td>RTL</td><td>Right-to-Left</td></tr>
+              <tr><td>SHA</td><td>Secure Hash Algorithm</td></tr>
+              <tr><td>SQL</td><td>Structured Query Language</td></tr>
+              <tr><td>UML</td><td>Unified Modeling Language</td></tr>
+              <tr><td>UUID / GUID</td><td>Universally Unique Identifier / Globally Unique Identifier</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ===== FOOTER ===== -->
+      <footer class="doc-footer">
+        <div class="footer-line"></div>
+        <div class="footer-logos">
+          <img src="img/uni_logo.png" alt="University" onerror="this.style.display='none'">
+          <img src="img/project_logo.png" alt="Equipify" onerror="this.style.display='none'">
+        </div>
+        <p class="footer-text">
+          Al-Zaytoonah University of Jordan<br>
+          Department of Computer Science — Software Engineering Project Documentation
+        </p>
+      </footer>
+
+    </div><!-- .content-area -->
+  </main>
+</div><!-- .page-wrapper -->
+
+<script src="script.js"></script>
+</body>
+</html>

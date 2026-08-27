@@ -1,0 +1,38 @@
+# .NET
+bin/
+obj/
+*.user
+appsettings.*.local.json
+
+# Node / Frontend
+node_modules/
+dist/
+.vite/
+
+# IDE
+.vs/
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs & runtime
+logs/
+*.log
+nohup.out
+
+# Uploads (user content)
+backend/src/Equipify.Api/wwwroot/uploads/
+
+# Secrets
+.env
+env.local
+
+# Docker
+docker-compose.override.yml
+Archive.zip
+doc.zip
+doc/
