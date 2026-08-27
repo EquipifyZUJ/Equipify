@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
-import { api } from '../api/client'
+import { api, img } from '../api/client'
 import type { Category, ListingSummary, MapMarker, Paged } from '../api/types'
 import { BrowseMap } from '../components/map/Maps'
 import { ListingCard } from '../components/listings/ListingCard'
@@ -269,7 +269,7 @@ export default function Browse({ mapOnly = false }: { mapOnly?: boolean }) {
             {markers.length === 0 && <Empty icon="🗺️" text={t('browse.empty')} />}
             {markers.map(m => (
               <Link key={m.id} to={`/listings/${m.id}`} className="map-row">
-                <img src={m.image ?? '/placeholder.svg'} alt="" loading="lazy" />
+                <img src={img(m.image)} alt="" loading="lazy" />
                 <div style={{ minWidth: 0, flex: 1 }}>
                   <strong style={{ display: 'block', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontSize: 'var(--fs-sm)' }}>
                     {m.title}

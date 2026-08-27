@@ -36,3 +36,4 @@ docker-compose.override.yml
 Archive.zip
 doc.zip
 doc/
+*.apk
