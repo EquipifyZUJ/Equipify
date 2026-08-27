@@ -148,7 +148,6 @@ var host = new HostBuilder()
                 o.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
             });
 
-            services.AddEndpointsApiExplorer();
             services.AddSwaggerGen(c =>
             {
                 c.CustomSchemaIds(type => type.FullName);
