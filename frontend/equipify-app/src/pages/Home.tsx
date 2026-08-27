@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { api } from '../api/client'
+import { api, img } from '../api/client'
 import type { Category, ListingSummary, Paged } from '../api/types'
 import { ListingCard } from '../components/listings/ListingCard'
 import { useI18n } from '../i18n'
@@ -70,7 +70,7 @@ export default function Home() {
               className="chip cat-chip"
               style={{ textDecoration: 'none', color: 'inherit' }}
             >
-              {c.picture && <img src={c.picture} alt="" loading="lazy" />}
+              {c.picture && <img src={img(c.picture)} alt="" loading="lazy" />}
               {c.name}
             </Link>
           ))}

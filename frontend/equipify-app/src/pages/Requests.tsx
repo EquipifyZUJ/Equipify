@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { api } from '../api/client'
+import { api, img } from '../api/client'
 import type { RentalRequest } from '../api/types'
 import { ConfirmModal, Empty, Modal, Spinner, Stars } from '../components/ui'
 import { useToast } from '../components/ToastProvider'
@@ -52,7 +52,7 @@ export function MyRequests() {
         {requests.map(r => (
           <div key={r.id} className="request-row glass">
             <Link to={`/listings/${r.listingId}`}>
-              <img src={r.listingImage ?? '/placeholder.svg'} alt="" loading="lazy" />
+              <img src={img(r.listingImage ?? '/placeholder.svg')} alt="" loading="lazy" />
             </Link>
             <div style={{ flex: 1, minWidth: 180 }}>
               <strong><Link to={`/listings/${r.listingId}`} style={{ color: 'inherit', textDecoration: 'none' }}>{r.listingTitle}</Link></strong>
@@ -109,7 +109,7 @@ export function IncomingRequests() {
       <div className="form-grid">
         {requests.map(r => (
           <div key={r.id} className="request-row glass">
-            <img src={r.listingImage ?? '/placeholder.svg'} alt="" loading="lazy" />
+            <img src={img(r.listingImage ?? '/placeholder.svg')} alt="" loading="lazy" />
             <div style={{ flex: 1, minWidth: 200 }}>
               <strong>{r.listingTitle}</strong>
               <div className="faint">

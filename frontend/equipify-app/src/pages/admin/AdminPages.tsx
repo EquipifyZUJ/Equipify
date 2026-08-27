@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { api } from '../../api/client'
+import { api, img } from '../../api/client'
 import type { DashboardStats, ListingSummary, RentalRequest, AuthUser, Category } from '../../api/types'
 import { ConfirmModal, Empty, Modal, Spinner, Stars } from '../../components/ui'
 import { useToast } from '../../components/ToastProvider'
@@ -208,7 +208,7 @@ export function AdminListings() {
               <tr key={l.id} style={l.status === 'Pending' ? { backgroundColor: 'rgba(251, 191, 36, 0.06)' } : undefined}>
                 <td>
                   <img
-                    src={l.mainImage ?? '/placeholder.svg'}
+                    src={img(l.mainImage)}
                     alt=""
                     style={{ width: 44, height: 34, objectFit: 'cover', borderRadius: 6 }}
                     loading="lazy"
@@ -291,7 +291,7 @@ export function AdminCategories() {
       <div className="grid cat-grid">
         {cats.map(c => (
           <div key={c.id} className="cat-card listing-card glass">
-            {c.picture && <img src={c.picture} alt="" loading="lazy" />}
+            {c.picture && <img src={img(c.picture)} alt="" loading="lazy" />}
             <div className="card-body between">
               <strong>{c.name}</strong>
               <div className="row" style={{ gap: 6 }}>
@@ -375,7 +375,7 @@ export function AdminRequests() {
             {pending.map(l => (
               <div key={l.id} className="request-row glass">
                 <img
-                  src={l.mainImage ? (l.mainImage.startsWith('http') ? l.mainImage : l.mainImage) : '/placeholder.svg'}
+                  src={img(l.mainImage)}
                   alt=""
                   loading="lazy"
                   style={{ width: 90, height: 70, objectFit: 'cover', borderRadius: 8 }}
@@ -410,7 +410,7 @@ export function AdminRequests() {
           <div className="form-grid">
             {requests.map(r => (
               <div key={r.id} className="request-row glass">
-                <img src={r.listingImage ?? '/placeholder.svg'} alt="" loading="lazy" />
+                <img src={img(r.listingImage)} alt="" loading="lazy" />
                 <div style={{ flex: 1, minWidth: 200 }}>
                   <strong>{r.listingTitle}</strong>
                   <div className="faint">

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { api } from '../api/client'
+import { api, img } from '../api/client'
 import type { ListingSummary } from '../api/types'
 import { ConfirmModal, Empty, Spinner } from '../components/ui'
 import { useToast } from '../components/ToastProvider'
@@ -55,7 +55,7 @@ export default function MyListings() {
         {listings.map(l => (
           <div key={l.id} className="listing-card glass">
             <Link to={`/listings/${l.id}`} className="card-media">
-              <img src={l.mainImage ?? '/placeholder.svg'} alt={l.title} loading="lazy" />
+              <img src={img(l.mainImage)} alt={l.title} loading="lazy" />
               <span className={`badge ${statusBadge(l.status)}`} style={{ position: 'absolute', top: 10, insetInlineEnd: 10 }}>
                 {t(`status.${l.status}` as any)}
               </span>

@@ -5,6 +5,16 @@
 
 const API = import.meta.env.VITE_API_URL ?? '/api'
 
+// API base URL without /api suffix — used for image paths like /images/... /uploads/...
+export const API_BASE = API.replace(/\/api\/?$/, '')
+
+/** Prefix relative image paths with the API server URL so they load on production */
+export function img(path: string | null | undefined): string {
+  if (!path) return '/placeholder.svg'
+  if (path.startsWith('http')) return path
+  return `${API_BASE}${path}`
+}
+
 export class ApiError extends Error {
   status: number
   constructor(status: number, message: string) {

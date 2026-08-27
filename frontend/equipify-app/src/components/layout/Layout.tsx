@@ -4,6 +4,8 @@ import './layout.css'
 import { useAuth } from '../../auth/AuthContext'
 import { useI18n, type Key } from '../../i18n'
 import { useTheme } from '../../theme/ThemeProvider'
+import logoDark from '../../assets/logo_dark.png'
+import logoLight from '../../assets/logo_light.png'
 
 export function Layout() {
   const { t, lang, toggle } = useI18n()
@@ -40,7 +42,7 @@ export function Layout() {
         <div className="container nav-inner">
           <NavLink to="/" className="brand" aria-label="Equipify" id="brand-link">
             <img
-              src={theme === 'dark' ? '/src/assets/logo_dark.png' : '/src/assets/logo_light.png'}
+              src={theme === 'dark' ? logoDark : logoLight}
               alt="Equipify"
               className="brand-logo"
             />

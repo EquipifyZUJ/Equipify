@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { api } from '../api/client'
+import { api, img } from '../api/client'
 import type { Listing, Review } from '../api/types'
 import { MiniMap } from '../components/map/Maps'
 import { Empty, Spinner, Stars } from '../components/ui'
@@ -99,13 +99,13 @@ export default function ListingDetails() {
         {/* Left column */}
         <div>
           <div className="gallery-main glass" style={{ padding: 0 }}>
-            <img className="img-cover" src={listing.images[activeImg] ?? '/placeholder.svg'} alt={listing.title} />
+            <img className="img-cover" src={img(listing.images[activeImg])} alt={listing.title} />
           </div>
           {listing.images.length > 1 && (
             <div className="thumbs">
               {listing.images.map((src, i) => (
                 <div key={src} className={`thumb ${i === activeImg ? 'on' : ''}`} onClick={() => setActiveImg(i)}>
-                  <img src={src} alt="" loading="lazy" />
+                  <img src={img(src)} alt="" loading="lazy" />
                 </div>
               ))}
             </div>

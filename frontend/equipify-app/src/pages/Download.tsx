@@ -1,6 +1,8 @@
 import { useI18n } from '../i18n'
 import { useTheme } from '../theme/ThemeProvider'
 import { useAuth } from '../auth/AuthContext'
+import logoDark from '../assets/logo_dark.png'
+import logoLight from '../assets/logo_light.png'
 
 const APK_URL = '/app/equipify.apk'
 
@@ -23,7 +25,7 @@ export default function Download() {
         <div className="dl-hero-content">
           <div className="dl-app-icon">
             <img
-              src={theme === 'dark' ? '/src/assets/logo_dark.png' : '/src/assets/logo_light.png'}
+              src={theme === 'dark' ? logoDark : logoLight}
               alt="Equipify"
               className="dl-icon-img"
             />

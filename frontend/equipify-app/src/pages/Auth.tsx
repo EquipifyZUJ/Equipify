@@ -4,6 +4,8 @@ import { useAuth } from '../auth/AuthContext'
 import { useI18n } from '../i18n'
 import { useTheme } from '../theme/ThemeProvider'
 import { api } from '../api/client'
+import logoDark from '../assets/logo_dark.png'
+import logoLight from '../assets/logo_light.png'
 
 /* ─── Login ─── */
 export function Login() {
@@ -34,7 +36,7 @@ export function Login() {
     <form className="auth-card glass-strong form-grid animate-fadeInUp" onSubmit={submit}>
       <div className="center">
         <img
-          src={theme === 'dark' ? '/src/assets/logo_dark.png' : '/src/assets/logo_light.png'}
+          src={theme === 'dark' ? logoDark : logoLight}
           alt="Equipify"
           className="auth-logo"
         />
@@ -100,7 +102,7 @@ function ForgotPassword({ onBack }: { onBack: () => void }) {
     <form className="auth-card glass-strong form-grid animate-fadeInUp" onSubmit={step === 'phone' ? sendOtp : verifyAndReset}>
       <div className="center">
         <img
-          src={theme === 'dark' ? '/src/assets/logo_dark.png' : '/src/assets/logo_light.png'}
+          src={theme === 'dark' ? logoDark : logoLight}
           alt="Equipify"
           className="auth-logo"
         />
@@ -191,7 +193,7 @@ export function Register() {
     <form className="auth-card glass-strong form-grid animate-fadeInUp" onSubmit={step === 'form' ? requestOtp : submitRegister}>
       <div className="center">
         <img
-          src={theme === 'dark' ? '/src/assets/logo_dark.png' : '/src/assets/logo_light.png'}
+          src={theme === 'dark' ? logoDark : logoLight}
           alt="Equipify"
           className="auth-logo"
         />

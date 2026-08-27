@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { api } from '../api/client'
+import { api, img } from '../api/client'
 import type { Category, Listing } from '../api/types'
 import { MapPicker } from '../components/map/MapPicker'
 import { useToast } from '../components/ToastProvider'
@@ -364,7 +364,7 @@ export default function ListingForm() {
           <div className="img-grid-preview">
             {existingImages.map((p, i) => (
               <div key={p} className="img-preview-card">
-                <img src={p.startsWith('/') ? p : `/uploads/listings/${p}`} alt="" />
+                <img src={img(p.startsWith('/') ? p : `/uploads/listings/${p}`)} alt="" />
                 {i === 0 && <span className="img-badge">{t('listings.mainImage')}</span>}
                 <span className="img-index">{i + 1}</span>
               </div>

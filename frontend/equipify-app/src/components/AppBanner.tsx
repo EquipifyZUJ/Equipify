@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useI18n } from '../i18n'
 import { useTheme } from '../theme/ThemeProvider'
+import logoDark from '../assets/logo_dark.png'
+import logoLight from '../assets/logo_light.png'
 
 export function AppBanner() {
   const { t } = useI18n()
@@ -27,7 +29,7 @@ export function AppBanner() {
       <div className="app-banner-inner">
         <div className="app-banner-icon">
           <img
-            src={theme === 'dark' ? '/src/assets/logo_dark.png' : '/src/assets/logo_light.png'}
+            src={theme === 'dark' ? logoDark : logoLight}
             alt="Equipify"
           />
         </div>
