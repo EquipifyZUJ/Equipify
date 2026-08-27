@@ -190,6 +190,7 @@ var host = new HostBuilder()
             webApp.UseSwagger();
             webApp.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "Equipify API v1"); c.DocumentTitle = "Equipify API"; });
 
+            webApp.UseRouting();
             webApp.UseCors(CorsPolicy);
             webApp.UseRateLimiter();
             webApp.UseAuthentication();
