@@ -2,12 +2,11 @@
 library;
 
 import 'dart:io' show Platform;
+import 'package:flutter/foundation.dart' show kReleaseMode;
 
 /// Resolves the Equipify API base URL.
 ///
-/// - Android emulator reaches the host machine via 10.0.2.2
-/// - iOS simulator / desktop can use localhost directly
-///
+/// Release builds connect to the production server by default.
 /// Override from the CLI:
 ///   flutter run --dart-define=API_URL=http://192.168.1.10:5000
 final String kApiUrl = String.fromEnvironment(
@@ -15,11 +14,11 @@ final String kApiUrl = String.fromEnvironment(
   defaultValue: _defaultApiUrl,
 );
 
-final String _defaultApiUrl = kIsAndroidEmulator
-    ? 'http://10.0.2.2:5000'
-    : 'http://localhost:5000';
+final String _defaultApiUrl = kReleaseMode
+    ? 'https://equipifyapi.onrender.com'
+    : (kIsAndroidEmulator ? 'http://10.0.2.2:5000' : 'http://localhost:5000');
 
-final bool kIsAndroidEmulator = Platform.isAndroid;
+final bool kIsAndroidEmulator = !kReleaseMode && Platform.isAndroid;
 
 /// Absolute URL for a relative image path returned by the API
 /// (e.g. "/uploads/listings/x.jpg" → "http://host/uploads/listings/x.jpg").

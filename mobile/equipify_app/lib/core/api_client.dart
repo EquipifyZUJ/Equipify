@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart' show kReleaseMode;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'constants.dart';
@@ -78,8 +79,8 @@ class ApiClient {
     _dio = Dio(
       BaseOptions(
         baseUrl: kApiUrl,
-        connectTimeout: const Duration(seconds: 12),
-        receiveTimeout: const Duration(seconds: 20),
+        connectTimeout: const Duration(seconds: kReleaseMode ? 60 : 12),
+        receiveTimeout: const Duration(seconds: kReleaseMode ? 60 : 20),
         headers: {'Accept': 'application/json'},
         validateStatus: (_) => true, // handled manually below
       ),
