@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
+import 'core/api_client.dart';
 import 'core/app_state.dart';
 import 'core/i18n.dart';
 import 'core/theme.dart';
@@ -11,6 +12,7 @@ import 'screens/root_shell.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await ApiClient.I.init();
   runApp(const EquipifyApp());
 }
 

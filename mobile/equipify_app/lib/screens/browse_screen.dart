@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart' hide Bounds;
 import 'package:latlong2/latlong.dart';
@@ -43,6 +44,7 @@ class _BrowseScreenState extends State<BrowseScreen> {
   Paged<ListingSummary>? _results;
   List<MapMarker> _markers = [];
   List<Category> _cats = [];
+  Timer? _mapDebounce;
 
   Bounds _bounds = Bounds(west: 35.3, south: 31.5, east: 36.2, north: 32.3);
 
@@ -61,11 +63,19 @@ class _BrowseScreenState extends State<BrowseScreen> {
     _bootstrap();
   }
 
+  @override
+  void dispose() {
+    _mapDebounce?.cancel();
+    super.dispose();
+  }
+
   Future<void> _bootstrap() async {
     try {
-      _cats = await CategoryService().all();
+      final catsFuture = CategoryService().all();
+      final dataFuture = _load();
+      _cats = await catsFuture;
+      await dataFuture;
     } catch (_) {/* non-fatal */}
-    await _load();
   }
 
   Future<void> _load() async {
@@ -530,7 +540,10 @@ class _BrowseScreenState extends State<BrowseScreen> {
               );
             },
             onMapEvent: (e) {
-              if (e is MapEventMoveEnd) _load();
+              if (e is MapEventMoveEnd) {
+                _mapDebounce?.cancel();
+                _mapDebounce = Timer(const Duration(milliseconds: 400), _load);
+              }
             },
           ),
           children: [

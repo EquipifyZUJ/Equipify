@@ -20,6 +20,11 @@ class RootShell extends StatefulWidget {
 
 class _RootShellState extends State<RootShell> {
   int _index = 0;
+  final Map<int, Widget> _cache = {};
+
+  Widget _buildTab(Widget Function() builder, int index) {
+    return _cache.putIfAbsent(index, builder);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,18 +33,14 @@ class _RootShellState extends State<RootShell> {
     final isAr = s.isAr;
 
     final tabs = <_Tab>[
-      _Tab(Icons.home_rounded, Icons.home_outlined, s.t('nav.home'), const HomeScreen()),
-      _Tab(Icons.explore_rounded, Icons.explore_outlined, s.t('nav.browse'), const BrowseScreen()),
+      _Tab(Icons.home_rounded, Icons.home_outlined, s.t('nav.home')),
+      _Tab(Icons.explore_rounded, Icons.explore_outlined, s.t('nav.browse')),
       if (auth.user != null) ...[
-        _Tab(Icons.inventory_2_rounded, Icons.inventory_2_outlined,
-            s.t('nav.myListings'), const MyListingsScreen()),
-        _Tab(Icons.receipt_long_rounded, Icons.receipt_long_outlined,
-            s.t('nav.requests'), const RequestsScreen()),
-        _Tab(Icons.person_rounded, Icons.person_outline, s.t('nav.profile'),
-            const ProfileScreen()),
+        _Tab(Icons.inventory_2_rounded, Icons.inventory_2_outlined, s.t('nav.myListings')),
+        _Tab(Icons.receipt_long_rounded, Icons.receipt_long_outlined, s.t('nav.requests')),
+        _Tab(Icons.person_rounded, Icons.person_outline, s.t('nav.profile')),
       ] else
-        _Tab(Icons.person_rounded, Icons.person_outline, s.t('nav.profile'),
-            const ProfileScreen()),
+        _Tab(Icons.person_rounded, Icons.person_outline, s.t('nav.profile')),
     ];
 
     final logoWidget = Image(
@@ -51,6 +52,19 @@ class _RootShellState extends State<RootShell> {
       height: 38,
       fit: BoxFit.contain,
     );
+
+    // Build only the selected tab + any previously visited tabs
+    final pages = <Widget>[];
+    for (var i = 0; i < tabs.length; i++) {
+      if (i == _index) {
+        pages.add(_buildTab(() => _createPage(i), i));
+      } else if (_cache.containsKey(i)) {
+        pages.add(_cache[i]!);
+      } else {
+        // Placeholder for unvisited tabs (won't be built)
+        pages.add(const SizedBox.shrink());
+      }
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -78,7 +92,13 @@ class _RootShellState extends State<RootShell> {
         elevation: 0,
         scrolledUnderElevation: 0,
       ),
-      body: IndexedStack(index: _index, children: [for (final t in tabs) t.page]),
+      body: IndexedStack(
+        index: _index,
+        children: [
+          for (var i = 0; i < tabs.length; i++)
+            _cache.containsKey(i) ? _cache[i]! : const SizedBox.shrink(),
+        ],
+      ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _index.clamp(0, tabs.length - 1),
         onDestinationSelected: (i) => setState(() => _index = i),
@@ -93,12 +113,21 @@ class _RootShellState extends State<RootShell> {
       ),
     );
   }
+
+  Widget _createPage(int index) {
+    switch (index) {
+      case 0: return const HomeScreen();
+      case 1: return const BrowseScreen();
+      case 2: return const MyListingsScreen();
+      case 3: return const RequestsScreen();
+      default: return const ProfileScreen();
+    }
+  }
 }
 
 class _Tab {
-  const _Tab(this.filled, this.outlined, this.label, this.page);
+  const _Tab(this.filled, this.outlined, this.label);
   final IconData filled;
   final IconData outlined;
   final String label;
-  final Widget page;
 }

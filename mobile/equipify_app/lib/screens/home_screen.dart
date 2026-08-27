@@ -35,12 +35,14 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _load() async {
     setState(() => _error = null);
     try {
-      final cats = await _catSvc.all();
-      final featured = await _svc.browse(pageSize: 6);
+      final results = await Future.wait([
+        _catSvc.all(),
+        _svc.browse(pageSize: 6),
+      ]);
       if (!mounted) return;
       setState(() {
-        _cats = cats;
-        _featured = featured;
+        _cats = results[0] as List<Category>;
+        _featured = results[1] as Paged<ListingSummary>;
       });
     } catch (e) {
       if (mounted) setState(() => _error = e.toString());

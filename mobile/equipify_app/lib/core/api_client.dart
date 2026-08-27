@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart' show kReleaseMode;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'constants.dart';
@@ -79,8 +78,8 @@ class ApiClient {
     _dio = Dio(
       BaseOptions(
         baseUrl: kApiUrl,
-        connectTimeout: const Duration(seconds: kReleaseMode ? 60 : 12),
-        receiveTimeout: const Duration(seconds: kReleaseMode ? 60 : 20),
+        connectTimeout: const Duration(seconds: 10),
+        receiveTimeout: const Duration(seconds: 15),
         headers: {'Accept': 'application/json'},
         validateStatus: (_) => true, // handled manually below
       ),
@@ -96,16 +95,23 @@ class ApiClient {
   static final ApiClient I = ApiClient._internal();
   late final Dio _dio;
 
+  /// Call once at startup to cache the stored token in memory.
+  Future<void> init() async {
+    final sp = await SharedPreferences.getInstance();
+    _cachedToken = sp.getString(_accessKey);
+  }
+
   static const _accessKey = StorageKeys.accessToken;
   static const _refreshKey = StorageKeys.refreshToken;
+  String? _cachedToken;
 
-  Future<String?> accessToken() async =>
-      (await SharedPreferences.getInstance()).getString(_accessKey);
+  Future<String?> accessToken() async => _cachedToken;
 
   Future<void> saveSession({
     required String? access,
     required String? refresh,
   }) async {
+    _cachedToken = access;
     final sp = await SharedPreferences.getInstance();
     if (access == null || refresh == null) {
       await sp.remove(_accessKey);

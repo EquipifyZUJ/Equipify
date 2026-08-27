@@ -13,7 +13,19 @@ class AuthProvider extends ChangeNotifier {
   bool ready = false;
 
   Future<void> bootstrap() async {
-    user = await _auth.restore();
+    try {
+      // Skip network entirely if no stored tokens
+      final sp = await SharedPreferences.getInstance();
+      final hasToken = sp.getString(StorageKeys.accessToken)?.isNotEmpty == true;
+      if (!hasToken) {
+        ready = true;
+        notifyListeners();
+        return;
+      }
+      user = await _auth.restore();
+    } catch (_) {
+      user = null;
+    }
     ready = true;
     notifyListeners();
   }

@@ -78,7 +78,12 @@ class AuthService {
       final data = await _api.get('/api/auth/me');
       return User.fromJson(data as Map<String, dynamic>);
     } on ApiException catch (e) {
-      if (e.isAuthError) await logout();
+      if (e.isAuthError) {
+        // Clear local tokens without hitting the server
+        await ApiClient.I.saveSession(access: null, refresh: null);
+      }
+      return null;
+    } catch (_) {
       return null;
     }
   }
