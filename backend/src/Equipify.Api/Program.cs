@@ -142,7 +142,9 @@ var host = new HostBuilder()
                 };
             });
 
-            services.AddControllers().AddJsonOptions(o =>
+            services.AddControllers()
+                .AddApplicationPart(typeof(Program).Assembly)
+                .AddJsonOptions(o =>
             {
                 o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                 o.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
