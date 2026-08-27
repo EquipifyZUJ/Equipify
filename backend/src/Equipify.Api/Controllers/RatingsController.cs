@@ -28,14 +28,5 @@ public class RatingsController : ControllerBase
     public async Task<ActionResult<List<ReviewDto>>> ListingReviews(int id, [FromQuery] int limit = 20)
         => Ok((await _ratings.GetReviewsForListingAsync(id, limit)).Select(ReviewDto.From).ToList());
 
-    /// <summary>Submit a rating for a completed rental request.</summary>
-    [Authorize(Roles = "User")]
-    [HttpPost("requests/{id:int}/rating")]
-    public async Task<IActionResult> SubmitRating(int id, SubmitRatingRequest request)
-    {
-        var result = await _ratings.SubmitAsync(CurrentUserId, id, request.Rating);
-        return result.Success ? NoContent() : ApiResults.FromResult(result);
-    }
-
     private int CurrentUserId => int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 }
