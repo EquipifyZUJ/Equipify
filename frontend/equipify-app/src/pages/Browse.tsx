@@ -61,7 +61,7 @@ export default function Browse({ mapOnly = false }: { mapOnly?: boolean }) {
       setGridLoading(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [search, categoryId, rentalUnit, minPrice, maxPrice, minDuration, maxDuration, page, mode])
+  }, [search, categoryId, rentalUnit, minPrice, maxPrice, minDuration, maxDuration, page])
 
   useEffect(() => { load() }, [load])
 
@@ -135,48 +135,12 @@ export default function Browse({ mapOnly = false }: { mapOnly?: boolean }) {
             className="browse-search-input"
             placeholder={t('home.searchPlaceholder')}
             value={search}
-            onChange={e => {
-              setSearch(e.target.value)
-              setPage(1)
-              // In map mode, immediately re-fetch markers
-              if (mode === 'map' && lastBoundsRef.current) {
-                const qs = new URLSearchParams({
-                  west: lastBoundsRef.current.west.toFixed(4),
-                  south: lastBoundsRef.current.south.toFixed(4),
-                  east: lastBoundsRef.current.east.toFixed(4),
-                  north: lastBoundsRef.current.north.toFixed(4),
-                })
-                if (categoryId) qs.set('categoryId', categoryId)
-                if (rentalUnit) qs.set('rentalUnit', rentalUnit)
-                if (minPrice) qs.set('minPrice', minPrice)
-                if (maxPrice) qs.set('maxPrice', maxPrice)
-                if (minDuration) qs.set('minDuration', minDuration)
-                if (maxDuration) qs.set('maxDuration', maxDuration)
-                api<MapMarker[]>(`/listings/map?search=${encodeURIComponent(e.target.value)}&${qs}`)
-                  .then(setMarkers)
-                  .catch(() => {})
-              }
-            }}
+            onChange={e => { setSearch(e.target.value); setPage(1) }}
             onKeyDown={e => { if (e.key === 'Enter') { setPage(1); load() } }}
             id="browse-search-input"
           />
           {search && (
-            <button className="browse-search-clear" onClick={() => {
-              setSearch('')
-              setPage(1)
-              if (mode === 'map' && lastBoundsRef.current) {
-                const qs = new URLSearchParams({
-                  west: lastBoundsRef.current.west.toFixed(4),
-                  south: lastBoundsRef.current.south.toFixed(4),
-                  east: lastBoundsRef.current.east.toFixed(4),
-                  north: lastBoundsRef.current.north.toFixed(4),
-                })
-                if (categoryId) qs.set('categoryId', categoryId)
-                api<MapMarker[]>(`/listings/map?${qs}`)
-                  .then(setMarkers)
-                  .catch(() => {})
-              }
-            }}>✕</button>
+            <button className="browse-search-clear" onClick={() => { setSearch(''); setPage(1) }}>✕</button>
           )}
         </div>
         <button

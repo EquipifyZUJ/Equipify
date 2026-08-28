@@ -48,11 +48,11 @@ public class ListingService : IListingService
         {
             var term = filter.Search.Trim();
             query = query.Where(l =>
-                l.Title.Contains(term) ||
-                l.Description.Contains(term) ||
-                l.LocationAddress.Contains(term) ||
-                l.Owner!.FirstName.Contains(term) ||
-                l.Owner.LastName.Contains(term));
+                EF.Functions.ILike(l.Title, $"%{term}%") ||
+                EF.Functions.ILike(l.Description, $"%{term}%") ||
+                EF.Functions.ILike(l.LocationAddress, $"%{term}%") ||
+                EF.Functions.ILike(l.Owner!.FirstName, $"%{term}%") ||
+                EF.Functions.ILike(l.Owner.LastName, $"%{term}%"));
         }
 
         if (!string.IsNullOrWhiteSpace(filter.RentalUnit))
@@ -107,11 +107,11 @@ public class ListingService : IListingService
 
         if (!string.IsNullOrWhiteSpace(search))
         {
-            var term = search.Trim().ToLower();
+            var term = search.Trim();
             query = query.Where(l =>
-                l.Title.ToLower().Contains(term) ||
-                l.Description.ToLower().Contains(term) ||
-                l.LocationAddress.ToLower().Contains(term));
+                EF.Functions.ILike(l.Title, $"%{term}%") ||
+                EF.Functions.ILike(l.Description, $"%{term}%") ||
+                EF.Functions.ILike(l.LocationAddress, $"%{term}%"));
         }
 
         return query

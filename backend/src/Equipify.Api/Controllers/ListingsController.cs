@@ -88,7 +88,8 @@ public class ListingsController : ControllerBase
         => Ok((await _listings.GetByOwnerAsync(CurrentUserId))
             .Select(ListingSummaryDto.From).ToList());
 
-    /// <summary>Creates a listing from multipart form-data (fields + images).</summary>
+    /// <summary>Creates a listing from multipart form-data (fields + images).
+    /// Images are stored in a single transaction with bytes for Render-safe persistence.</summary>
     [Authorize(Roles = "User")]
     [HttpPost]
     [Consumes("multipart/form-data")]
@@ -109,35 +110,40 @@ public class ListingsController : ControllerBase
         if (dbImages.Count == 0)
             return BadRequest(new { error = "No valid image was uploaded (jpg/png/gif/webp)." });
 
-        var paths = dbImages.Select(i => i.Path).ToList();
-        var result = await _listings.CreateAsync(form.ToDto(paths, CurrentUserId));
-
-        if (!result.Success)
-            return ApiResults.FromResult(result);
-
-        var listingId = result.Value;
-
-        // Service already saved the listing with path-only images.
-        // Now persist the bytes using raw SQL to avoid EF change-tracker confusion.
-        for (int i = 0; i < dbImages.Count; i++)
+        // Build the complete entity graph with bytes — one SaveChanges, zero ambiguity.
+        var listing = new Listing
         {
-            var idx = i;
-            await _db.Database.ExecuteSqlRawAsync(
-                "UPDATE \"ListingImages\" SET \"ImageBytes\" = @bytes, \"ContentType\" = @ct WHERE \"Id\" = (SELECT \"Id\" FROM \"ListingImages\" WHERE \"ListingId\" = @lid ORDER BY \"Id\" LIMIT 1 OFFSET @off)",
-                new Npgsql.NpgsqlParameter("@bytes", dbImages[idx].Bytes),
-                new Npgsql.NpgsqlParameter("@ct", dbImages[idx].ContentType),
-                new Npgsql.NpgsqlParameter("@lid", listingId),
-                new Npgsql.NpgsqlParameter("@off", idx));
-        }
+            OwnerId = CurrentUserId,
+            Title = form.Title.Trim(),
+            Description = form.Description?.Trim() ?? string.Empty,
+            CategoryId = form.CategoryId,
+            LocationAddress = form.LocationAddress?.Trim() ?? string.Empty,
+            RentalUnit = form.RentalUnit ?? "day",
+            CostPerHour = form.CostPerHour,
+            CostPerDay = form.CostPerDay,
+            CostPerWeek = form.CostPerWeek,
+            CostPerMonth = form.CostPerMonth,
+            CostPerYear = form.CostPerYear,
+            MinRentalDays = form.MinRentalDays,
+            MaxRentalDays = form.MaxRentalDays,
+            Latitude = form.Latitude,
+            Longitude = form.Longitude,
+            MainImage = dbImages[0].Path,
+            MainImageBytes = dbImages[0].Bytes,
+            MainImageContentType = dbImages[0].ContentType,
+            Status = ListingStatus.Pending,
+            Images = dbImages.Select(img => new ListingImage
+            {
+                ImagePath = img.Path,
+                ImageBytes = img.Bytes,
+                ContentType = img.ContentType
+            }).ToList()
+        };
 
-        // Set main image bytes on the listing row itself
-        await _db.Database.ExecuteSqlRawAsync(
-            "UPDATE \"Listings\" SET \"MainImageBytes\" = @bytes, \"MainImageContentType\" = @ct WHERE \"Id\" = @id",
-            new Npgsql.NpgsqlParameter("@bytes", dbImages[0].Bytes),
-            new Npgsql.NpgsqlParameter("@ct", dbImages[0].ContentType),
-            new Npgsql.NpgsqlParameter("@id", listingId));
+        _db.Listings.Add(listing);
+        await _db.SaveChangesAsync();
 
-        return CreatedAtAction(nameof(Details), new { id = listingId }, new { id = listingId });
+        return CreatedAtAction(nameof(Details), new { id = listing.Id }, new { id = listing.Id });
     }
 
     /// <summary>Updates an owned listing; new content returns it to Pending for re-approval.</summary>
@@ -150,6 +156,10 @@ public class ListingsController : ControllerBase
         if (form.Images is not null && form.Images.Count > 6)
             return BadRequest(new { error = "A maximum of 6 images is allowed." });
 
+        var existing = await _db.Listings.FindAsync(id);
+        if (existing is null) return NotFound();
+        if (existing.OwnerId != CurrentUserId) return Forbid();
+
         List<(string Path, byte[] Bytes, string ContentType)>? dbImages = null;
         if (form.Images is not null && form.Images.Count > 0)
         {
@@ -161,39 +171,50 @@ public class ListingsController : ControllerBase
             }
         }
 
-        var paths = dbImages?.Select(i => i.Path).ToList();
-        var result = await _listings.UpdateAsync(form.ToDto(paths ?? new(), CurrentUserId, id));
+        // Update listing fields
+        existing.Title = form.Title.Trim();
+        existing.Description = form.Description?.Trim() ?? string.Empty;
+        existing.CategoryId = form.CategoryId;
+        existing.LocationAddress = form.LocationAddress?.Trim() ?? string.Empty;
+        existing.RentalUnit = form.RentalUnit ?? "day";
+        existing.CostPerHour = form.CostPerHour;
+        existing.CostPerDay = form.CostPerDay;
+        existing.CostPerWeek = form.CostPerWeek;
+        existing.CostPerMonth = form.CostPerMonth;
+        existing.CostPerYear = form.CostPerYear;
+        existing.MinRentalDays = form.MinRentalDays;
+        existing.MaxRentalDays = form.MaxRentalDays;
+        existing.Latitude = form.Latitude;
+        existing.Longitude = form.Longitude;
 
-        if (!result.Success || dbImages is null || dbImages.Count == 0)
-            return ApiResults.FromResult(result);
+        // Only reset to Pending if user actually changed content
+        if (existing.Status == ListingStatus.Active)
+            existing.Status = ListingStatus.Pending;
 
-        // Delete old images for this listing
-        await _db.Database.ExecuteSqlRawAsync(
-            "DELETE FROM \"ListingImages\" WHERE \"ListingId\" = @id",
-            new Npgsql.NpgsqlParameter("@id", id));
-
-        // Insert new images with bytes via raw SQL
-        for (int i = 0; i < dbImages.Count; i++)
+        // Replace images atomically if new ones were uploaded
+        if (dbImages is not null && dbImages.Count > 0)
         {
-            await _db.Database.ExecuteSqlRawAsync(
-                "INSERT INTO \"ListingImages\" (\"ListingId\", \"ImagePath\", \"ImageBytes\", \"ContentType\") VALUES (@lid, @path, @bytes, @ct)",
-                new Npgsql.NpgsqlParameter("@lid", id),
-                new Npgsql.NpgsqlParameter("@path", dbImages[i].Path),
-                new Npgsql.NpgsqlParameter("@bytes", dbImages[i].Bytes),
-                new Npgsql.NpgsqlParameter("@ct", dbImages[i].ContentType));
+            var oldImages = await _db.ListingImages.Where(i => i.ListingId == id).ToListAsync();
+            _db.ListingImages.RemoveRange(oldImages);
+
+            existing.MainImage = dbImages[0].Path;
+            existing.MainImageBytes = dbImages[0].Bytes;
+            existing.MainImageContentType = dbImages[0].ContentType;
+
+            foreach (var img in dbImages)
+            {
+                _db.ListingImages.Add(new ListingImage
+                {
+                    ListingId = id,
+                    ImagePath = img.Path,
+                    ImageBytes = img.Bytes,
+                    ContentType = img.ContentType
+                });
+            }
         }
 
-        // Update main image bytes
-        await _db.Database.ExecuteSqlRawAsync(
-            "UPDATE \"Listings\" SET \"MainImageBytes\" = @bytes, \"MainImageContentType\" = @ct, \"MainImage\" = @path WHERE \"Id\" = @id",
-            new Npgsql.NpgsqlParameter("@bytes", dbImages[0].Bytes),
-            new Npgsql.NpgsqlParameter("@ct", dbImages[0].ContentType),
-            new Npgsql.NpgsqlParameter("@path", dbImages[0].Path),
-            new Npgsql.NpgsqlParameter("@id", id));
-
+        await _db.SaveChangesAsync();
         return NoContent();
-
-        return result.Success ? NoContent() : ApiResults.FromResult(result);
     }
 
     /// <summary>Deactivates an owned listing. Only Inactive is allowed — reactivation requires admin approval.</summary>
@@ -204,7 +225,6 @@ public class ListingsController : ControllerBase
         if (!Enum.TryParse<ListingStatus>(request.Status, ignoreCase: true, out var status))
             return BadRequest(new { error = "Invalid status." });
 
-        // Users can only DEACTIVATE — reactivation requires admin approval
         if (status != ListingStatus.Inactive)
             return Forbid();
 
@@ -219,23 +239,7 @@ public class ListingsController : ControllerBase
     {
         var result = await _listings.DeleteAsync(id, CurrentUserId);
         if (!result.Success) return ApiResults.FromResult(result);
-
-        if (result is ServiceResult<List<string>> { Value: not null } withPaths)
-            DeleteFiles(withPaths.Value);
         return NoContent();
-    }
-
-    internal void DeleteFiles(IEnumerable<string> webPaths)
-    {
-        var root = HttpContext.RequestServices.GetRequiredService<IWebHostEnvironment>();
-        var wwwroot = root.WebRootPath ?? Path.Combine(root.ContentRootPath, "wwwroot");
-        foreach (var path in webPaths)
-        {
-            var safe = path.Replace('\\', '/').TrimStart('/');
-            if (!safe.StartsWith("uploads/", StringComparison.OrdinalIgnoreCase)) continue;
-            try { System.IO.File.Delete(Path.Combine(wwwroot, safe)); }
-            catch { /* best effort */ }
-        }
     }
 
     private int CurrentUserId => int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
