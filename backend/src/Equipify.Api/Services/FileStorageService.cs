@@ -9,6 +9,9 @@ public interface IFileStorageService
 {
     /// <summary>Validates, compresses, and saves uploaded images; returns web-relative paths.</summary>
     Task<List<string>> SaveImagesAsync(IEnumerable<IFormFile>? files, string subFolder);
+
+    /// <summary>Validates and compresses images, returning (path, bytes, contentType) for DB storage.</summary>
+    Task<List<(string Path, byte[] Bytes, string ContentType)>> SaveImagesToDbAsync(IEnumerable<IFormFile>? files, string subFolder);
 }
 
 /// <summary>
@@ -48,6 +51,20 @@ public class FileStorageService : IFileStorageService
         }
 
         return paths;
+    }
+
+    public async Task<List<(string Path, byte[] Bytes, string ContentType)>> SaveImagesToDbAsync(IEnumerable<IFormFile>? files, string subFolder)
+    {
+        var results = new List<(string Path, byte[] Bytes, string ContentType)>();
+        if (files is null) return results;
+
+        foreach (var file in files.Take(6))
+        {
+            var result = await CompressToBytesAsync(file, subFolder);
+            if (result is not null) results.Add(result.Value);
+        }
+
+        return results;
     }
 
     private async Task<string?> CompressAndSaveAsync(IFormFile file, string subFolder)
@@ -130,5 +147,60 @@ public class FileStorageService : IFileStorageService
                        && header[8] == 0x57 && header[9] == 0x45 && header[10] == 0x42 && header[11] == 0x50,
             _ => false
         };
+    }
+
+    private async Task<(string Path, byte[] Bytes, string ContentType)?> CompressToBytesAsync(IFormFile file, string subFolder)
+    {
+        if (file is null || file.Length == 0) return null;
+
+        if (file.Length > MaxRawBytes)
+        {
+            _logger.LogWarning("Rejected upload {Name}: exceeds {Max} MB", file.FileName, MaxRawBytes / 1024 / 1024);
+            return null;
+        }
+
+        var ext = Path.GetExtension(file.FileName).ToLowerInvariant();
+        if (!AllowedExtensions.Contains(ext))
+        {
+            _logger.LogWarning("Rejected upload {Name}: extension {Ext} not allowed", file.FileName, ext);
+            return null;
+        }
+
+        if (!await HasValidSignatureAsync(file, ext))
+        {
+            _logger.LogWarning("Rejected upload {Name}: content is not a valid image", file.FileName);
+            return null;
+        }
+
+        var fileName = $"{Guid.NewGuid():N}.jpg";
+        var relPath = $"/uploads/{subFolder}/{fileName}";
+
+        try
+        {
+            await using var inputStream = file.OpenReadStream();
+            using var image = await Image.LoadAsync(inputStream);
+
+            if (image.Width > MaxDimension || image.Height > MaxDimension)
+            {
+                image.Mutate(x => x.Resize(new ResizeOptions
+                {
+                    Size = new Size(MaxDimension, MaxDimension),
+                    Mode = ResizeMode.Max
+                }));
+            }
+
+            using var ms = new MemoryStream();
+            await image.SaveAsJpegAsync(ms, new JpegEncoder { Quality = JpegQuality });
+            var bytes = ms.ToArray();
+
+            _logger.LogInformation("Compressed {Name} → {SizeKB} KB (DB)", file.FileName, bytes.Length / 1024);
+
+            return (relPath, bytes, "image/jpeg");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to process image {Name}", file.FileName);
+            return null;
+        }
     }
 }

@@ -1,6 +1,8 @@
 using Equipify.Api.Contracts;
 using Equipify.Api.Infrastructure;
 using Equipify.Api.Services;
+using Equipify.Data;
+using Equipify.Domain.Entities;
 using Equipify.Domain.Enums;
 using Equipify.Service.Models;
 using Equipify.Service.Services.Interfaces;
@@ -16,11 +18,13 @@ public class ListingsController : ControllerBase
 {
     private readonly IListingService _listings;
     private readonly IFileStorageService _files;
+    private readonly EquipifyDbContext _db;
 
-    public ListingsController(IListingService listings, IFileStorageService files)
+    public ListingsController(IListingService listings, IFileStorageService files, EquipifyDbContext db)
     {
         _listings = listings;
         _files = files;
+        _db = db;
     }
 
     /// <summary>Browse active listings (filters + pagination).</summary>
@@ -93,19 +97,49 @@ public class ListingsController : ControllerBase
         if (form.Images is null || form.Images.Count == 0)
             return BadRequest(new { error = "Please upload at least one image." });
 
-        List<string> paths;
-        try { paths = await _files.SaveImagesAsync(form.Images, "listings"); }
+        List<(string Path, byte[] Bytes, string ContentType)> dbImages;
+        try { dbImages = await _files.SaveImagesToDbAsync(form.Images, "listings"); }
         catch (InvalidOperationException ex) { return BadRequest(new { error = ex.Message }); }
         catch (Exception ex)
         {
             return StatusCode(500, new { error = $"Image processing failed: {ex.Message}" });
         }
 
-        if (paths.Count == 0)
+        if (dbImages.Count == 0)
             return BadRequest(new { error = "No valid image was uploaded (jpg/png/gif/webp)." });
 
+        var paths = dbImages.Select(i => i.Path).ToList();
         var result = await _listings.CreateAsync(form.ToDto(paths, CurrentUserId));
-        return result.Success ? CreatedAtAction(nameof(Details), new { id = result.Value }, new { id = result.Value }) : ApiResults.FromResult(result);
+
+        if (result.Success)
+        {
+            // Save image bytes to DB for persistent storage
+            var listingId = result.Value;
+            foreach (var (path, bytes, ct) in dbImages)
+            {
+                var img = new ListingImage
+                {
+                    ListingId = listingId,
+                    ImagePath = path,
+                    ImageBytes = bytes,
+                    ContentType = ct
+                };
+                _db.ListingImages.Add(img);
+            }
+
+            // Set main image bytes on listing
+            var listing = await _db.Listings.FindAsync(listingId);
+            if (listing is not null && dbImages.Count > 0)
+            {
+                listing.MainImageBytes = dbImages[0].Bytes;
+                listing.MainImageContentType = dbImages[0].ContentType;
+            }
+
+            await _db.SaveChangesAsync();
+            return CreatedAtAction(nameof(Details), new { id = listingId }, new { id = listingId });
+        }
+
+        return ApiResults.FromResult(result);
     }
 
     /// <summary>Updates an owned listing; new content returns it to Pending for re-approval.</summary>
@@ -118,15 +152,43 @@ public class ListingsController : ControllerBase
         if (form.Images is not null && form.Images.Count > 6)
             return BadRequest(new { error = "A maximum of 6 images is allowed." });
 
-        List<string> paths;
-        try { paths = await _files.SaveImagesAsync(form.Images, "listings"); }
-        catch (InvalidOperationException ex) { return BadRequest(new { error = ex.Message }); }
-        catch (Exception ex)
+        List<(string Path, byte[] Bytes, string ContentType)>? dbImages = null;
+        if (form.Images is not null && form.Images.Count > 0)
         {
-            return StatusCode(500, new { error = $"Image processing failed: {ex.Message}" });
+            try { dbImages = await _files.SaveImagesToDbAsync(form.Images, "listings"); }
+            catch (InvalidOperationException ex) { return BadRequest(new { error = ex.Message }); }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = $"Image processing failed: {ex.Message}" });
+            }
         }
 
-        var result = await _listings.UpdateAsync(form.ToDto(paths, CurrentUserId, id));
+        var paths = dbImages?.Select(i => i.Path).ToList();
+        var result = await _listings.UpdateAsync(form.ToDto(paths ?? new(), CurrentUserId, id));
+
+        if (result.Success && dbImages is not null && dbImages.Count > 0)
+        {
+            foreach (var (path, bytes, ct) in dbImages)
+            {
+                _db.ListingImages.Add(new ListingImage
+                {
+                    ListingId = id,
+                    ImagePath = path,
+                    ImageBytes = bytes,
+                    ContentType = ct
+                });
+            }
+
+            var listing = await _db.Listings.FindAsync(id);
+            if (listing is not null)
+            {
+                listing.MainImageBytes = dbImages[0].Bytes;
+                listing.MainImageContentType = dbImages[0].ContentType;
+            }
+
+            await _db.SaveChangesAsync();
+        }
+
         return result.Success ? NoContent() : ApiResults.FromResult(result);
     }
 

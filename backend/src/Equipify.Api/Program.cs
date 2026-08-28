@@ -165,6 +165,10 @@ var host = new HostBuilder()
             });
 
             app.UseSerilogRequestLogging();
+
+            // Auto-migrate database on startup (adds new columns like ImageBytes)
+            ctx.Database.Migrate();
+
             app.UseStaticFiles();
 
             app.UseSwagger();

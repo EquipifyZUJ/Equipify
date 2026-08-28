@@ -13,8 +13,14 @@ public class Listing
     public string Title { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
 
-    /// <summary>Relative path (under wwwroot) to the main/thumbnail image.</summary>
+    /// <summary>Relative path (under wwwroot) or image bytes reference.</summary>
     public string? MainImage { get; set; }
+
+    /// <summary>Raw main image bytes stored in the database.</summary>
+    public byte[]? MainImageBytes { get; set; }
+
+    /// <summary>MIME type of the main image.</summary>
+    public string? MainImageContentType { get; set; }
 
     public int CategoryId { get; set; }
     public Category? Category { get; set; }
