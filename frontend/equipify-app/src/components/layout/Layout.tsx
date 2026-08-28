@@ -125,6 +125,12 @@ export function Layout() {
           <NavLink to="/terms" className="link faint">{t('nav.terms')}</NavLink>
           <span>•</span>
           <NavLink to="/download" className="link faint">{t('nav.download')}</NavLink>
+          {isAdmin && (
+            <>
+              <span>•</span>
+              <NavLink to="/admin" className="link faint">{t('nav.adminDashboard') || 'لوحة التحكم'}</NavLink>
+            </>
+          )}
         </div>
         <div>Equipify © {new Date().getFullYear()} — rent anything, anywhere.</div>
       </footer>

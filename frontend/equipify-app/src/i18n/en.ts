@@ -16,6 +16,7 @@ export const en: Dict = {
   'nav.faq': 'FAQ',
   'nav.terms': 'Terms & Conditions',
   'nav.download': 'Download App',
+  'nav.adminDashboard': 'Admin Dashboard',
 
   'home.heroTitle': 'Rent anything around you, or list yours today',
   'home.heroSub': 'The marketplace for renting equipment — cameras, tools, vehicles and more. Easy and secure.',

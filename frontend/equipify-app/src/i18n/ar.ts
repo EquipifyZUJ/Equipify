@@ -14,6 +14,7 @@ export const ar: Record<string, string> = {
   'nav.faq': 'الأسئلة الشائعة',
   'nav.terms': 'الشروط والأحكام',
   'nav.download': 'تحميل التطبيق',
+  'nav.adminDashboard': 'لوحة التحكم',
 
   'home.heroTitle': 'أجّر أي شيء حولك، أو ابحث عما تحتاجه',
   'home.heroSub': 'المنصة الأولى لتأجير المعدات والأدوات — كاميرات، أدوات بناء، مركبات وأكثر. بسهولة وأمان.',
