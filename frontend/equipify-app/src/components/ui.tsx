@@ -22,18 +22,27 @@ export function Modal({ open, title, onClose, children }: {
   )
 }
 
-export function ConfirmModal({ open, text, onConfirm, onClose }: {
+export function ConfirmModal({ open, text, title, confirmLabel, onConfirm, onClose }: {
   open: boolean
   text: string
+  title?: string
+  confirmLabel?: string
   onConfirm: () => void
   onClose: () => void
 }) {
   const { t } = useI18n()
   return (
-    <Modal open={open} onClose={onClose} title={text}>
+    <Modal open={open} onClose={onClose} title={title ?? text}>
+      <p style={{ margin: '4px 0 16px', color: 'var(--muted)' }}>{text}</p>
       <div className="row" style={{ justifyContent: 'flex-end', gap: 10 }}>
         <button className="btn btn-ghost" onClick={onClose}>{t('common.cancel')}</button>
-        <button className="btn btn-danger" onClick={() => { onConfirm(); onClose() }}>{t('common.confirm')}</button>
+        <button
+          className="btn btn-danger"
+          onClick={async () => {
+            await onConfirm()
+            onClose()
+          }}
+        >{confirmLabel ?? t('common.confirm')}</button>
       </div>
     </Modal>
   )

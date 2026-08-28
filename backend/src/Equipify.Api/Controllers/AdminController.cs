@@ -92,16 +92,12 @@ public class AdminController : ControllerBase
         return result.Success ? NoContent() : ApiResults.FromResult(result);
     }
 
-    /// <summary>Deletes any listing and its images.</summary>
+    /// <summary>Deletes any listing and its images (cascade).</summary>
     [HttpDelete("listings/{id:int}")]
-    public async Task<IActionResult> DeleteListing([FromServices] ListingsControllerHelper helper, int id)
+    public async Task<IActionResult> DeleteListing(int id)
     {
         var result = await _listings.DeleteAsync(id);
-        if (!result.Success) return ApiResults.FromResult(result);
-
-        if (result is ServiceResult<List<string>> { Value: not null } withPaths)
-            helper.DeleteFiles(withPaths.Value, HttpContext.RequestServices);
-        return NoContent();
+        return result.Success ? NoContent() : ApiResults.FromResult(result);
     }
 
     // ---------- Categories ----------
@@ -147,22 +143,5 @@ public class AdminController : ControllerBase
     {
         var result = await _requests.DeleteAsync(id, isAdmin: true);
         return result.Success ? NoContent() : ApiResults.FromResult(result);
-    }
-}
-
-/// <summary>Small helper so file cleanup logic is shared without exposing it on the controller.</summary>
-public class ListingsControllerHelper
-{
-    public void DeleteFiles(IEnumerable<string> webPaths, IServiceProvider services)
-    {
-        var env = services.GetRequiredService<IWebHostEnvironment>();
-        var wwwroot = env.WebRootPath ?? Path.Combine(env.ContentRootPath, "wwwroot");
-        foreach (var path in webPaths)
-        {
-            var safe = path.Replace('\\', '/').TrimStart('/');
-            if (!safe.StartsWith("uploads/", StringComparison.OrdinalIgnoreCase)) continue;
-            try { System.IO.File.Delete(Path.Combine(wwwroot, safe)); }
-            catch { /* best effort */ }
-        }
     }
 }

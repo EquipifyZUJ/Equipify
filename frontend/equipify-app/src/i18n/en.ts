@@ -211,6 +211,9 @@ export const en: Dict = {
   'admin.noPending': 'No pending listings — all caught up!',
   'admin.reject': 'Reject',
   'admin.confirmDelete': 'Are you sure? This cannot be undone.',
+  'admin.deleteListing': 'Delete Listing',
+  'admin.confirmDeleteListing': 'Delete listing',
+  'admin.delete': 'Delete',
   'admin.loginTitle': 'Admin Portal',
   'admin.loginSub': 'Enter admin credentials to access',
 
