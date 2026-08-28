@@ -69,9 +69,35 @@ async function doRefresh(): Promise<boolean> {
 interface Options extends Omit<RequestInit, 'body'> {
   body?: unknown
   form?: FormData
+  signal?: AbortSignal
+}
+
+// Simple GET cache for idempotent endpoints (categories). TTL 5min.
+const getCache = new Map<string, { data: unknown; exp: number }>()
+const CACHE_TTL = 5 * 60 * 1000
+const CACHEABLE = new Set(['/categories'])
+
+function getCached<T>(path: string): T | null {
+  const c = getCache.get(path)
+  if (c && c.exp > Date.now()) return c.data as T
+  if (c) getCache.delete(path)
+  return null
+}
+function setCached(path: string, data: unknown) {
+  if (CACHEABLE.has(path)) getCache.set(path, { data, exp: Date.now() + CACHE_TTL })
+}
+export function clearApiCache(path?: string) {
+  if (path) getCache.delete(path)
+  else getCache.clear()
 }
 
 export async function api<T = unknown>(path: string, options: Options = {}): Promise<T> {
+  // Serve from cache for GET cacheable paths when no signal/body/form
+  if (!options.body && !options.form && !options.signal && CACHEABLE.has(path)) {
+    const hit = getCached<T>(path)
+    if (hit) return hit
+  }
+
   const send = async (): Promise<Response> => {
     const headers: Record<string, string> = {}
     const at = tokens.access
@@ -83,7 +109,7 @@ export async function api<T = unknown>(path: string, options: Options = {}): Pro
       headers['Content-Type'] = 'application/json'
       body = JSON.stringify(options.body)
     }
-    return fetch(`${API}${path}`, { ...options, headers: { ...headers, ...options.headers }, body })
+    return fetch(`${API}${path}`, { ...options, headers: { ...headers, ...options.headers }, body, signal: options.signal })
   }
 
   let res = await send()
@@ -104,6 +130,7 @@ export async function api<T = unknown>(path: string, options: Options = {}): Pro
     }
     throw new ApiError(res.status, payload?.error ?? payload?.detail ?? `HTTP ${res.status}`)
   }
+  if (!options.body && !options.form && CACHEABLE.has(path)) setCached(path, payload)
   return payload as T
 }
 

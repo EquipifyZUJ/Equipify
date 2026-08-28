@@ -27,22 +27,40 @@ export default function Browse({ mapOnly = false }: { mapOnly?: boolean }) {
   const [data, setData] = useState<Paged<ListingSummary> | null>(null)
   const [loading, setLoading] = useState(true)
   const [gridLoading, setGridLoading] = useState(false)
-  const [mode, setMode] = useState<'grid' | 'map'>(mapOnly ? 'map' : 'map')
+  const [mode, setMode] = useState<'grid' | 'map'>(mapOnly ? 'map' : 'grid')
   const [markers, setMarkers] = useState<MapMarker[]>([])
   const [filtersOpen, setFiltersOpen] = useState(false)
   const searchRef = useRef<HTMLInputElement>(null)
   const lastBoundsRef = useRef<{ west: number; south: number; east: number; north: number } | null>(null)
+  const gridAbortRef = useRef<AbortController | null>(null)
+  const mapAbortRef = useRef<AbortController | null>(null)
+  const lastSearchRef = useRef(search)
 
   const hasActiveFilters = rentalUnit || minPrice || maxPrice || minDuration || maxDuration
+
+  // Debounce search (400ms) — prevents storm of requests on every keystroke
+  const [debouncedSearch, setDebouncedSearch] = useState(search)
+  useEffect(() => {
+    const t = setTimeout(() => setDebouncedSearch(search), 400)
+    return () => clearTimeout(t)
+  }, [search])
+
+  // Keep debounced in sync when search cleared externally
+  useEffect(() => { if (search === '' && debouncedSearch !== '') setDebouncedSearch('') }, [search, debouncedSearch])
 
   useEffect(() => {
     api<Category[]>('/categories').then(setCategories).catch(() => {})
   }, [])
 
   const load = useCallback(async () => {
+    // Abort previous grid request
+    gridAbortRef.current?.abort()
+    const ac = new AbortController()
+    gridAbortRef.current = ac
     if (mode === 'grid') setGridLoading(true)
+    else if (!data) setLoading(true)
     const qs = new URLSearchParams()
-    if (search) qs.set('search', search)
+    if (debouncedSearch) qs.set('search', debouncedSearch)
     if (categoryId) qs.set('categoryId', categoryId)
     if (rentalUnit) qs.set('rentalUnit', rentalUnit)
     if (minPrice) qs.set('minPrice', minPrice)
@@ -53,44 +71,58 @@ export default function Browse({ mapOnly = false }: { mapOnly?: boolean }) {
     qs.set('pageSize', '12')
 
     try {
-      setData(await api<Paged<ListingSummary>>(`/listings?${qs}`))
-    } catch {
-      setData(null)
+      const res = await api<Paged<ListingSummary>>(`/listings?${qs}`, { signal: ac.signal })
+      if (!ac.signal.aborted) setData(res)
+    } catch (e: any) {
+      if (e?.name !== 'AbortError') setData(null)
     } finally {
-      setLoading(false)
-      setGridLoading(false)
+      if (!ac.signal.aborted) {
+        setLoading(false)
+        setGridLoading(false)
+      }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [search, categoryId, rentalUnit, minPrice, maxPrice, minDuration, maxDuration, page])
+  }, [debouncedSearch, categoryId, rentalUnit, minPrice, maxPrice, minDuration, maxDuration, page, mode, data])
 
-  useEffect(() => { load() }, [load])
+  useEffect(() => { load(); return () => gridAbortRef.current?.abort() }, [load])
 
   const loadMarkers = useCallback(async (b: { west: number; south: number; east: number; north: number }) => {
     lastBoundsRef.current = b
     if (mode !== 'map') return
+    mapAbortRef.current?.abort()
+    const ac = new AbortController()
+    mapAbortRef.current = ac
     try {
       const qs = new URLSearchParams({
         west: b.west.toFixed(4), south: b.south.toFixed(4),
         east: b.east.toFixed(4), north: b.north.toFixed(4),
       })
       if (categoryId) qs.set('categoryId', categoryId)
-      if (search) qs.set('search', search)
+      if (debouncedSearch) qs.set('search', debouncedSearch)
       if (rentalUnit) qs.set('rentalUnit', rentalUnit)
       if (minPrice) qs.set('minPrice', minPrice)
       if (maxPrice) qs.set('maxPrice', maxPrice)
       if (minDuration) qs.set('minDuration', minDuration)
       if (maxDuration) qs.set('maxDuration', maxDuration)
-      setMarkers(await api<MapMarker[]>(`/listings/map?${qs}`))
-    } catch { /* ignore */ }
-  }, [mode, categoryId, search, rentalUnit, minPrice, maxPrice, minDuration, maxDuration])
+      const res = await api<MapMarker[]>(`/listings/map?${qs}`, { signal: ac.signal })
+      if (!ac.signal.aborted) setMarkers(res)
+    } catch (e: any) {
+      if (e?.name === 'AbortError') return
+    }
+  }, [mode, categoryId, debouncedSearch, rentalUnit, minPrice, maxPrice, minDuration, maxDuration])
 
-  // Re-fetch markers when search/filters change in map mode
+  // Re-fetch markers when debounced search/filters change in map mode (throttled via debounce)
   useEffect(() => {
     if (mode === 'map' && lastBoundsRef.current) {
-      loadMarkers(lastBoundsRef.current)
+      // Avoid duplicate fetch if search hasn't settled
+      if (lastSearchRef.current === debouncedSearch) {
+        loadMarkers(lastBoundsRef.current)
+      } else {
+        lastSearchRef.current = debouncedSearch
+        loadMarkers(lastBoundsRef.current)
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [search, categoryId, rentalUnit, minPrice, maxPrice, minDuration, maxDuration])
+  }, [debouncedSearch, categoryId, rentalUnit, minPrice, maxPrice, minDuration, maxDuration])
 
   const resetFilters = () => {
     setRentalUnit('')
