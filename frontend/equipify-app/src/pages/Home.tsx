@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { api, img } from '../api/client'
 import type { Category, ListingSummary, Paged } from '../api/types'
@@ -11,10 +11,22 @@ export default function Home() {
   const [categories, setCategories] = useState<Category[]>([])
   const [featured, setFeatured] = useState<ListingSummary[]>([])
   const [search, setSearch] = useState('')
+  const [showFab, setShowFab] = useState(true)
+  const lastScroll = useRef(0)
 
   useEffect(() => {
     api<Category[]>('/categories').then(setCategories).catch(() => {})
     api<Paged<ListingSummary>>('/listings?page=1&pageSize=8').then(p => setFeatured(p.items)).catch(() => {})
+  }, [])
+
+  useEffect(() => {
+    const onScroll = () => {
+      const y = window.scrollY
+      setShowFab(y < lastScroll.current || y < 200)
+      lastScroll.current = y
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
   return (
@@ -121,7 +133,7 @@ export default function Home() {
       </section>
 
       {/* ── Floating map button ── */}
-      <Link to="/map" className="explore-map-btn" id="explore-map-btn">
+      <Link to="/map" className="explore-map-btn" id="explore-map-btn" style={{ transform: showFab ? 'translateX(-50%) translateY(0)' : 'translateX(-50%) translateY(120px)', opacity: showFab ? 1 : 0, pointerEvents: showFab ? 'auto' : 'none' }}>
         🗺️ {t('home.exploreMap')}
       </Link>
     </>

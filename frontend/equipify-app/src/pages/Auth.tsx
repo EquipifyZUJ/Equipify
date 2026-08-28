@@ -73,6 +73,7 @@ function ForgotPassword({ onBack }: { onBack: () => void }) {
   const { t } = useI18n()
   const { theme } = useTheme()
   const navigate = useNavigate()
+  const { login } = useAuth()
   const [step, setStep] = useState<'phone' | 'otp' | 'reset'>('phone')
   const [phone, setPhone] = useState('')
   const [otp, setOtp] = useState('')
@@ -93,7 +94,9 @@ function ForgotPassword({ onBack }: { onBack: () => void }) {
     e.preventDefault(); setBusy(true); setError('')
     try {
       await api('/auth/reset-password', { method: 'POST', body: { phoneNumber: phone, otpCode: otp, newPassword: newPass } })
-      navigate('/login')
+      // Auto-login after successful reset
+      await login(phone, newPass)
+      navigate('/')
     } catch (err: any) { setError(err.message) }
     finally { setBusy(false) }
   }
