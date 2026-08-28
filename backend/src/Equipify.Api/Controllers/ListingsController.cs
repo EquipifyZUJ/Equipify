@@ -65,8 +65,8 @@ public class ListingsController : ControllerBase
     public async Task<ActionResult<List<MapMarkerDto>>> Map(
         [FromQuery] double west, [FromQuery] double south,
         [FromQuery] double east, [FromQuery] double north,
-        [FromQuery] int? categoryId)
-        => Ok((await _listings.GetForMapAsync(west, south, east, north, categoryId))
+        [FromQuery] int? categoryId, [FromQuery] string? search)
+        => Ok((await _listings.GetForMapAsync(west, south, east, north, categoryId, search))
             .Select(MapMarkerDto.From).ToList());
 
     /// <summary>Listing details.</summary>
@@ -112,35 +112,32 @@ public class ListingsController : ControllerBase
         var paths = dbImages.Select(i => i.Path).ToList();
         var result = await _listings.CreateAsync(form.ToDto(paths, CurrentUserId));
 
-        if (result.Success)
+        if (!result.Success)
+            return ApiResults.FromResult(result);
+
+        var listingId = result.Value;
+
+        // Service already saved the listing with path-only images.
+        // Now persist the bytes using raw SQL to avoid EF change-tracker confusion.
+        for (int i = 0; i < dbImages.Count; i++)
         {
-            var listingId = result.Value;
-
-            // Update existing ListingImage entries (created by service) with bytes
-            var existingImages = await _db.ListingImages
-                .Where(i => i.ListingId == listingId)
-                .OrderBy(i => i.Id)
-                .ToListAsync();
-
-            for (int i = 0; i < existingImages.Count && i < dbImages.Count; i++)
-            {
-                existingImages[i].ImageBytes = dbImages[i].Bytes;
-                existingImages[i].ContentType = dbImages[i].ContentType;
-            }
-
-            // Set main image bytes on listing
-            var listing = await _db.Listings.FindAsync(listingId);
-            if (listing is not null && dbImages.Count > 0)
-            {
-                listing.MainImageBytes = dbImages[0].Bytes;
-                listing.MainImageContentType = dbImages[0].ContentType;
-            }
-
-            await _db.SaveChangesAsync();
-            return CreatedAtAction(nameof(Details), new { id = listingId }, new { id = listingId });
+            var idx = i;
+            await _db.Database.ExecuteSqlRawAsync(
+                "UPDATE \"ListingImages\" SET \"ImageBytes\" = @bytes, \"ContentType\" = @ct WHERE \"Id\" = (SELECT \"Id\" FROM \"ListingImages\" WHERE \"ListingId\" = @lid ORDER BY \"Id\" LIMIT 1 OFFSET @off)",
+                new Npgsql.NpgsqlParameter("@bytes", dbImages[idx].Bytes),
+                new Npgsql.NpgsqlParameter("@ct", dbImages[idx].ContentType),
+                new Npgsql.NpgsqlParameter("@lid", listingId),
+                new Npgsql.NpgsqlParameter("@off", idx));
         }
 
-        return ApiResults.FromResult(result);
+        // Set main image bytes on the listing row itself
+        await _db.Database.ExecuteSqlRawAsync(
+            "UPDATE \"Listings\" SET \"MainImageBytes\" = @bytes, \"MainImageContentType\" = @ct WHERE \"Id\" = @id",
+            new Npgsql.NpgsqlParameter("@bytes", dbImages[0].Bytes),
+            new Npgsql.NpgsqlParameter("@ct", dbImages[0].ContentType),
+            new Npgsql.NpgsqlParameter("@id", listingId));
+
+        return CreatedAtAction(nameof(Details), new { id = listingId }, new { id = listingId });
     }
 
     /// <summary>Updates an owned listing; new content returns it to Pending for re-approval.</summary>
@@ -167,43 +164,34 @@ public class ListingsController : ControllerBase
         var paths = dbImages?.Select(i => i.Path).ToList();
         var result = await _listings.UpdateAsync(form.ToDto(paths ?? new(), CurrentUserId, id));
 
-        if (result.Success && dbImages is not null && dbImages.Count > 0)
+        if (!result.Success || dbImages is null || dbImages.Count == 0)
+            return ApiResults.FromResult(result);
+
+        // Delete old images for this listing
+        await _db.Database.ExecuteSqlRawAsync(
+            "DELETE FROM \"ListingImages\" WHERE \"ListingId\" = @id",
+            new Npgsql.NpgsqlParameter("@id", id));
+
+        // Insert new images with bytes via raw SQL
+        for (int i = 0; i < dbImages.Count; i++)
         {
-            // Update existing or add new ListingImage entries with bytes
-            var existingImages = await _db.ListingImages
-                .Where(i => i.ListingId == id)
-                .OrderBy(i => i.Id)
-                .ToListAsync();
-
-            for (int i = 0; i < dbImages.Count; i++)
-            {
-                if (i < existingImages.Count)
-                {
-                    existingImages[i].ImageBytes = dbImages[i].Bytes;
-                    existingImages[i].ContentType = dbImages[i].ContentType;
-                    existingImages[i].ImagePath = dbImages[i].Path;
-                }
-                else
-                {
-                    _db.ListingImages.Add(new ListingImage
-                    {
-                        ListingId = id,
-                        ImagePath = dbImages[i].Path,
-                        ImageBytes = dbImages[i].Bytes,
-                        ContentType = dbImages[i].ContentType
-                    });
-                }
-            }
-
-            var listing = await _db.Listings.FindAsync(id);
-            if (listing is not null)
-            {
-                listing.MainImageBytes = dbImages[0].Bytes;
-                listing.MainImageContentType = dbImages[0].ContentType;
-            }
-
-            await _db.SaveChangesAsync();
+            await _db.Database.ExecuteSqlRawAsync(
+                "INSERT INTO \"ListingImages\" (\"ListingId\", \"ImagePath\", \"ImageBytes\", \"ContentType\") VALUES (@lid, @path, @bytes, @ct)",
+                new Npgsql.NpgsqlParameter("@lid", id),
+                new Npgsql.NpgsqlParameter("@path", dbImages[i].Path),
+                new Npgsql.NpgsqlParameter("@bytes", dbImages[i].Bytes),
+                new Npgsql.NpgsqlParameter("@ct", dbImages[i].ContentType));
         }
+
+        // Update main image bytes
+        await _db.Database.ExecuteSqlRawAsync(
+            "UPDATE \"Listings\" SET \"MainImageBytes\" = @bytes, \"MainImageContentType\" = @ct, \"MainImage\" = @path WHERE \"Id\" = @id",
+            new Npgsql.NpgsqlParameter("@bytes", dbImages[0].Bytes),
+            new Npgsql.NpgsqlParameter("@ct", dbImages[0].ContentType),
+            new Npgsql.NpgsqlParameter("@path", dbImages[0].Path),
+            new Npgsql.NpgsqlParameter("@id", id));
+
+        return NoContent();
 
         return result.Success ? NoContent() : ApiResults.FromResult(result);
     }

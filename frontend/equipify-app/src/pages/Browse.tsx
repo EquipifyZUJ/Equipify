@@ -30,6 +30,7 @@ export default function Browse({ mapOnly = false }: { mapOnly?: boolean }) {
   const [markers, setMarkers] = useState<MapMarker[]>([])
   const [filtersOpen, setFiltersOpen] = useState(false)
   const searchRef = useRef<HTMLInputElement>(null)
+  const lastBoundsRef = useRef<{ west: number; south: number; east: number; north: number } | null>(null)
 
   const hasActiveFilters = rentalUnit || minPrice || maxPrice || minDuration || maxDuration
 
@@ -63,6 +64,7 @@ export default function Browse({ mapOnly = false }: { mapOnly?: boolean }) {
   useEffect(() => { load() }, [load])
 
   const loadMarkers = useCallback(async (b: { west: number; south: number; east: number; north: number }) => {
+    lastBoundsRef.current = b
     if (mode !== 'map') return
     try {
       const qs = new URLSearchParams({
@@ -70,9 +72,23 @@ export default function Browse({ mapOnly = false }: { mapOnly?: boolean }) {
         east: b.east.toFixed(4), north: b.north.toFixed(4),
       })
       if (categoryId) qs.set('categoryId', categoryId)
+      if (search) qs.set('search', search)
+      if (rentalUnit) qs.set('rentalUnit', rentalUnit)
+      if (minPrice) qs.set('minPrice', minPrice)
+      if (maxPrice) qs.set('maxPrice', maxPrice)
+      if (minDuration) qs.set('minDuration', minDuration)
+      if (maxDuration) qs.set('maxDuration', maxDuration)
       setMarkers(await api<MapMarker[]>(`/listings/map?${qs}`))
     } catch { /* ignore */ }
-  }, [mode, categoryId])
+  }, [mode, categoryId, search, rentalUnit, minPrice, maxPrice, minDuration, maxDuration])
+
+  // Re-fetch markers when search/filters change in map mode
+  useEffect(() => {
+    if (mode === 'map' && lastBoundsRef.current) {
+      loadMarkers(lastBoundsRef.current)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [search, categoryId, rentalUnit, minPrice, maxPrice, minDuration, maxDuration])
 
   const resetFilters = () => {
     setRentalUnit('')

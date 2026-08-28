@@ -93,7 +93,7 @@ public class ListingService : IListingService
         };
     }
 
-    public Task<List<Listing>> GetForMapAsync(double west, double south, double east, double north, int? categoryId = null)
+    public Task<List<Listing>> GetForMapAsync(double west, double south, double east, double north, int? categoryId = null, string? search = null)
     {
         var (w, s, e, n) = NormalizeBbox(west, south, east, north);
         var query = _uow.Listings.Query()
@@ -104,6 +104,15 @@ public class ListingService : IListingService
 
         if (categoryId is > 0)
             query = query.Where(l => l.CategoryId == categoryId);
+
+        if (!string.IsNullOrWhiteSpace(search))
+        {
+            var term = search.Trim().ToLower();
+            query = query.Where(l =>
+                l.Title.ToLower().Contains(term) ||
+                l.Description.ToLower().Contains(term) ||
+                l.LocationAddress.ToLower().Contains(term));
+        }
 
         return query
             .Select(l => new Listing

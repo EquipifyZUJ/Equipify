@@ -14,7 +14,7 @@ public interface IListingService
     Task<Listing?> GetDetailsAsync(int id, bool includeInactive = false);
 
     /// <summary>Lightweight list for map markers within a viewport.</summary>
-    Task<List<Listing>> GetForMapAsync(double west, double south, double east, double north, int? categoryId = null);
+    Task<List<Listing>> GetForMapAsync(double west, double south, double east, double north, int? categoryId = null, string? search = null);
 
     Task<List<Listing>> GetByOwnerAsync(int ownerId);
     Task<List<Listing>> GetAllAsync();
