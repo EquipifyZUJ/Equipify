@@ -73,10 +73,6 @@ function AdminGate({ t, adminLogin }: { t: (k: string) => string; adminLogin: (u
         <button className="btn btn-accent" type="submit" disabled={busy}>
           {busy ? '…' : t('nav.login')}
         </button>
-
-        <p className="muted center" style={{ fontSize: '0.75rem', marginTop: 4 }}>
-          Dev: admin / Admin@12345
-        </p>
       </form>
     </div>
   )

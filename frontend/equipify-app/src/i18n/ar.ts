@@ -136,6 +136,7 @@ export const ar: Record<string, string> = {
   'listings.empty': 'لا توجد إعلانات بعد — أنشئ أول إعلان لك!',
   'listings.activate': 'تفعيل',
   'listings.deactivate': 'تعطيل',
+  'listings.pendingAdminApproval': 'بانتظار موافقة الإدارة',
   'listings.delete': 'حذف',
   'listings.edit': 'تعديل',
   'listings.images': 'الصور (حتى 6 صور)',

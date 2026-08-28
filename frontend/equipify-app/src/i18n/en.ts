@@ -138,6 +138,7 @@ export const en: Dict = {
   'listings.empty': 'No listings yet — create your first one!',
   'listings.activate': 'Activate',
   'listings.deactivate': 'Deactivate',
+  'listings.pendingAdminApproval': 'Awaiting admin approval',
   'listings.delete': 'Delete',
   'listings.edit': 'Edit',
   'listings.images': 'Images (up to 6)',

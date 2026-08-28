@@ -24,10 +24,12 @@ export default function MyListings() {
   if (listings === null) return <Spinner />
 
   const toggle = async (l: ListingSummary) => {
+    // Users can ONLY deactivate — reactivation requires admin approval
+    if (l.status !== 'Active') return
     try {
       await api(`/listings/${l.id}/status`, {
         method: 'POST',
-        body: { status: l.status === 'Active' ? 'Inactive' : 'Active' },
+        body: { status: 'Inactive' },
       })
       load()
     } catch (e: any) { toast(e.message ?? t('common.error'), 'error') }
@@ -65,10 +67,13 @@ export default function MyListings() {
               <div className="card-sub">{l.costPerDay} {t('listing.perDay')} · 📍{l.locationAddress}</div>
               <div className="row" style={{ marginTop: 12, flexWrap: 'wrap', gap: 8 }}>
                 <Link to={`/my-listings/${l.id}/edit`} className="btn btn-ghost btn-sm">✏️ {t('listings.edit')}</Link>
-                {l.status !== 'Pending' && (
+                {l.status === 'Active' && (
                   <button className="btn btn-ghost btn-sm" onClick={() => toggle(l)}>
-                    {l.status === 'Active' ? `⏸ ${t('listings.deactivate')}` : `▶ ${t('listings.activate')}`}
+                    ⏸ {t('listings.deactivate')}
                   </button>
+                )}
+                {l.status === 'Inactive' && (
+                  <span className="badge badge-warn" style={{ fontSize: '0.7rem' }}>{t('listings.pendingAdminApproval')}</span>
                 )}
                 <button className="btn btn-danger btn-sm" onClick={() => setToDelete(l.id)}>🗑</button>
               </div>

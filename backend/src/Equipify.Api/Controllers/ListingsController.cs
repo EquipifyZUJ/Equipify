@@ -8,6 +8,7 @@ using Equipify.Service.Models;
 using Equipify.Service.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace Equipify.Api.Controllers;
@@ -113,18 +114,18 @@ public class ListingsController : ControllerBase
 
         if (result.Success)
         {
-            // Save image bytes to DB for persistent storage
             var listingId = result.Value;
-            foreach (var (path, bytes, ct) in dbImages)
+
+            // Update existing ListingImage entries (created by service) with bytes
+            var existingImages = await _db.ListingImages
+                .Where(i => i.ListingId == listingId)
+                .OrderBy(i => i.Id)
+                .ToListAsync();
+
+            for (int i = 0; i < existingImages.Count && i < dbImages.Count; i++)
             {
-                var img = new ListingImage
-                {
-                    ListingId = listingId,
-                    ImagePath = path,
-                    ImageBytes = bytes,
-                    ContentType = ct
-                };
-                _db.ListingImages.Add(img);
+                existingImages[i].ImageBytes = dbImages[i].Bytes;
+                existingImages[i].ContentType = dbImages[i].ContentType;
             }
 
             // Set main image bytes on listing
@@ -168,15 +169,30 @@ public class ListingsController : ControllerBase
 
         if (result.Success && dbImages is not null && dbImages.Count > 0)
         {
-            foreach (var (path, bytes, ct) in dbImages)
+            // Update existing or add new ListingImage entries with bytes
+            var existingImages = await _db.ListingImages
+                .Where(i => i.ListingId == id)
+                .OrderBy(i => i.Id)
+                .ToListAsync();
+
+            for (int i = 0; i < dbImages.Count; i++)
             {
-                _db.ListingImages.Add(new ListingImage
+                if (i < existingImages.Count)
                 {
-                    ListingId = id,
-                    ImagePath = path,
-                    ImageBytes = bytes,
-                    ContentType = ct
-                });
+                    existingImages[i].ImageBytes = dbImages[i].Bytes;
+                    existingImages[i].ContentType = dbImages[i].ContentType;
+                    existingImages[i].ImagePath = dbImages[i].Path;
+                }
+                else
+                {
+                    _db.ListingImages.Add(new ListingImage
+                    {
+                        ListingId = id,
+                        ImagePath = dbImages[i].Path,
+                        ImageBytes = dbImages[i].Bytes,
+                        ContentType = dbImages[i].ContentType
+                    });
+                }
             }
 
             var listing = await _db.Listings.FindAsync(id);
@@ -192,13 +208,17 @@ public class ListingsController : ControllerBase
         return result.Success ? NoContent() : ApiResults.FromResult(result);
     }
 
-    /// <summary>Activates/deactivates an owned listing.</summary>
+    /// <summary>Deactivates an owned listing. Only Inactive is allowed — reactivation requires admin approval.</summary>
     [Authorize(Roles = "User")]
     [HttpPost("{id:int}/status")]
     public async Task<IActionResult> SetStatus(int id, SetListingStatusRequest request)
     {
-        if (!Enum.TryParse<ListingStatus>(request.Status, ignoreCase: true, out var status) || status == ListingStatus.Pending)
-            return BadRequest(new { error = "Status must be Active or Inactive." });
+        if (!Enum.TryParse<ListingStatus>(request.Status, ignoreCase: true, out var status))
+            return BadRequest(new { error = "Invalid status." });
+
+        // Users can only DEACTIVATE — reactivation requires admin approval
+        if (status != ListingStatus.Inactive)
+            return Forbid();
 
         var result = await _listings.SetStatusAsync(id, status, CurrentUserId);
         return result.Success ? NoContent() : ApiResults.FromResult(result);
