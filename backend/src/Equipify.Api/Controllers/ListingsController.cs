@@ -217,7 +217,7 @@ public class ListingsController : ControllerBase
         return NoContent();
     }
 
-    /// <summary>Deactivates an owned listing. Only Inactive is allowed — reactivation requires admin approval.</summary>
+    /// <summary>Activates/deactivates an owned listing (Active ↔ Inactive).</summary>
     [Authorize(Roles = "User")]
     [HttpPost("{id:int}/status")]
     public async Task<IActionResult> SetStatus(int id, SetListingStatusRequest request)
@@ -225,8 +225,8 @@ public class ListingsController : ControllerBase
         if (!Enum.TryParse<ListingStatus>(request.Status, ignoreCase: true, out var status))
             return BadRequest(new { error = "Invalid status." });
 
-        if (status != ListingStatus.Inactive)
-            return Forbid();
+        if (status != ListingStatus.Active && status != ListingStatus.Inactive)
+            return BadRequest(new { error = "Only Active or Inactive is allowed." });
 
         var result = await _listings.SetStatusAsync(id, status, CurrentUserId);
         return result.Success ? NoContent() : ApiResults.FromResult(result);

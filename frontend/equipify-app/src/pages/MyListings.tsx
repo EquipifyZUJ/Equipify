@@ -24,12 +24,12 @@ export default function MyListings() {
   if (listings === null) return <Spinner />
 
   const toggle = async (l: ListingSummary) => {
-    // Users can ONLY deactivate — reactivation requires admin approval
-    if (l.status !== 'Active') return
+    const target = l.status === 'Active' ? 'Inactive' : 'Active'
+    if (l.status !== 'Active' && l.status !== 'Inactive') return
     try {
       await api(`/listings/${l.id}/status`, {
         method: 'POST',
-        body: { status: 'Inactive' },
+        body: { status: target },
       })
       load()
     } catch (e: any) { toast(e.message ?? t('common.error'), 'error') }
@@ -73,6 +73,11 @@ export default function MyListings() {
                   </button>
                 )}
                 {l.status === 'Inactive' && (
+                  <button className="btn btn-ghost btn-sm" onClick={() => toggle(l)}>
+                    ▶ {t('listings.activate')}
+                  </button>
+                )}
+                {l.status === 'Pending' && (
                   <span className="badge badge-warn" style={{ fontSize: '0.7rem' }}>{t('listings.pendingAdminApproval')}</span>
                 )}
                 <button className="btn btn-danger btn-sm" onClick={() => setToDelete(l.id)}>🗑</button>
