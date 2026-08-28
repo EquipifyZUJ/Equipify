@@ -516,8 +516,8 @@ class _BrowseScreenState extends State<BrowseScreen> {
   Widget _buildMap() {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final tileUrl = isDark
-        ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png'
-        : 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png';
+        ? 'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
+        : 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
     final tileSubdomains = ['a', 'b', 'c', 'd'];
     return Stack(
       children: [

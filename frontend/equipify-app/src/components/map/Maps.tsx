@@ -5,10 +5,8 @@ import 'leaflet/dist/leaflet.css'
 import type { MapMarker } from '../../api/types'
 import { useTheme } from '../../theme/ThemeProvider'
 
-const TILE_LIGHT = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png'
-const TILE_DARK = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png'
-const TILE_SUBS = ['a', 'b', 'c', 'd']
-const TILE_ATTR = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>'
+const TILE_LIGHT = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
+const TILE_ATTR = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 
 const priceIcon = (price: number | null, isDark: boolean) =>
   L.divIcon({
@@ -46,8 +44,7 @@ export function BrowseMap({ markers, onMove }: {
       <TileLayer
         key={isDark ? 'dark' : 'light'}
         attribution={TILE_ATTR}
-        url={isDark ? TILE_DARK : TILE_LIGHT}
-        subdomains={TILE_SUBS}
+        url={TILE_LIGHT}
       />
       <BoundsReporter onMove={onMove} />
       {markers.map(m => (
@@ -71,8 +68,7 @@ export function MiniMap({ lat, lng, title }: { lat: number; lng: number; title: 
       <TileLayer
         key={isDark ? 'dark' : 'light'}
         attribution={TILE_ATTR}
-        url={isDark ? TILE_DARK : TILE_LIGHT}
-        subdomains={TILE_SUBS}
+        url={TILE_LIGHT}
       />
       <Marker position={[lat, lng]} icon={priceIcon(null, isDark)}>
         <Popup>{title}</Popup>

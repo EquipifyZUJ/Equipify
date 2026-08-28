@@ -306,10 +306,7 @@ class _ListingDetailsScreenState extends State<ListingDetailsScreen> {
                               ),
                               children: [
                                 TileLayer(
-                                  urlTemplate: isDark
-                                      ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png'
-                                      : 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png',
-                                  subdomains: const ['a', 'b', 'c', 'd'],
+                                  urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                                   userAgentPackageName: 'com.equipify.app',
                                 ),
                                 MarkerLayer(markers: [
