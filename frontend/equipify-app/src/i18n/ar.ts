@@ -209,9 +209,6 @@ export const ar: Record<string, string> = {
   'admin.noPending': 'لا توجد إعلانات بانتظار الموافقة — تم الانتهاء!',
   'admin.reject': 'رفض',
   'admin.confirmDelete': 'هل أنت متأكد من الحذف؟ لا يمكن التراجع.',
-  'admin.deleteListing': 'حذف الإعلان',
-  'admin.confirmDeleteListing': 'هل تريد حذف الإعلان',
-  'admin.delete': 'حذف',
   'admin.loginTitle': 'بوابة الإدارة',
   'admin.loginSub': 'أدخل بيانات الأدمن للوصول',
 

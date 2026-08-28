@@ -144,7 +144,7 @@ export function AdminListings() {
   const { t } = useI18n()
   const toast = useToast()
   const [listings, setListings] = useState<ListingSummary[] | null>(null)
-  const [toDelete, setToDelete] = useState<ListingSummary | null>(null)
+  const [toDelete, setToDelete] = useState<number | null>(null)
   const [filter, setFilter] = useState<'All' | 'Pending' | 'Active' | 'Inactive'>('All')
 
   const load = () => api<ListingSummary[]>('/admin/listings').then(setListings).catch(() => setListings([]))
@@ -162,7 +162,7 @@ export function AdminListings() {
 
   const remove = async () => {
     if (toDelete === null) return
-    try { await api(`/admin/listings/${toDelete.id}`, { method: 'DELETE' }); toast('🗑 ✓'); setToDelete(null); load() }
+    try { await api(`/admin/listings/${toDelete}`, { method: 'DELETE' }); toast('🗑 ✓'); load() }
     catch (e: any) { toast(e.message ?? t('common.error'), 'error') }
   }
 
@@ -234,7 +234,7 @@ export function AdminListings() {
                     {l.status === 'Inactive' && (
                       <button className="btn btn-ghost btn-sm" onClick={() => act(l.id, 'approve')}>▶</button>
                     )}
-                    <button className="btn btn-danger btn-sm" onClick={() => setToDelete(l)}>🗑</button>
+                    <button className="btn btn-danger btn-sm" onClick={() => setToDelete(l.id)}>🗑</button>
                   </div>
                 </td>
               </tr>
@@ -242,14 +242,7 @@ export function AdminListings() {
           </tbody>
         </table>
       </div>
-      <ConfirmModal
-        open={toDelete !== null}
-        title={t('admin.deleteListing')}
-        text={`${t('admin.confirmDeleteListing')} "${toDelete?.title}"?`}
-        confirmLabel={t('admin.delete')}
-        onConfirm={remove}
-        onClose={() => setToDelete(null)}
-      />
+      <ConfirmModal open={toDelete !== null} text={t('admin.confirmDelete')} onConfirm={remove} onClose={() => setToDelete(null)} />
     </>
   )
 }
