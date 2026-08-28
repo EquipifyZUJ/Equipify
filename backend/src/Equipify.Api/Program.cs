@@ -166,8 +166,21 @@ var host = new HostBuilder()
 
             app.UseSerilogRequestLogging();
 
-            // Auto-migrate database on startup (adds new columns like ImageBytes)
-            ctx.Database.Migrate();
+            // Auto-migrate database on startup
+            try
+            {
+                ctx.Database.Migrate();
+            }
+            catch
+            {
+                // Fallback: ensure tables exist, then add missing columns via raw SQL
+                ctx.Database.EnsureCreated();
+                ctx.Database.ExecuteSqlRaw(@"
+                    ALTER TABLE ""Listings"" ADD COLUMN IF NOT EXISTS ""MainImageBytes"" bytea;
+                    ALTER TABLE ""Listings"" ADD COLUMN IF NOT EXISTS ""MainImageContentType"" text;
+                    ALTER TABLE ""ListingImages"" ADD COLUMN IF NOT EXISTS ""ImageBytes"" bytea;
+                    ALTER TABLE ""ListingImages"" ADD COLUMN IF NOT EXISTS ""ContentType"" text;");
+            }
 
             app.UseStaticFiles();
 
