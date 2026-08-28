@@ -56,10 +56,8 @@ export default function Browse({ mapOnly = false }: { mapOnly?: boolean }) {
     gridAbortRef.current?.abort()
     const ac = new AbortController()
     gridAbortRef.current = ac
-    const isGrid = mode === 'grid'
-    if (isGrid) setGridLoading(true)
-    else if (!data) setLoading(true)
-    // Ensure initial loading clears even if we are in grid mode
+    // Show appropriate spinner
+    if (mode === 'grid') setGridLoading(true)
     if (!data) setLoading(true)
     const qs = new URLSearchParams()
     if (debouncedSearch) qs.set('search', debouncedSearch)
@@ -76,15 +74,10 @@ export default function Browse({ mapOnly = false }: { mapOnly?: boolean }) {
       const res = await api<Paged<ListingSummary>>(`/listings?${qs}`, { signal: ac.signal })
       if (!ac.signal.aborted) setData(res)
     } catch (e: any) {
-      if (e?.name !== 'AbortError' && !ac.signal.aborted) setData(null)
+      if (e?.name !== 'AbortError') setData(null)
     } finally {
-      if (!ac.signal.aborted) {
-        setLoading(false)
-        setGridLoading(false)
-      } else {
-        // On abort, ensure spinners don't hang
-        setGridLoading(false)
-      }
+      setLoading(false)
+      setGridLoading(false)
     }
   }, [debouncedSearch, categoryId, rentalUnit, minPrice, maxPrice, minDuration, maxDuration, page, mode])
 
