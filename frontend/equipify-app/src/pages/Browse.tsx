@@ -53,12 +53,14 @@ export default function Browse({ mapOnly = false }: { mapOnly?: boolean }) {
   }, [])
 
   const load = useCallback(async () => {
-    // Abort previous grid request
     gridAbortRef.current?.abort()
     const ac = new AbortController()
     gridAbortRef.current = ac
-    if (mode === 'grid') setGridLoading(true)
+    const isGrid = mode === 'grid'
+    if (isGrid) setGridLoading(true)
     else if (!data) setLoading(true)
+    // Ensure initial loading clears even if we are in grid mode
+    if (!data) setLoading(true)
     const qs = new URLSearchParams()
     if (debouncedSearch) qs.set('search', debouncedSearch)
     if (categoryId) qs.set('categoryId', categoryId)
@@ -74,16 +76,17 @@ export default function Browse({ mapOnly = false }: { mapOnly?: boolean }) {
       const res = await api<Paged<ListingSummary>>(`/listings?${qs}`, { signal: ac.signal })
       if (!ac.signal.aborted) setData(res)
     } catch (e: any) {
-      if (e?.name !== 'AbortError') setData(null)
+      if (e?.name !== 'AbortError' && !ac.signal.aborted) setData(null)
     } finally {
       if (!ac.signal.aborted) {
         setLoading(false)
         setGridLoading(false)
+      } else {
+        // On abort, ensure spinners don't hang
+        setGridLoading(false)
       }
     }
-  }, [debouncedSearch, categoryId, rentalUnit, minPrice, maxPrice, minDuration, maxDuration, page, mode, data])
-
-  useEffect(() => { load(); return () => gridAbortRef.current?.abort() }, [load])
+  }, [debouncedSearch, categoryId, rentalUnit, minPrice, maxPrice, minDuration, maxDuration, page, mode])
 
   const loadMarkers = useCallback(async (b: { west: number; south: number; east: number; north: number }) => {
     lastBoundsRef.current = b
@@ -110,16 +113,11 @@ export default function Browse({ mapOnly = false }: { mapOnly?: boolean }) {
     }
   }, [mode, categoryId, debouncedSearch, rentalUnit, minPrice, maxPrice, minDuration, maxDuration])
 
-  // Re-fetch markers when debounced search/filters change in map mode (throttled via debounce)
+  // Re-fetch markers when debounced search/filters change in map mode
   useEffect(() => {
     if (mode === 'map' && lastBoundsRef.current) {
-      // Avoid duplicate fetch if search hasn't settled
-      if (lastSearchRef.current === debouncedSearch) {
-        loadMarkers(lastBoundsRef.current)
-      } else {
-        lastSearchRef.current = debouncedSearch
-        loadMarkers(lastBoundsRef.current)
-      }
+      lastSearchRef.current = debouncedSearch
+      loadMarkers(lastBoundsRef.current)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedSearch, categoryId, rentalUnit, minPrice, maxPrice, minDuration, maxDuration])

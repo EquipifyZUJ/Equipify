@@ -41,7 +41,7 @@ export default function Home() {
           className="hero-search"
           onSubmit={e => {
             e.preventDefault()
-            navigate(`/browse?search=${encodeURIComponent(search)}`)
+            navigate(`/map?search=${encodeURIComponent(search)}`)
           }}
         >
           <input
@@ -59,7 +59,7 @@ export default function Home() {
 
         {/* Two main action buttons */}
         <div className="hero-actions">
-          <Link to="/browse" className="action-card action-card--rent" id="action-rent">
+          <Link to="/map" className="action-card action-card--rent" id="action-rent">
             <div className="action-icon">🔍</div>
             <h3>{t('home.rent')}</h3>
             <p>{t('home.rentSub')}</p>
@@ -78,7 +78,7 @@ export default function Home() {
           {categories.map(c => (
             <Link
               key={c.id}
-              to={`/browse?categoryId=${c.id}`}
+              to={`/map?categoryId=${c.id}`}
               className="chip cat-chip"
               style={{ textDecoration: 'none', color: 'inherit' }}
             >
