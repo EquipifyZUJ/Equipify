@@ -13,7 +13,9 @@ export default function MyListings() {
   const { t } = useI18n()
   const toast = useToast()
   const [listings, setListings] = useState<ListingSummary[] | null>(null)
-  const [toDelete, setToDelete] = useState<number | null>(null)
+  const [toDelete, setToDelete] = useState<ListingSummary | null>(null)
+  const [toToggle, setToToggle] = useState<ListingSummary | null>(null)
+  const [busy, setBusy] = useState(false)
 
   const load = useCallback(() => {
     api<ListingSummary[]>('/listings/mine').then(setListings).catch(() => setListings([]))
@@ -23,25 +25,30 @@ export default function MyListings() {
 
   if (listings === null) return <Spinner />
 
-  const toggle = async (l: ListingSummary) => {
-    const target = l.status === 'Active' ? 'Inactive' : 'Active'
-    if (l.status !== 'Active' && l.status !== 'Inactive') return
+  const doToggle = async () => {
+    if (!toToggle || busy) return
+    const target = toToggle.status === 'Active' ? 'Inactive' : 'Active'
+    setBusy(true)
     try {
-      await api(`/listings/${l.id}/status`, {
+      await api(`/listings/${toToggle.id}/status`, {
         method: 'POST',
         body: { status: target },
       })
+      toast(target === 'Active' ? `▶ ${t('listings.activate')} ✓` : `⏸ ${t('listings.deactivate')} ✓`)
       load()
     } catch (e: any) { toast(e.message ?? t('common.error'), 'error') }
+    finally { setBusy(false); setToToggle(null) }
   }
 
   const remove = async () => {
-    if (toDelete === null) return
+    if (toDelete === null || busy) return
+    setBusy(true)
     try {
-      await api(`/listings/${toDelete}`, { method: 'DELETE' })
+      await api(`/listings/${toDelete.id}`, { method: 'DELETE' })
       toast('🗑 ✓')
       load()
     } catch (e: any) { toast(e.message ?? t('common.error'), 'error') }
+    finally { setBusy(false); setToDelete(null) }
   }
 
   return (
@@ -66,28 +73,34 @@ export default function MyListings() {
               <div className="card-title">{l.title}</div>
               <div className="card-sub">{l.costPerDay} {t('listing.perDay')} · 📍{l.locationAddress}</div>
               <div className="row" style={{ marginTop: 12, flexWrap: 'wrap', gap: 8 }}>
-                <Link to={`/my-listings/${l.id}/edit`} className="btn btn-ghost btn-sm">✏️ {t('listings.edit')}</Link>
+                <Link to={`/my-listings/${l.id}/edit`} className="btn btn-ghost btn-sm" title={t('listings.edit')}>✏️ {t('listings.edit')}</Link>
                 {l.status === 'Active' && (
-                  <button className="btn btn-ghost btn-sm" onClick={() => toggle(l)}>
+                  <button className="btn btn-ghost btn-sm" disabled={busy} onClick={() => setToToggle(l)} title={t('listings.deactivate')}>
                     ⏸ {t('listings.deactivate')}
                   </button>
                 )}
                 {l.status === 'Inactive' && (
-                  <button className="btn btn-ghost btn-sm" onClick={() => toggle(l)}>
+                  <button className="btn btn-accent btn-sm" disabled={busy} onClick={() => setToToggle(l)} title={t('listings.activate')}>
                     ▶ {t('listings.activate')}
                   </button>
                 )}
                 {l.status === 'Pending' && (
                   <span className="badge badge-warn" style={{ fontSize: '0.7rem' }}>{t('listings.pendingAdminApproval')}</span>
                 )}
-                <button className="btn btn-danger btn-sm" onClick={() => setToDelete(l.id)}>🗑</button>
+                <button className="btn btn-danger btn-sm" disabled={busy} onClick={() => setToDelete(l)} title={t('admin.confirmDelete')}>🗑</button>
               </div>
             </div>
           </div>
         ))}
       </div>
 
-      <ConfirmModal open={toDelete !== null} text={t('admin.confirmDelete')} onConfirm={remove} onClose={() => setToDelete(null)} />
+      <ConfirmModal open={toDelete !== null} text={toDelete ? `${t('admin.confirmDelete')} "${toDelete.title}"?` : t('admin.confirmDelete')} onConfirm={remove} onClose={() => setToDelete(null)} />
+      <ConfirmModal
+        open={toToggle !== null}
+        text={toToggle ? `${toToggle.status === 'Active' ? t('listings.deactivate') : t('listings.activate')} "${toToggle.title}"?` : ''}
+        onConfirm={doToggle}
+        onClose={() => setToToggle(null)}
+      />
     </>
   )
 }
