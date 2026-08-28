@@ -29,6 +29,7 @@ export default function Browse({ mapOnly = false }: { mapOnly?: boolean }) {
   const [gridLoading, setGridLoading] = useState(false)
   const [mode, setMode] = useState<'grid' | 'map'>(mapOnly ? 'map' : 'grid')
   const [markers, setMarkers] = useState<MapMarker[]>([])
+  useEffect(() => { setMode(mapOnly ? 'map' : 'grid') }, [mapOnly])
   const [filtersOpen, setFiltersOpen] = useState(false)
   const searchRef = useRef<HTMLInputElement>(null)
   const lastBoundsRef = useRef<{ west: number; south: number; east: number; north: number } | null>(null)
