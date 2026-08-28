@@ -116,7 +116,7 @@ export default function Home() {
       {/* ── Featured listings ── */}
       <div className="section-head">
         <h2>{t('home.featured')}</h2>
-        <Link to="/browse" className="link">{t('home.viewAll')} →</Link>
+        <Link to="/map" className="link">{t('home.viewAll')} →</Link>
       </div>
 
       <div className="grid listing-grid">

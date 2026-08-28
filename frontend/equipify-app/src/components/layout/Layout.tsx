@@ -20,7 +20,7 @@ export function Layout() {
 
   const links: Array<{ to: string; key: Key }> = [
     { to: '/', key: 'nav.home' },
-    { to: '/browse', key: 'nav.browse' },
+    { to: '/map', key: 'nav.browse' },
     { to: '/faq', key: 'nav.faq' },
     { to: '/terms', key: 'nav.terms' },
   ]
