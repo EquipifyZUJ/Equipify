@@ -26,6 +26,7 @@ export default function Browse({ mapOnly = false }: { mapOnly?: boolean }) {
   const [categories, setCategories] = useState<Category[]>([])
   const [data, setData] = useState<Paged<ListingSummary> | null>(null)
   const [loading, setLoading] = useState(true)
+  const [gridLoading, setGridLoading] = useState(false)
   const [mode, setMode] = useState<'grid' | 'map'>(mapOnly ? 'map' : 'map')
   const [markers, setMarkers] = useState<MapMarker[]>([])
   const [filtersOpen, setFiltersOpen] = useState(false)
@@ -39,7 +40,7 @@ export default function Browse({ mapOnly = false }: { mapOnly?: boolean }) {
   }, [])
 
   const load = useCallback(async () => {
-    setLoading(true)
+    if (mode === 'grid') setGridLoading(true)
     const qs = new URLSearchParams()
     if (search) qs.set('search', search)
     if (categoryId) qs.set('categoryId', categoryId)
@@ -57,9 +58,10 @@ export default function Browse({ mapOnly = false }: { mapOnly?: boolean }) {
       setData(null)
     } finally {
       setLoading(false)
+      setGridLoading(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [search, categoryId, rentalUnit, minPrice, maxPrice, minDuration, maxDuration, page])
+  }, [search, categoryId, rentalUnit, minPrice, maxPrice, minDuration, maxDuration, page, mode])
 
   useEffect(() => { load() }, [load])
 
@@ -133,12 +135,48 @@ export default function Browse({ mapOnly = false }: { mapOnly?: boolean }) {
             className="browse-search-input"
             placeholder={t('home.searchPlaceholder')}
             value={search}
-            onChange={e => { setSearch(e.target.value); setPage(1) }}
+            onChange={e => {
+              setSearch(e.target.value)
+              setPage(1)
+              // In map mode, immediately re-fetch markers
+              if (mode === 'map' && lastBoundsRef.current) {
+                const qs = new URLSearchParams({
+                  west: lastBoundsRef.current.west.toFixed(4),
+                  south: lastBoundsRef.current.south.toFixed(4),
+                  east: lastBoundsRef.current.east.toFixed(4),
+                  north: lastBoundsRef.current.north.toFixed(4),
+                })
+                if (categoryId) qs.set('categoryId', categoryId)
+                if (rentalUnit) qs.set('rentalUnit', rentalUnit)
+                if (minPrice) qs.set('minPrice', minPrice)
+                if (maxPrice) qs.set('maxPrice', maxPrice)
+                if (minDuration) qs.set('minDuration', minDuration)
+                if (maxDuration) qs.set('maxDuration', maxDuration)
+                api<MapMarker[]>(`/listings/map?search=${encodeURIComponent(e.target.value)}&${qs}`)
+                  .then(setMarkers)
+                  .catch(() => {})
+              }
+            }}
             onKeyDown={e => { if (e.key === 'Enter') { setPage(1); load() } }}
             id="browse-search-input"
           />
           {search && (
-            <button className="browse-search-clear" onClick={() => { setSearch(''); setPage(1) }}>✕</button>
+            <button className="browse-search-clear" onClick={() => {
+              setSearch('')
+              setPage(1)
+              if (mode === 'map' && lastBoundsRef.current) {
+                const qs = new URLSearchParams({
+                  west: lastBoundsRef.current.west.toFixed(4),
+                  south: lastBoundsRef.current.south.toFixed(4),
+                  east: lastBoundsRef.current.east.toFixed(4),
+                  north: lastBoundsRef.current.north.toFixed(4),
+                })
+                if (categoryId) qs.set('categoryId', categoryId)
+                api<MapMarker[]>(`/listings/map?${qs}`)
+                  .then(setMarkers)
+                  .catch(() => {})
+              }
+            }}>✕</button>
           )}
         </div>
         <button
@@ -265,10 +303,13 @@ export default function Browse({ mapOnly = false }: { mapOnly?: boolean }) {
         <Spinner />
       ) : mode === 'grid' ? (
         <>
-          {data && data.items.length === 0 && <Empty icon="🔎" text={t('browse.empty')} />}
-          <div className="grid listing-grid" style={{ marginTop: 20 }}>
-            {data?.items.map(l => <ListingCard key={l.id} listing={l} />)}
-          </div>
+          {gridLoading && <Spinner />}
+          {!gridLoading && data && data.items.length === 0 && <Empty icon="🔎" text={t('browse.empty')} />}
+          {!gridLoading && (
+            <div className="grid listing-grid" style={{ marginTop: 20 }}>
+              {data?.items.map(l => <ListingCard key={l.id} listing={l} />)}
+            </div>
+          )}
           {data && data.totalPages > 1 && (
             <div className="pager">
               <button className="page-btn" disabled={page <= 1} onClick={() => setPage(p => p - 1)}>‹</button>
