@@ -1,7 +1,7 @@
 name: equipify_app
 description: Equipify — rent anything, anywhere. Mobile client for the Equipify API.
 publish_to: 'none'
-version: 1.0.0+1
+version: 1.4.1+5
 
 environment:
   sdk: ^3.9.0

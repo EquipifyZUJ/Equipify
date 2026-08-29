@@ -21,11 +21,19 @@ String _resolveUrl() {
   return 'http://localhost:5000';
 }
 
-/// Absolute URL for a relative image path returned by the API
-/// (e.g. "/uploads/listings/x.jpg" → "http://host/uploads/listings/x.jpg").
+/// Absolute URL for a relative image path returned by the API.
+///
+/// New uploads are served from DB via /api/images/file/{name}
+/// (frontend maps /uploads/ -> /api/images/file/). This mirrors that
+/// logic so newly created listings show immediately in the app.
 String imageUrl(String? path) {
   if (path == null || path.isEmpty) return '';
   if (path.startsWith('http')) return path;
+  if (path.startsWith('/uploads/')) {
+    final fileName = path.split('/').last;
+    if (fileName.isEmpty) return '';
+    return '$kApiUrl/api/images/file/$fileName';
+  }
   return '$kApiUrl$path';
 }
 
